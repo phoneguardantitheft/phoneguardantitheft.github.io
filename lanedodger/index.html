@@ -17,7 +17,7 @@
     .container {
       max-width: 1000px;
       margin: 0 auto;
-      padding: 60px 20px;
+      padding: 40px 20px 60px;
     }
 
     .logo {
@@ -26,6 +26,7 @@
       border-radius: 28px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.4);
       margin-bottom: 25px;
+      object-fit: cover;
     }
 
     h1 {
@@ -34,47 +35,24 @@
       color: #38bdf8;
     }
 
+    .challenge {
+      font-size: 1.35rem;
+      font-weight: bold;
+      color: #facc15;
+      margin: 10px auto 18px;
+    }
+
     .subtitle {
       font-size: 1.3rem;
       color: #cbd5e1;
       max-width: 700px;
-      margin: 0 auto 40px;
+      margin: 0 auto 25px;
       line-height: 1.6;
-    }
-
-    .card {
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid #1e293b;
-      border-radius: 24px;
-      padding: 40px;
-      margin-top: 40px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.35);
-    }
-
-    h2 {
-      color: #7dd3fc;
-      margin-bottom: 15px;
-    }
-
-    p {
-      color: #dbeafe;
-      line-height: 1.7;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    li {
-      padding: 10px 0;
-      color: #dbeafe;
-      font-size: 1.05rem;
     }
 
     .button {
       display: inline-block;
-      margin-top: 35px;
+      margin: 10px 0 25px;
       padding: 16px 36px;
       border-radius: 14px;
       background: linear-gradient(to right, #0ea5e9, #38bdf8);
@@ -90,10 +68,29 @@
       transform: translateY(-2px);
     }
 
-    .footer {
-      margin-top: 60px;
-      color: #94a3b8;
-      font-size: 0.9rem;
+    .card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid #1e293b;
+      border-radius: 24px;
+      padding: 40px;
+      margin-top: 35px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+    }
+
+    h2 {
+      color: #7dd3fc;
+      margin-bottom: 15px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      padding: 10px 0;
+      color: #dbeafe;
+      font-size: 1.05rem;
     }
 
     .links {
@@ -106,8 +103,24 @@
       text-decoration: none;
     }
 
-    .links a:hover {
-      text-decoration: underline;
+    .footer {
+      margin-top: 60px;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.6rem;
+      }
+
+      .container {
+        padding-top: 28px;
+      }
+
+      .card {
+        padding: 28px 20px;
+      }
     }
   </style>
 </head>
@@ -116,15 +129,22 @@
 
   <div class="container">
 
-    <!-- Replace with your LaneDodger icon -->
-    <img src="lanedodger_logo.png" alt="LaneDodger Arcade Logo" class="logo">
+    <img src="lanedodger_logo.png" alt="LaneDodger Arcade Logo" class="logo" onerror="this.style.display='none'">
 
     <h1>LaneDodger Arcade</h1>
+
+    <p class="challenge">🏆 Survival Run is live. Can you beat it?</p>
 
     <p class="subtitle">
       Dodge obstacles, survive dangerous highways, unlock unique runners,
       and master fast-paced arcade action across handcrafted levels and endless challenges.
     </p>
+
+    <a href="https://apps.apple.com/us/app/lanedodger-arcade/id6768488464"
+       target="_blank"
+       class="button">
+      Download on the App Store
+    </a>
 
     <div class="card">
       <h2>Game Features</h2>
@@ -133,18 +153,18 @@
         <li>🏃 Fast-paced arcade dodging gameplay</li>
         <li>🔥 Lava highways, snow roads, storms, and more</li>
         <li>🦊 Unlock unique playable runners</li>
-        <li>🏆 Endless Top Run survival mode</li>
+        <li>🏆 Endless Survival Run mode</li>
         <li>🎁 Daily rewards and mystery crates</li>
         <li>🛡️ Shields, boosts, and checkpoints</li>
         <li>🎮 100 handcrafted levels</li>
         <li>🌎 Game Center leaderboard support</li>
       </ul>
 
-      <a href="https://apps.apple.com/us/app/lanedodger-arcade/id6768488464" 
-   target="_blank" 
-   class="button">
-   Download on the App Store
-</a>
+      <a href="https://apps.apple.com/us/app/lanedodger-arcade/id6768488464"
+         target="_blank"
+         class="button">
+        Download on the App Store
+      </a>
 
       <div class="links">
         <a href="privacy.html">Privacy Policy</a>
