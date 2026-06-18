@@ -16,46 +16,60 @@
       line-height: 1.6;
       text-align: center;
       color: #333;
+
+      background: linear-gradient(
+        180deg,
+        #f8fafc 0%,
+        #eef2ff 50%,
+        #ffffff 100%
+      );
     }
 
     h1 {
       margin-bottom: 10px;
-      font-size: 42px;
+      font-size: 48px;
     }
 
     .subtitle {
-      font-size: 24px;
-      font-weight: 600;
+      font-size: 28px;
+      font-weight: 700;
       color: #111;
       margin-bottom: 25px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .download-btn {
       display: inline-block;
-      background: #000;
-      color: #fff;
-      padding: 14px 28px;
+      background: #2563eb;
+      color: #fff !important;
+      padding: 16px 32px;
       border-radius: 12px;
       text-decoration: none;
       font-weight: 600;
       margin: 20px 0;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.30);
     }
 
     .download-btn:hover {
-      opacity: 0.9;
+      opacity: 0.95;
       text-decoration: none;
     }
 
     .card {
+      background: #fff;
       border: 1px solid #e5e7eb;
       border-radius: 16px;
-      padding: 20px;
+      padding: 24px;
       margin: 20px 0;
       text-align: left;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     }
 
     h2 {
       margin-top: 0;
+      color: #111827;
     }
 
     a {
@@ -70,33 +84,51 @@
     footer {
       margin-top: 30px;
       color: #666;
+      padding-bottom: 20px;
+    }
+
+    .hero {
+      margin-bottom: 30px;
+    }
+
+    .tagline {
+      color: #6b7280;
+      font-size: 18px;
+      margin-top: -10px;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 
 <body>
 
-  <h1>SocialCheck</h1>
+  <div class="hero">
+    <h1>SocialCheck</h1>
 
-  <p class="subtitle">
-    Find Out Who Unfollowed You on Instagram and Removed You on Facebook
-  </p>
+    <p class="subtitle">
+      Find Out Who Unfollowed You on Instagram and Removed You on Facebook 👀
+    </p>
 
-  <a class="download-btn"
-     href="https://apps.apple.com/us/app/socialcheck/id6759270164"
-     target="_blank">
-     Download Now
-  </a>
+    <p class="tagline">
+      Compare exports, track changes, and discover what's changed since your last check.
+    </p>
+
+    <a class="download-btn"
+       href="https://apps.apple.com/us/app/socialcheck/id6759270164"
+       target="_blank">
+       Download Now
+    </a>
+  </div>
 
   <div class="card">
     <h2>What is SocialCheck?</h2>
 
     <p>
-      SocialCheck helps you compare social media exports over time so you can see what's changed since your last check.
+      SocialCheck helps you compare social media exports over time so you can see exactly what's changed.
     </p>
 
     <p>
-      Discover unfollows, removed connections, username changes, and other differences between exports in seconds.
+      Discover unfollows, removed friends, username changes, and other differences between exports in seconds.
     </p>
   </div>
 
@@ -105,7 +137,7 @@
 
     <p>👀 Find out who unfollowed you</p>
 
-    <p>📱 Review Facebook connection changes</p>
+    <p>👥 Review Facebook connection changes</p>
 
     <p>🔄 Detect username changes</p>
 
