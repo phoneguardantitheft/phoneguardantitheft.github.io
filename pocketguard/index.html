@@ -1,17 +1,23 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PocketGuard Legal</title>
+
+  <title>PocketGuard - Smart Budget</title>
+  <meta name="description" content="Track spending, manage bills, and stay in control of your budget with PocketGuard - Smart Budget." />
+
   <style>
     :root {
-      --bg: #0f172a;
-      --card: #111827;
-      --muted: #94a3b8;
-      --text: #e5e7eb;
+      --bg: #07130d;
+      --card: rgba(255,255,255,0.10);
+      --card2: rgba(255,255,255,0.14);
+      --text: #ffffff;
+      --muted: rgba(255,255,255,0.78);
       --accent: #22c55e;
-      --border: #1f2937;
+      --accent2: #86efac;
+      --border: rgba(255,255,255,0.18);
     }
 
     * { box-sizing: border-box; }
@@ -19,222 +25,410 @@
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: linear-gradient(180deg, #0b1220 0%, #111827 100%);
       color: var(--text);
       line-height: 1.65;
+      background:
+        radial-gradient(circle at top left, #14532d 0%, transparent 32%),
+        radial-gradient(circle at top right, #16a34a 0%, transparent 28%),
+        linear-gradient(135deg, #020617 0%, #052e16 45%, #064e3b 100%);
+      min-height: 100vh;
     }
 
     .wrap {
-      max-width: 980px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 32px 20px 60px;
+      padding: 48px 20px 70px;
+      text-align: center;
     }
 
     .hero {
-      background: rgba(17, 24, 39, 0.9);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 32px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.28);
-      margin-bottom: 24px;
+      padding: 52px 22px 34px;
     }
 
     .badge {
       display: inline-block;
-      padding: 6px 12px;
+      padding: 8px 14px;
       border-radius: 999px;
-      background: rgba(34, 197, 94, 0.12);
-      color: #86efac;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      margin-bottom: 12px;
+      background: rgba(34, 197, 94, 0.16);
+      color: #bbf7d0;
+      border: 1px solid rgba(134, 239, 172, 0.26);
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 16px;
     }
 
-    h1, h2, h3 { line-height: 1.2; }
-    h1 { font-size: 2.2rem; margin: 0 0 10px; }
-    h2 { font-size: 1.5rem; margin-top: 0; }
-    h3 { font-size: 1.1rem; margin-bottom: 8px; }
-
-    p, li { color: var(--text); }
-    .muted { color: var(--muted); }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
+    h1 {
+      font-size: 54px;
+      line-height: 1.1;
+      margin: 0 0 14px;
+      letter-spacing: -1px;
     }
 
-    .card {
-      background: rgba(17, 24, 39, 0.92);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: 0 14px 30px rgba(0,0,0,0.22);
+    .subtitle {
+      font-size: 30px;
+      font-weight: 800;
+      max-width: 760px;
+      margin: 0 auto 16px;
+      line-height: 1.25;
     }
 
-    a {
-      color: #86efac;
+    .tagline {
+      max-width: 680px;
+      margin: 0 auto 28px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .download-btn {
+      display: inline-block;
+      background: #22c55e;
+      color: #052e16 !important;
+      padding: 16px 34px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 900;
+      box-shadow: 0 14px 32px rgba(34,197,94,0.28);
+    }
+
+    .download-btn:hover {
+      opacity: 0.92;
       text-decoration: none;
     }
 
-    a:hover { text-decoration: underline; }
+    .money-preview {
+      max-width: 620px;
+      margin: 36px auto 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      padding: 20px;
+      text-align: left;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.28);
+    }
+
+    .money-row {
+      background: var(--card2);
+      border-radius: 18px;
+      padding: 16px 18px;
+      margin: 12px 0;
+      font-weight: 800;
+    }
+
+    .amount {
+      display: block;
+      font-size: 24px;
+      margin-top: 4px;
+      color: #bbf7d0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 34px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      text-align: left;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.22);
+    }
+
+    .card.full {
+      grid-column: 1 / -1;
+      text-align: center;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 26px;
+      line-height: 1.2;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    p, li {
+      color: var(--muted);
+    }
+
+    .feature {
+      margin: 14px 0;
+      font-size: 17px;
+    }
+
+    a {
+      color: #bbf7d0;
+      text-decoration: underline;
+    }
+
+    .legal {
+      margin-top: 34px;
+    }
+
+    details {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 22px;
+      margin: 18px 0;
+      text-align: left;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.18);
+    }
+
+    summary {
+      cursor: pointer;
+      font-size: 22px;
+      font-weight: 800;
+      color: #ffffff;
+    }
 
     ul {
-      padding-left: 20px;
-      margin-top: 8px;
-    }
-
-    .toc {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .toc a {
-      border: 1px solid #234132;
-      background: rgba(34, 197, 94, 0.08);
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-size: 14px;
+      padding-left: 22px;
     }
 
     footer {
-      margin-top: 26px;
-      text-align: center;
-      color: var(--muted);
+      margin-top: 34px;
+      color: rgba(255,255,255,0.70);
       font-size: 14px;
     }
 
-    @media (min-width: 760px) {
-      .grid {
-        grid-template-columns: 1fr 1fr;
+    @media (max-width: 760px) {
+      .wrap {
+        padding: 34px 14px 60px;
       }
-      .full {
-        grid-column: 1 / -1;
+
+      h1 {
+        font-size: 42px;
+      }
+
+      .subtitle {
+        font-size: 24px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
+
 </head>
+
 <body>
-  <div class="wrap">
-    <section class="hero">
-      <div class="badge">PocketGuard Legal</div>
-      <h1>PocketGuard Privacy & Data Policies</h1>
-      <p class="muted">
-        These pages describe how PocketGuard handles user information, consent, retention, and deletion for budgeting and bank connection features.
-      </p>
-      <p class="muted"><strong>Effective Date:</strong> March 2026</p>
-      <div class="toc">
-        <a href="#privacy-policy">Privacy Policy</a>
-        <a href="#retention-policy">Data Retention & Disposal Policy</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </section>
+  <main class="wrap">
 
-    <div class="grid">
-      <section class="card full" id="privacy-policy">
-        <h2>Privacy Policy</h2>
-        <p>
-          PocketGuard is a personal finance application designed to help users track spending, monitor subscriptions, and view budgeting insights.
-          This Privacy Policy explains what information we collect, how we use it, and the choices users have regarding their data.
-        </p>
+<section class="hero">
+  <div class="badge">PocketGuard - Smart Budget</div>
 
-        <h3>1. Information We Collect</h3>
-        <ul>
-          <li>Account information such as Sign in with Apple credentials and basic profile details.</li>
-          <li>Financial account and transaction information retrieved through Plaid when users choose to connect a bank account.</li>
-          <li>Subscription and billing status for premium features.</li>
-          <li>Device and app usage information needed for security, troubleshooting, and app improvement.</li>
-        </ul>
+  <h1>PocketGuard</h1>
 
-        <h3>2. How We Use Information</h3>
-        <ul>
-          <li>Provide budgeting, spending, and subscription tracking features.</li>
-          <li>Support bank account linking and transaction retrieval through Plaid.</li>
-          <li>Maintain account security and prevent unauthorized access.</li>
-          <li>Improve app functionality and reliability.</li>
-          <li>Process premium access and restore purchases.</li>
-        </ul>
+  <p class="subtitle">
+    Take Control of Your Money Before It Disappears
+  </p>
 
-        <h3>3. Bank Connections and Plaid</h3>
-        <p>
-          PocketGuard uses Plaid to connect financial accounts. Bank login credentials are handled by Plaid Link and are not directly collected or stored by PocketGuard.
-          PocketGuard receives authorized account and transaction data from Plaid only after user consent.
-        </p>
+  <p class="tagline">
+    Track spending, manage bills, monitor subscriptions, and stay on top of your budget in one simple app.
+  </p>
 
-        <h3>4. Data Sharing</h3>
-        <p>
-          PocketGuard does not sell user financial data. Information is shared only with service providers necessary to operate the app, such as Plaid for bank connections and other infrastructure providers used to host and secure the service.
-        </p>
+  <a class="download-btn"
+     href="https://apps.apple.com/us/app/pocketguard-smart-budget/id6760582334"
+     target="_blank">
+     Download Now
+  </a>
 
-        <h3>5. Data Security</h3>
-        <p>
-          PocketGuard uses reasonable administrative, technical, and organizational safeguards to protect user information. Data is protected in transit using HTTPS/TLS. Access to production systems and sensitive services is restricted.
-        </p>
-
-        <h3>6. User Choices</h3>
-        <ul>
-          <li>Users may disconnect services or stop using the app at any time.</li>
-          <li>Users may request deletion of their account and associated data.</li>
-          <li>Users may choose whether to subscribe to premium features.</li>
-        </ul>
-
-        <h3>7. Children’s Privacy</h3>
-        <p>
-          PocketGuard is not intended for children under 13, and we do not knowingly collect personal information from children under 13.
-        </p>
-
-        <h3>8. Policy Updates</h3>
-        <p>
-          This Privacy Policy may be updated from time to time. Changes will be reflected by updating the effective date on this page.
-        </p>
-      </section>
-
-      <section class="card full" id="retention-policy">
-        <h2>Data Retention & Disposal Policy</h2>
-        <p>
-          PocketGuard retains user financial data only as long as necessary to provide core application functionality, including budgeting insights, transaction history, and account summaries.
-        </p>
-
-        <h3>1. Retention</h3>
-        <ul>
-          <li>User data is retained only for as long as needed to support account features and provide the service.</li>
-          <li>Data associated with connected financial accounts is retained only while the account remains active and authorized.</li>
-          <li>Subscription and limited operational records may be retained as needed for legal, accounting, fraud prevention, and operational purposes.</li>
-        </ul>
-
-        <h3>2. Deletion Requests</h3>
-        <p>
-          Users may request deletion of their account at any time through the application. Upon deletion, associated user data, including financial records and Plaid access tokens maintained by PocketGuard, will be removed from active systems within a reasonable period, subject to legal and operational retention requirements.
-        </p>
-
-        <h3>3. Disposal</h3>
-        <p>
-          PocketGuard uses secure deletion practices to dispose of data that is no longer required. Access to retained data is restricted to authorized systems and personnel only.
-        </p>
-
-        <h3>4. Review</h3>
-        <p>
-          PocketGuard periodically reviews retention and disposal practices to support compliance with applicable privacy and security requirements.
-        </p>
-      </section>
-
-      <section class="card full" id="contact">
-        <h2>Contact</h2>
-        <p>
-          For privacy or data questions related to PocketGuard, contact:<br />
-          <strong>Daveon Hawthorne</strong><br />
-          Founder & Application Owner – PocketGuard<br />
-          <a href="mailto:phoneguardantitheft@gmail.com">phoneguardantitheft@gmail.com</a>
-        </p>
-      </section>
+  <div class="money-preview">
+    <div class="money-row">
+      Spending Overview
+      <span class="amount">$623 left to spend</span>
     </div>
 
-    <footer>
-      PocketGuard Legal Pages • March 2026
-    </footer>
+    <div class="money-row">
+      Bills & Subscriptions
+      <span class="amount">$290 left to pay</span>
+    </div>
+
+    <div class="money-row">
+      Savings Goals
+      <span class="amount">Track your progress</span>
+    </div>
   </div>
+</section>
+
+<section class="grid">
+
+  <div class="card">
+    <h2>What is PocketGuard?</h2>
+    <p>
+      PocketGuard is a smart budgeting app built to help you understand where your money is going.
+    </p>
+    <p>
+      Keep track of expenses, bills, subscriptions, and savings goals so you can make better money decisions.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Features</h2>
+<p class="feature">💸 Track your spending</p>
+<p class="feature">📊 Organize your expenses</p>
+<p class="feature">💰 Add income and budget entries</p>
+<p class="feature">🎯 Track savings goals</p>
+<p class="feature">📱 Simple budgeting dashboard</p>
+    <p class="feature">🔐 Secure bank connection support</p>
+  </div>
+
+  <div class="card">
+    <h2>Perfect For</h2>
+    <p>
+      ✅ Staying on budget<br>
+      ✅ Tracking monthly expenses<br>
+      ✅ Watching subscriptions<br>
+      ✅ Planning savings goals<br>
+      ✅ Getting more organized with money
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Simple Money Clarity</h2>
+    <p>
+      PocketGuard helps you see your spending patterns clearly so you can stop guessing and start planning.
+    </p>
+    <p>
+      Whether you are budgeting for bills, saving money, or trying to understand where your paycheck went, PocketGuard keeps everything organized.
+    </p>
+  </div>
+
+  <div class="card full">
+    <h2>Download Today</h2>
+    <p>
+      Start tracking your money and build better budgeting habits.
+    </p>
+
+    <a class="download-btn"
+       href="https://apps.apple.com/us/app/pocketguard-smart-budget/id6760582334"
+       target="_blank">
+       Download on the App Store
+    </a>
+  </div>
+
+  <div class="card full" id="contact">
+    <h2>Support</h2>
+    <p>
+      For support, privacy, or data questions related to PocketGuard, contact:<br />
+      <strong>Daveon Hawthorne</strong><br />
+      Founder & Application Owner – PocketGuard<br />
+      <a href="mailto:admin@hawthorne-software.com">admin@hawthorne-software.com</a>
+    </p>
+  </div>
+
+</section>
+
+<section class="legal">
+
+  <details id="privacy-policy">
+    <summary>Privacy Policy</summary>
+
+    <p>
+      <strong>Effective Date:</strong> March 2026
+    </p>
+
+    <p>
+      PocketGuard is a personal finance application designed to help users track spending, monitor subscriptions, and view budgeting insights.
+      This Privacy Policy explains what information we collect, how we use it, and the choices users have regarding their data.
+    </p>
+
+    <h3>1. Information We Collect</h3>
+    <ul>
+      <li>Account information such as Sign in with Apple credentials and basic profile details.</li>
+      <li>Financial account and transaction information retrieved through Plaid when users choose to connect a bank account.</li>
+      <li>Subscription and billing status for premium features.</li>
+      <li>Device and app usage information needed for security, troubleshooting, and app improvement.</li>
+    </ul>
+
+    <h3>2. How We Use Information</h3>
+    <ul>
+      <li>Provide budgeting, spending, and subscription tracking features.</li>
+      <li>Support bank account linking and transaction retrieval through Plaid.</li>
+      <li>Maintain account security and prevent unauthorized access.</li>
+      <li>Improve app functionality and reliability.</li>
+      <li>Process premium access and restore purchases.</li>
+    </ul>
+
+    <h3>3. Bank Connections and Plaid</h3>
+    <p>
+      PocketGuard uses Plaid to connect financial accounts. Bank login credentials are handled by Plaid Link and are not directly collected or stored by PocketGuard.
+      PocketGuard receives authorized account and transaction data from Plaid only after user consent.
+    </p>
+
+    <h3>4. Data Sharing</h3>
+    <p>
+      PocketGuard does not sell user financial data. Information is shared only with service providers necessary to operate the app, such as Plaid for bank connections and other infrastructure providers used to host and secure the service.
+    </p>
+
+    <h3>5. Data Security</h3>
+    <p>
+      PocketGuard uses reasonable administrative, technical, and organizational safeguards to protect user information. Data is protected in transit using HTTPS/TLS. Access to production systems and sensitive services is restricted.
+    </p>
+
+    <h3>6. User Choices</h3>
+    <ul>
+      <li>Users may disconnect services or stop using the app at any time.</li>
+      <li>Users may request deletion of their account and associated data.</li>
+      <li>Users may choose whether to subscribe to premium features.</li>
+    </ul>
+
+    <h3>7. Children’s Privacy</h3>
+    <p>
+      PocketGuard is not intended for children under 13, and we do not knowingly collect personal information from children under 13.
+    </p>
+
+    <h3>8. Policy Updates</h3>
+    <p>
+      This Privacy Policy may be updated from time to time. Changes will be reflected by updating the effective date on this page.
+    </p>
+  </details>
+
+  <details id="retention-policy">
+    <summary>Data Retention & Disposal Policy</summary>
+
+    <p>
+      PocketGuard retains user financial data only as long as necessary to provide core application functionality, including budgeting insights, transaction history, and account summaries.
+    </p>
+
+    <h3>1. Retention</h3>
+    <ul>
+      <li>User data is retained only for as long as needed to support account features and provide the service.</li>
+      <li>Data associated with connected financial accounts is retained only while the account remains active and authorized.</li>
+      <li>Subscription and limited operational records may be retained as needed for legal, accounting, fraud prevention, and operational purposes.</li>
+    </ul>
+
+    <h3>2. Deletion Requests</h3>
+    <p>
+      Users may request deletion of their account at any time through the application. Upon deletion, associated user data, including financial records and Plaid access tokens maintained by PocketGuard, will be removed from active systems within a reasonable period, subject to legal and operational retention requirements.
+    </p>
+
+    <h3>3. Disposal</h3>
+    <p>
+      PocketGuard uses secure deletion practices to dispose of data that is no longer required. Access to retained data is restricted to authorized systems and personnel only.
+    </p>
+
+    <h3>4. Review</h3>
+    <p>
+      PocketGuard periodically reviews retention and disposal practices to support compliance with applicable privacy and security requirements.
+    </p>
+  </details>
+
+</section>
+
+<footer>
+  PocketGuard - Smart Budget • March 2026
+</footer>
+
+
+  </main>
 </body>
 </html>
