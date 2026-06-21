@@ -1,1 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Open PixEvent</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #09000f;
+      color: white;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 0, 224, .45), transparent 35%),
+        radial-gradient(circle at 80% 30%, rgba(85, 132, 255, .55), transparent 35%),
+        #09000f;
+    }
+    .card {
+      width: min(92vw, 430px);
+      padding: 34px 24px;
+      border-radius: 32px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.16);
+      box-shadow: 0 24px 80px rgba(0,0,0,.45);
+      text-align: center;
+      backdrop-filter: blur(16px);
+    }
+    .icon {
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 18px;
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #ff28df, #6b7cff);
+      font-size: 34px;
+    }
+    h1 { margin: 0 0 10px; font-size: 30px; }
+    p { margin: 0 0 22px; color: rgba(255,255,255,.78); line-height: 1.45; }
+    .button {
+      display: block;
+      text-decoration: none;
+      color: white;
+      font-weight: 800;
+      font-size: 18px;
+      padding: 17px 20px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #f22de8, #5e79ff);
+      box-shadow: 0 12px 28px rgba(130, 88, 255, .35);
+    }
+    .small {
+      margin-top: 18px;
+      font-size: 13px;
+      color: rgba(255,255,255,.58);
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="icon">📸</div>
+    <h1>Open PixEvent</h1>
+    <p>Tap below to open this event in the PixEvent app and upload photos.</p>
+    <a id="openButton" class="button" href="#">Open in PixEvent</a>
+    <div id="eventText" class="small"></div>
+  </main>
 
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    let eventId = params.get("eventId");
+
+    // Also support /pixevent/e/EVENT_ID if you ever use path style later.
+    if (!eventId) {
+      const parts = window.location.pathname.split("/").filter(Boolean);
+      const last = parts[parts.length - 1];
+      if (last && last !== "e" && last !== "pixevent") eventId = last;
+    }
+
+    const button = document.getElementById("openButton");
+    const eventText = document.getElementById("eventText");
+
+    if (eventId) {
+      const deepLink = "pixevent://event/" + encodeURIComponent(eventId);
+      button.href = deepLink;
+      eventText.textContent = "Event ID: " + eventId;
+    } else {
+      button.textContent = "Missing Event ID";
+      button.style.opacity = ".55";
+      eventText.textContent = "This invite link is missing an eventId.";
+    }
+  </script>
+</body>
+</html>
