@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "D3F59C27PJ.com.daveonhawthorne.PixEvent",
+          "D3F59C27PJ.com.daveonhawthorne.PixEvent.Clip"
+        ],
+        "components": [
+          {
+            "/": "/pixevent/e/*"
+          }
+        ]
+      }
+    ]
+  }
+}
