@@ -2,98 +2,241 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Open PixEvent</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>PixEvent Guest</title>
   <style>
     :root {
       color-scheme: dark;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #09000f;
-      color: white;
+      background: #08000f;
+      color: #fff;
     }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       min-height: 100vh;
-      display: grid;
-      place-items: center;
+      padding: max(22px, env(safe-area-inset-top)) 18px max(28px, env(safe-area-inset-bottom));
       background:
-        radial-gradient(circle at 20% 20%, rgba(255, 0, 224, .45), transparent 35%),
-        radial-gradient(circle at 80% 30%, rgba(85, 132, 255, .55), transparent 35%),
-        #09000f;
+        radial-gradient(circle at 18% 12%, rgba(239, 38, 232, .34), transparent 32%),
+        radial-gradient(circle at 82% 20%, rgba(94, 121, 255, .38), transparent 34%),
+        linear-gradient(180deg, #120019 0%, #050008 100%);
     }
-    .card {
-      width: min(92vw, 430px);
-      padding: 34px 24px;
-      border-radius: 32px;
-      background: rgba(255,255,255,.10);
-      border: 1px solid rgba(255,255,255,.16);
+    .wrap { width: min(100%, 460px); margin: 0 auto; }
+    .top { text-align:center; margin: 10px 0 18px; }
+    .brand { font-weight: 800; font-size: 18px; letter-spacing: .2px; }
+    .sub { margin-top: 4px; color: rgba(255,255,255,.58); font-size: 14px; }
+    .phone-card {
+      overflow: hidden;
+      border-radius: 34px;
+      background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.14);
       box-shadow: 0 24px 80px rgba(0,0,0,.45);
-      text-align: center;
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(18px);
     }
-    .icon {
-      width: 76px;
-      height: 76px;
-      margin: 0 auto 18px;
-      border-radius: 24px;
+    .cover {
+      position: relative;
+      min-height: 430px;
+      background: linear-gradient(135deg, rgba(255,45,232,.34), rgba(88,121,255,.28));
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+    .cover img {
+      width: 100%;
+      height: 100%;
+      min-height: 430px;
+      object-fit: cover;
+      display: block;
+    }
+    .cover::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.08) 38%, rgba(0,0,0,.76) 100%);
+      pointer-events: none;
+    }
+    .placeholder {
+      position: absolute;
+      inset: 0;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, #ff28df, #6b7cff);
-      font-size: 34px;
+      color: rgba(255,255,255,.6);
+      font-size: 54px;
     }
-    h1 { margin: 0 0 10px; font-size: 30px; }
-    p { margin: 0 0 22px; color: rgba(255,255,255,.78); line-height: 1.45; }
+    .event-info {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 26px;
+      z-index: 2;
+      text-align: left;
+    }
+    .event-name { font-size: 30px; line-height: 1.05; font-weight: 900; margin: 0 0 8px; }
+    .event-date { font-size: 16px; color: rgba(255,255,255,.78); margin: 0; }
+    .panel { padding: 22px; }
+    .shots {
+      border-radius: 22px;
+      background: rgba(0,0,0,.34);
+      border: 1px solid rgba(255,255,255,.10);
+      padding: 18px;
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .shots strong { font-size: 48px; line-height: .9; }
+    .shots span { color: rgba(255,255,255,.82); font-weight: 800; letter-spacing: .5px; margin-bottom: 4px; }
     .button {
+      width: 100%;
+      border: 0;
       display: block;
+      text-align: center;
       text-decoration: none;
       color: white;
-      font-weight: 800;
+      font-weight: 900;
       font-size: 18px;
-      padding: 17px 20px;
-      border-radius: 18px;
+      padding: 18px 20px;
+      border-radius: 20px;
       background: linear-gradient(135deg, #f22de8, #5e79ff);
-      box-shadow: 0 12px 28px rgba(130, 88, 255, .35);
+      box-shadow: 0 12px 32px rgba(130, 88, 255, .34);
+      cursor: pointer;
     }
-    .small {
-      margin-top: 18px;
-      font-size: 13px;
-      color: rgba(255,255,255,.58);
-      word-break: break-all;
-    }
+    .button.secondary { margin-top: 12px; background: rgba(255,255,255,.12); box-shadow: none; }
+    .fine { margin: 16px 6px 0; color: rgba(255,255,255,.56); font-size: 13px; line-height: 1.45; text-align:center; }
+    .status { margin-top: 18px; color: rgba(255,255,255,.72); text-align:center; font-size: 13px; word-break: break-word; }
+    .hidden { display:none; }
   </style>
 </head>
 <body>
-  <main class="card">
-    <div class="icon">📸</div>
-    <h1>Open PixEvent</h1>
-    <p>Tap below to open this event in the PixEvent app and upload photos.</p>
-    <a id="openButton" class="button" href="#">Open in PixEvent</a>
-    <div id="eventText" class="small"></div>
+  <main class="wrap">
+    <header class="top">
+      <div class="brand">PixEvent Guest</div>
+      <div class="sub">No app download required</div>
+    </header>
+
+    <section class="phone-card">
+      <div class="cover" id="cover">
+        <div class="placeholder" id="placeholder">📸</div>
+        <div class="event-info">
+          <h1 class="event-name" id="eventName">Loading event...</h1>
+          <p class="event-date" id="eventDate">Please wait</p>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="shots">
+          <strong id="photoLimit">25</strong>
+          <span>SHOTS<br>PER GUEST</span>
+        </div>
+        <button class="button" id="takePhotosButton">Take Photos</button>
+        <a class="button secondary" id="openAppButton" href="#">Open in PixEvent App</a>
+        <div class="fine" id="revealText">Photos will be shared based on the host's settings.</div>
+        <div class="status" id="statusText"></div>
+      </div>
+    </section>
   </main>
 
-  <script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    // Replace this with your Firebase Web App config from Firebase Console > Project settings > Your apps > Web app.
+    const firebaseConfig = {
+      apiKey: "PASTE_API_KEY_HERE",
+      authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
+      projectId: "PASTE_PROJECT_ID",
+      storageBucket: "PASTE_PROJECT_ID.appspot.com",
+      appId: "PASTE_WEB_APP_ID"
+    };
+
     const params = new URLSearchParams(window.location.search);
     let eventId = params.get("eventId");
 
-    // Also support /pixevent/e/EVENT_ID if you ever use path style later.
     if (!eventId) {
       const parts = window.location.pathname.split("/").filter(Boolean);
       const last = parts[parts.length - 1];
       if (last && last !== "e" && last !== "pixevent") eventId = last;
     }
 
-    const button = document.getElementById("openButton");
-    const eventText = document.getElementById("eventText");
+    const eventName = document.getElementById("eventName");
+    const eventDate = document.getElementById("eventDate");
+    const photoLimit = document.getElementById("photoLimit");
+    const revealText = document.getElementById("revealText");
+    const statusText = document.getElementById("statusText");
+    const cover = document.getElementById("cover");
+    const placeholder = document.getElementById("placeholder");
+    const openAppButton = document.getElementById("openAppButton");
+    const takePhotosButton = document.getElementById("takePhotosButton");
 
-    if (eventId) {
-      const deepLink = "pixevent://event/" + encodeURIComponent(eventId);
-      button.href = deepLink;
-      eventText.textContent = "Event ID: " + eventId;
-    } else {
-      button.textContent = "Missing Event ID";
-      button.style.opacity = ".55";
-      eventText.textContent = "This invite link is missing an eventId.";
+    function formatDate(value) {
+      try {
+        const date = value?.toDate ? value.toDate() : new Date(value);
+        if (!date || isNaN(date.getTime())) return "";
+        return date.toLocaleString([], { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" });
+      } catch { return ""; }
     }
+
+    function setCover(src) {
+      if (!src) return;
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = "Event cover photo";
+      img.onload = () => placeholder.classList.add("hidden");
+      cover.prepend(img);
+    }
+
+    function deepLink() {
+      return eventId ? "pixevent://event/" + encodeURIComponent(eventId) : "#";
+    }
+
+    openAppButton.href = deepLink();
+
+    takePhotosButton.addEventListener("click", () => {
+      statusText.textContent = "Web camera upload is coming next. For now, tap Open in PixEvent App.";
+    });
+
+    async function loadEvent() {
+      if (!eventId) {
+        eventName.textContent = "Missing Event";
+        eventDate.textContent = "This invite link is missing an eventId.";
+        takePhotosButton.disabled = true;
+        return;
+      }
+
+      statusText.textContent = "Event ID: " + eventId;
+
+      if (firebaseConfig.apiKey.includes("PASTE_")) {
+        eventName.textContent = "PixEvent";
+        eventDate.textContent = "Firebase web config needed";
+        statusText.textContent = "Paste your Firebase Web App config into this page to load real event data.";
+        return;
+      }
+
+      try {
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const snap = await getDoc(doc(db, "events", eventId));
+
+        if (!snap.exists()) {
+          eventName.textContent = "Event Not Found";
+          eventDate.textContent = "Ask the host for a new invite link.";
+          return;
+        }
+
+        const data = snap.data();
+        eventName.textContent = data.name || data.eventName || "PixEvent";
+        eventDate.textContent = formatDate(data.startDate) || data.eventType || "Event camera";
+        photoLimit.textContent = data.photosPerGuest || "25";
+        revealText.textContent = data.revealOption ? `Gallery reveal: ${data.revealOption}.` : "Photos will be shared based on the host's settings.";
+
+        setCover(data.coverPhotoURL || data.coverURL || data.coverImageURL || data.coverPhotoDataURL || data.coverPhotoData);
+      } catch (error) {
+        eventName.textContent = "Unable to Load Event";
+        eventDate.textContent = "Please try again.";
+        statusText.textContent = error?.message || String(error);
+      }
+    }
+
+    loadEvent();
   </script>
 </body>
 </html>
