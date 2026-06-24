@@ -4,142 +4,431 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>PixEvent Guest</title>
+
+  <!-- Default link preview. Dynamic per-event cover previews need a server/rendered page later. -->
+  <meta property="og:title" content="Open PixEvent Camera" />
+  <meta property="og:description" content="Capture memories for this event — no app download required." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#09000f" />
+
   <style>
     :root {
       color-scheme: dark;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #08000f;
+      background: #050008;
       color: #fff;
+      --pink: #f22de8;
+      --blue: #5e79ff;
+      --purple: #7d5cff;
+      --panel: rgba(19, 18, 24, .88);
+      --soft: rgba(255,255,255,.12);
+      --muted: rgba(255,255,255,.62);
     }
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { margin: 0; min-height: 100%; background: #050008; }
     body {
-      margin: 0;
       min-height: 100vh;
-      padding: max(22px, env(safe-area-inset-top)) 18px max(28px, env(safe-area-inset-bottom));
+      overflow-x: hidden;
       background:
         radial-gradient(circle at 18% 12%, rgba(239, 38, 232, .34), transparent 32%),
         radial-gradient(circle at 82% 20%, rgba(94, 121, 255, .38), transparent 34%),
         linear-gradient(180deg, #120019 0%, #050008 100%);
     }
-    .wrap { width: min(100%, 460px); margin: 0 auto; }
-    .top { text-align:center; margin: 10px 0 18px; }
-    .brand { font-weight: 800; font-size: 18px; letter-spacing: .2px; }
-    .sub { margin-top: 4px; color: rgba(255,255,255,.58); font-size: 14px; }
-    .phone-card {
-      overflow: hidden;
-      border-radius: 34px;
-      background: rgba(255,255,255,.09);
-      border: 1px solid rgba(255,255,255,.14);
-      box-shadow: 0 24px 80px rgba(0,0,0,.45);
-      backdrop-filter: blur(18px);
-    }
-    .cover {
-      position: relative;
-      min-height: 430px;
-      background: linear-gradient(135deg, rgba(255,45,232,.34), rgba(88,121,255,.28));
+    .screen { min-height: 100vh; padding: max(18px, env(safe-area-inset-top)) 18px max(24px, env(safe-area-inset-bottom)); }
+    .hidden { display: none !important; }
+    .fade { animation: fade .22s ease-out both; }
+    @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Invite / Apple-style landing */
+    .invite-screen {
       display: flex;
-      align-items: stretch;
+      align-items: center;
       justify-content: center;
+      min-height: 100vh;
+      padding: max(20px, env(safe-area-inset-top)) 18px max(24px, env(safe-area-inset-bottom));
+      position: relative;
+      overflow: hidden;
     }
-    .cover img {
-      width: 100%;
-      height: 100%;
-      min-height: 430px;
-      object-fit: cover;
-      display: block;
+    .blur-bg {
+      position: fixed;
+      inset: -28px;
+      background: radial-gradient(circle at 20% 20%, rgba(242,45,232,.40), transparent 32%), linear-gradient(180deg, #191026, #050008);
+      filter: blur(18px);
+      transform: scale(1.05);
+      opacity: .9;
     }
-    .cover::after {
+    .blur-bg.has-cover {
+      background-size: cover;
+      background-position: center;
+      opacity: .72;
+    }
+    .blur-bg::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.08) 38%, rgba(0,0,0,.76) 100%);
-      pointer-events: none;
+      background: rgba(0,0,0,.62);
     }
-    .placeholder {
+    .invite-card {
+      position: relative;
+      width: min(92vw, 430px);
+      min-height: 690px;
+      border-radius: 36px;
+      background: rgba(8,8,12,.88);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 28px 90px rgba(0,0,0,.60);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .mini-phones {
       position: absolute;
       inset: 0;
+      pointer-events: none;
+      opacity: .22;
+      overflow: hidden;
+    }
+    .phone-chip {
+      position: absolute;
+      width: 54px;
+      height: 92px;
+      border-radius: 15px;
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.35));
+      transform: rotate(-18deg);
+    }
+    .phone-chip.dark { background: linear-gradient(180deg, rgba(60,60,70,.9), rgba(20,20,26,.75)); }
+    .phone-chip:nth-child(1) { left: -8px; top: 96px; }
+    .phone-chip:nth-child(2) { right: -10px; top: 52px; transform: rotate(18deg); }
+    .phone-chip:nth-child(3) { left: 48px; bottom: 96px; transform: rotate(15deg); }
+    .phone-chip:nth-child(4) { right: 54px; bottom: 108px; transform: rotate(-12deg); }
+
+    .invite-hero {
+      position: relative;
+      padding: 52px 28px 24px;
+      text-align: center;
+    }
+    .app-logo {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 12px;
+      border-radius: 21px;
       display: grid;
       place-items: center;
-      color: rgba(255,255,255,.6);
-      font-size: 54px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.16);
+      font-size: 34px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
     }
-    .event-info {
+    .brand-word { font-size: 45px; font-weight: 1000; letter-spacing: -2px; margin: 0; }
+    .tagline { margin: 10px 0 0; font-size: 21px; font-weight: 800; color: rgba(255,255,255,.92); }
+    .device-preview {
+      width: 188px;
+      height: 330px;
+      margin: 26px auto 0;
+      border-radius: 36px;
+      padding: 10px;
+      background: #050509;
+      box-shadow: 0 18px 55px rgba(0,0,0,.6);
+      transform: rotate(-4deg);
+    }
+    .device-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 27px;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(242,45,232,.35), rgba(94,121,255,.35));
+      position: relative;
+    }
+    .device-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .device-inner::after {
+      content: "";
       position: absolute;
-      left: 24px;
-      right: 24px;
-      bottom: 26px;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.45));
+    }
+    .device-title {
+      position: absolute;
       z-index: 2;
-      text-align: left;
+      left: 12px;
+      right: 12px;
+      top: 16px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.15;
     }
-    .event-name { font-size: 30px; line-height: 1.05; font-weight: 900; margin: 0 0 8px; }
-    .event-date { font-size: 16px; color: rgba(255,255,255,.78); margin: 0; }
-    .panel { padding: 22px; }
-    .shots {
-      border-radius: 22px;
-      background: rgba(0,0,0,.34);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 18px;
-      display: flex;
-      align-items: flex-end;
-      gap: 12px;
-      margin-bottom: 18px;
+    .device-shutter {
+      position: absolute;
+      z-index: 2;
+      bottom: 18px;
+      left: 50%;
+      width: 52px;
+      height: 52px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: white;
+      border: 4px solid rgba(255,255,255,.65);
+      box-shadow: 0 0 0 4px rgba(80,79,255,.38);
     }
-    .shots strong { font-size: 48px; line-height: .9; }
-    .shots span { color: rgba(255,255,255,.82); font-weight: 800; letter-spacing: .5px; margin-bottom: 4px; }
-    .button {
+    .invite-bottom {
+      position: relative;
+      padding: 0 26px 28px;
+      text-align: center;
+    }
+    .event-title { margin: 0; font-size: 28px; line-height: 1.08; font-weight: 950; letter-spacing: -.7px; }
+    .event-subtitle { margin: 10px 0 24px; color: rgba(255,255,255,.62); font-size: 18px; font-weight: 650; }
+    .apple-button, .primary-button, .secondary-button {
       width: 100%;
       border: 0;
-      display: block;
-      text-align: center;
-      text-decoration: none;
-      color: white;
-      font-weight: 900;
+      border-radius: 16px;
+      min-height: 56px;
       font-size: 18px;
-      padding: 18px 20px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, #f22de8, #5e79ff);
-      box-shadow: 0 12px 32px rgba(130, 88, 255, .34);
+      font-weight: 900;
       cursor: pointer;
     }
-    .button.secondary { margin-top: 12px; background: rgba(255,255,255,.12); box-shadow: none; }
-    .fine { margin: 16px 6px 0; color: rgba(255,255,255,.56); font-size: 13px; line-height: 1.45; text-align:center; }
-    .status { margin-top: 18px; color: rgba(255,255,255,.72); text-align:center; font-size: 13px; word-break: break-word; }
-    .hidden { display:none; }
+    .apple-button { background: #fff; color: #111; }
+    .primary-button { color: #fff; background: linear-gradient(135deg, var(--pink), var(--blue)); box-shadow: 0 12px 32px rgba(130,88,255,.34); }
+    .secondary-button { margin-top: 12px; color: #fff; background: rgba(255,255,255,.12); }
+    .terms { margin: 14px 0 0; font-size: 11px; color: rgba(255,255,255,.38); line-height: 1.35; }
+
+    /* Prompt modal */
+    .camera-screen {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      overflow: hidden;
+    }
+    video#cameraVideo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: linear-gradient(135deg, #526b99, #8b7058);
+    }
+    .camera-dim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.05) 45%, rgba(0,0,0,.82));
+      pointer-events: none;
+    }
+    .camera-top {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      top: max(20px, env(safe-area-inset-top));
+      display: grid;
+      grid-template-columns: 48px 1fr 48px;
+      align-items: center;
+      gap: 8px;
+      z-index: 5;
+    }
+    .round-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 0;
+      background: rgba(0,0,0,.35);
+      color: #fff;
+      font-size: 32px;
+      line-height: 1;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+    .camera-title { text-align: center; color: rgba(255,255,255,.82); font-weight: 900; line-height: 1.15; }
+    .camera-title small { display:block; margin-top: 3px; color: rgba(255,255,255,.50); font-weight: 750; }
+    .camera-tools {
+      position: absolute;
+      right: 18px;
+      top: calc(max(84px, env(safe-area-inset-top) + 68px));
+      z-index: 5;
+      display: grid;
+      gap: 10px;
+    }
+    .tool-pill {
+      min-width: 82px;
+      border: 0;
+      border-radius: 22px;
+      padding: 13px 14px;
+      color: #fff;
+      background: rgba(0,0,0,.38);
+      font-weight: 950;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .camera-bottom {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      bottom: max(24px, env(safe-area-inset-bottom));
+      z-index: 5;
+      display: grid;
+      grid-template-columns: 126px 1fr 74px;
+      align-items: end;
+      gap: 16px;
+    }
+    .shot-counter {
+      border-radius: 22px;
+      background: rgba(0,0,0,.42);
+      border: 1px solid rgba(255,255,255,.11);
+      padding: 16px;
+      min-height: 88px;
+    }
+    .shot-counter .big { font-size: 45px; line-height: .8; font-weight: 1000; }
+    .shot-counter .small { font-size: 13px; font-weight: 950; color: rgba(255,255,255,.85); letter-spacing: .6px; margin-top: 8px; }
+    .shutter-wrap { text-align: center; }
+    .shutter {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      border: 5px solid rgba(255,255,255,.78);
+      background: white;
+      box-shadow: inset 0 0 0 3px rgba(0,0,0,.18), 0 0 0 4px rgba(255,255,255,.15);
+    }
+    .shutter-label { margin-top: 10px; color: rgba(255,255,255,.70); font-size: 13px; }
+    .thumb-stack { width: 64px; height: 64px; border-radius: 15px; background: rgba(255,255,255,.10); display: grid; place-items: center; font-size: 28px; }
+
+    .modal-shade {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      background: rgba(0,0,0,.38);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 22px;
+    }
+    .modal {
+      width: min(100%, 430px);
+      border-radius: 28px;
+      background: rgba(19,18,24,.96);
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 24px 70px rgba(0,0,0,.62);
+      overflow: hidden;
+    }
+    .modal-body { padding: 26px 26px 22px; }
+    .eyebrow { color: rgba(255,255,255,.56); font-size: 14px; letter-spacing: 4px; font-weight: 900; margin-bottom: 24px; text-align: center; }
+    .modal-row { display: flex; gap: 18px; align-items: center; }
+    .modal-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(125,92,255,.22); display: grid; place-items: center; font-size: 30px; flex: none; }
+    .modal h2 { margin: 0; font-size: 25px; line-height: 1.12; }
+    .modal p { margin: 7px 0 0; color: rgba(255,255,255,.68); line-height: 1.35; font-size: 17px; }
+    .modal-actions { border-top: 1px solid rgba(255,255,255,.10); display: grid; grid-template-columns: 1fr 1fr; }
+    .modal-actions button { background: transparent; color: #8d88ff; border: 0; min-height: 62px; font-size: 20px; font-weight: 900; cursor: pointer; }
+    .modal-actions button:first-child { color: rgba(255,255,255,.58); border-right: 1px solid rgba(255,255,255,.10); }
+    .single-action { grid-template-columns: 1fr !important; }
+
+    .toast {
+      position: fixed;
+      left: 18px;
+      right: 18px;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      z-index: 30;
+      padding: 15px 18px;
+      border-radius: 18px;
+      background: rgba(20,20,24,.94);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.86);
+      text-align: center;
+      font-weight: 750;
+    }
+
+    @media (max-height: 720px) {
+      .invite-card { min-height: 620px; }
+      .device-preview { width: 154px; height: 270px; margin-top: 18px; }
+      .brand-word { font-size: 38px; }
+      .tagline { font-size: 18px; }
+    }
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <header class="top">
-      <div class="brand">PixEvent Guest</div>
-      <div class="sub">No app download required</div>
-    </header>
-
-    <section class="phone-card">
-      <div class="cover" id="cover">
-        <div class="placeholder" id="placeholder">📸</div>
-        <div class="event-info">
-          <h1 class="event-name" id="eventName">Loading event...</h1>
-          <p class="event-date" id="eventDate">Please wait</p>
+  <div class="invite-screen" id="inviteScreen">
+    <div class="blur-bg" id="blurBg"></div>
+    <section class="invite-card fade">
+      <div class="mini-phones">
+        <div class="phone-chip"></div><div class="phone-chip dark"></div><div class="phone-chip dark"></div><div class="phone-chip"></div>
+      </div>
+      <div class="invite-hero">
+        <div class="app-logo">📸</div>
+        <h1 class="brand-word">PixEvent</h1>
+        <p class="tagline">Your perspective is requested.</p>
+        <div class="device-preview">
+          <div class="device-inner" id="deviceInner">
+            <div class="device-title"><span id="deviceTitle">Loading event...</span><small id="deviceDate"></small></div>
+            <div class="device-shutter"></div>
+          </div>
         </div>
       </div>
-      <div class="panel">
-        <div class="shots">
-          <strong id="photoLimit">25</strong>
-          <span>SHOTS<br>PER GUEST</span>
-        </div>
-        <button class="button" id="takePhotosButton">Take Photos</button>
-        <a class="button secondary" id="openAppButton" href="#">Open in PixEvent App</a>
-        <div class="fine" id="revealText">Photos will be shared based on the host's settings.</div>
-        <div class="status" id="statusText"></div>
+      <div class="invite-bottom">
+        <h2 class="event-title" id="eventName">Loading event...</h2>
+        <div class="event-subtitle" id="photoLimitText">Take up to 25 photos</div>
+        <button class="apple-button" id="continueButton"> Continue with Apple</button>
+        <button class="secondary-button" id="openAppButton">Open in PixEvent App</button>
+        <p class="terms" id="statusText">Loading PixEvent invite...</p>
       </div>
     </section>
-  </main>
+  </div>
+
+  <section class="camera-screen hidden" id="cameraScreen">
+    <video id="cameraVideo" autoplay playsinline muted></video>
+    <canvas id="captureCanvas" class="hidden"></canvas>
+    <div class="camera-dim"></div>
+    <div class="camera-top">
+      <button class="round-btn" id="closeCamera">×</button>
+      <div class="camera-title"><span id="cameraEventName">PixEvent</span><small id="cameraEndText">Event camera</small></div>
+      <div></div>
+    </div>
+    <div class="camera-tools">
+      <button class="tool-pill" id="flashButton">AUTO ⚡</button>
+      <button class="tool-pill" id="timerButton">OFF ⏱</button>
+      <button class="tool-pill" id="flipButton">Flip 🔁</button>
+    </div>
+    <div class="camera-bottom">
+      <div class="shot-counter"><div><span class="big" id="remainingShots">25</span> <span style="font-weight:900;color:rgba(255,255,255,.45)">/25</span></div><div class="small">SHOTS REMAINING</div></div>
+      <div class="shutter-wrap"><button class="shutter" id="shutterButton" aria-label="Capture photo"></button><div class="shutter-label">Tap to capture</div></div>
+      <div class="thumb-stack" id="thumbStack">🖼️</div>
+    </div>
+  </section>
+
+  <div class="modal-shade hidden" id="cameraAccessModal">
+    <div class="modal fade">
+      <div class="modal-body">
+        <div class="eyebrow">GRANT CAMERA ACCESS TO START</div>
+        <div class="modal-row"><div class="modal-icon">📷</div><div><h2>Camera</h2><p>Unlock <span id="unlockCount">25</span> photos</p></div></div>
+      </div>
+      <div class="modal-actions single-action"><button id="allowCameraButton">Continue →</button></div>
+    </div>
+  </div>
+
+  <div class="modal-shade hidden" id="revealModal">
+    <div class="modal fade">
+      <div class="modal-body">
+        <div class="eyebrow">GALLERY REVEAL</div>
+        <div class="modal-row"><div class="modal-icon">🔒</div><div><h2 id="revealTitle">Photos reveal after the event</h2><p id="revealBody">Shared with the host only. The host may make the gallery visible to others later.</p></div></div>
+      </div>
+      <div class="modal-actions single-action"><button id="nextRevealButton">Next →</button></div>
+    </div>
+  </div>
+
+  <div class="modal-shade hidden" id="notificationModal">
+    <div class="modal fade">
+      <div class="modal-body">
+        <div class="eyebrow">ENABLE NOTIFICATIONS</div>
+        <div class="modal-row"><div class="modal-icon">🔔</div><div><h2>Want to be notified when the gallery reveals?</h2></div></div>
+      </div>
+      <div class="modal-actions"><button id="notNowButton">Not Now</button><button id="yesNotifyButton">Yes</button></div>
+    </div>
+  </div>
+
+  <div class="toast hidden" id="toast"></div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-    // Replace this with your Firebase Web App config from Firebase Console > Project settings > Your apps > Web app.
     const firebaseConfig = {
       apiKey: "AIzaSyBXPv5R1YF6lSlKn8LJNiYSkp5mmKsQ33s",
       authDomain: "pixevent-6450d.firebaseapp.com",
@@ -151,92 +440,201 @@
     };
 
     const params = new URLSearchParams(window.location.search);
-    let eventId = params.get("eventId");
-
+    let eventId = params.get("eventId") || params.get("event") || params.get("id");
     if (!eventId) {
       const parts = window.location.pathname.split("/").filter(Boolean);
       const last = parts[parts.length - 1];
       if (last && last !== "e" && last !== "pixevent") eventId = last;
     }
 
-    const eventName = document.getElementById("eventName");
-    const eventDate = document.getElementById("eventDate");
-    const photoLimit = document.getElementById("photoLimit");
-    const revealText = document.getElementById("revealText");
-    const statusText = document.getElementById("statusText");
-    const cover = document.getElementById("cover");
-    const placeholder = document.getElementById("placeholder");
-    const openAppButton = document.getElementById("openAppButton");
-    const takePhotosButton = document.getElementById("takePhotosButton");
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-    function formatDate(value) {
+    const $ = (id) => document.getElementById(id);
+    const inviteScreen = $("inviteScreen");
+    const cameraScreen = $("cameraScreen");
+    const blurBg = $("blurBg");
+    const eventName = $("eventName");
+    const photoLimitText = $("photoLimitText");
+    const statusText = $("statusText");
+    const deviceInner = $("deviceInner");
+    const deviceTitle = $("deviceTitle");
+    const deviceDate = $("deviceDate");
+    const cameraVideo = $("cameraVideo");
+    const captureCanvas = $("captureCanvas");
+    const continueButton = $("continueButton");
+    const openAppButton = $("openAppButton");
+    const cameraAccessModal = $("cameraAccessModal");
+    const revealModal = $("revealModal");
+    const notificationModal = $("notificationModal");
+    const toast = $("toast");
+
+    let eventData = {};
+    let stream = null;
+    let currentFacingMode = "environment";
+    let maxPhotos = 25;
+    let remaining = 25;
+    let capturedCount = 0;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.remove("hidden");
+      setTimeout(() => toast.classList.add("hidden"), 2300);
+    }
+
+    function formatDate(value, compact = false) {
       try {
         const date = value?.toDate ? value.toDate() : new Date(value);
         if (!date || isNaN(date.getTime())) return "";
-        return date.toLocaleString([], { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" });
+        if (compact) {
+          return date.toLocaleDateString([], { month: "2-digit", day: "2-digit", year: "numeric" });
+        }
+        return date.toLocaleDateString([], { month: "long", day: "numeric", year: "numeric" });
       } catch { return ""; }
     }
 
-    function setCover(src) {
+    function eventCover(data) {
+      return data.coverPhotoURL || data.coverURL || data.coverImageURL || data.coverPhotoDataURL || data.coverPhotoData || "";
+    }
+
+    function applyCover(src) {
       if (!src) return;
+      blurBg.style.backgroundImage = `url('${src}')`;
+      blurBg.classList.add("has-cover");
       const img = document.createElement("img");
       img.src = src;
       img.alt = "Event cover photo";
-      img.onload = () => placeholder.classList.add("hidden");
-      cover.prepend(img);
+      deviceInner.prepend(img);
     }
 
-    function deepLink() {
-      return eventId ? "pixevent://event/" + encodeURIComponent(eventId) : "#";
+    function revealLabel(data) {
+      const value = (data.revealOption || data.revealTiming || data.galleryReveal || data.reveal || "after event").toString().toLowerCase();
+      if (value.includes("during")) return "Photos reveal during the event";
+      if (value.includes("12")) return "Photos reveal 12 hours after the event";
+      if (value.includes("24")) return "Photos reveal 24 hours after the event";
+      return "Photos reveal after the event";
     }
 
-    openAppButton.href = deepLink();
+    function openDeepLink() {
+      if (!eventId) return;
+      window.location.href = "pixevent://event/" + encodeURIComponent(eventId);
+    }
 
-    takePhotosButton.addEventListener("click", () => {
-      statusText.textContent = "Web camera upload is coming next. For now, tap Open in PixEvent App.";
-    });
+    function showCameraAccessFlow() {
+      if (!eventId || eventName.textContent === "Event Not Found") {
+        showToast("This invite link is not valid.");
+        return;
+      }
+      inviteScreen.classList.add("hidden");
+      cameraScreen.classList.remove("hidden");
+      $("cameraEventName").textContent = eventData.name || eventData.eventName || "PixEvent";
+      $("cameraEndText").textContent = eventData.endDate ? `Ends on ${formatDate(eventData.endDate)}` : "Event camera";
+      $("unlockCount").textContent = maxPhotos;
+      cameraAccessModal.classList.remove("hidden");
+    }
+
+    async function startCamera() {
+      cameraAccessModal.classList.add("hidden");
+      try {
+        if (stream) stream.getTracks().forEach(t => t.stop());
+        stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: currentFacingMode }, audio: false });
+        cameraVideo.srcObject = stream;
+        revealModal.classList.remove("hidden");
+      } catch (error) {
+        showToast("Camera permission is needed to take photos.");
+        inviteScreen.classList.remove("hidden");
+        cameraScreen.classList.add("hidden");
+      }
+    }
+
+    function updateShotUI() {
+      $("remainingShots").textContent = remaining;
+      const counter = document.querySelector(".shot-counter span[style]");
+      if (counter) counter.textContent = `/${maxPhotos}`;
+    }
+
+    function capturePhoto() {
+      if (!stream || remaining <= 0) {
+        showToast(remaining <= 0 ? "No shots remaining." : "Camera is not ready yet.");
+        return;
+      }
+      const video = cameraVideo;
+      const canvas = captureCanvas;
+      const width = video.videoWidth || 1080;
+      const height = video.videoHeight || 1920;
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(video, 0, 0, width, height);
+      capturedCount += 1;
+      remaining = Math.max(0, maxPhotos - capturedCount);
+      updateShotUI();
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        const url = URL.createObjectURL(blob);
+        $("thumbStack").innerHTML = `<img src="${url}" alt="Latest photo" style="width:100%;height:100%;object-fit:cover;border-radius:15px;">`;
+      }, "image/jpeg", .86);
+      showToast("Photo captured. Firebase upload comes next.");
+    }
+
+    function closeCamera() {
+      if (stream) stream.getTracks().forEach(t => t.stop());
+      stream = null;
+      cameraScreen.classList.add("hidden");
+      inviteScreen.classList.remove("hidden");
+    }
 
     async function loadEvent() {
       if (!eventId) {
         eventName.textContent = "Missing Event";
-        eventDate.textContent = "This invite link is missing an eventId.";
-        takePhotosButton.disabled = true;
-        return;
-      }
-
-      statusText.textContent = "Event ID: " + eventId;
-
-      if (firebaseConfig.apiKey.includes("PASTE_")) {
-        eventName.textContent = "PixEvent";
-        eventDate.textContent = "Firebase web config needed";
-        statusText.textContent = "Paste your Firebase Web App config into this page to load real event data.";
+        deviceTitle.textContent = "Missing Event";
+        statusText.textContent = "This invite link is missing an eventId.";
         return;
       }
 
       try {
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
         const snap = await getDoc(doc(db, "events", eventId));
-
         if (!snap.exists()) {
           eventName.textContent = "Event Not Found";
-          eventDate.textContent = "Ask the host for a new invite link.";
+          deviceTitle.textContent = "Event Not Found";
+          photoLimitText.textContent = "Ask the host for a new invite link.";
+          statusText.textContent = `Event ID: ${eventId}`;
           return;
         }
 
-        const data = snap.data();
-        eventName.textContent = data.name || data.eventName || "PixEvent";
-        eventDate.textContent = formatDate(data.startDate) || data.eventType || "Event camera";
-        photoLimit.textContent = data.photosPerGuest || "25";
-        revealText.textContent = data.revealOption ? `Gallery reveal: ${data.revealOption}.` : "Photos will be shared based on the host's settings.";
+        eventData = snap.data();
+        const name = eventData.name || eventData.eventName || "PixEvent";
+        maxPhotos = parseInt(eventData.photosPerGuest || eventData.photoLimit || "25", 10) || 25;
+        remaining = maxPhotos;
 
-        setCover(data.coverPhotoURL || data.coverURL || data.coverImageURL || data.coverPhotoDataURL || data.coverPhotoData);
+        eventName.textContent = name;
+        deviceTitle.textContent = name;
+        deviceDate.textContent = formatDate(eventData.startDate, true);
+        photoLimitText.textContent = `Take up to ${maxPhotos} photos`;
+        statusText.textContent = "By continuing, you agree to capture memories for this event.";
+        $("revealTitle").textContent = revealLabel(eventData);
+        $("revealBody").textContent = "Shared with the host only. The host may make the gallery visible to others later.";
+        updateShotUI();
+        applyCover(eventCover(eventData));
       } catch (error) {
         eventName.textContent = "Unable to Load Event";
-        eventDate.textContent = "Please try again.";
+        deviceTitle.textContent = "Unable to Load Event";
+        photoLimitText.textContent = "Please try again.";
         statusText.textContent = error?.message || String(error);
       }
     }
+
+    continueButton.addEventListener("click", showCameraAccessFlow);
+    openAppButton.addEventListener("click", openDeepLink);
+    $("allowCameraButton").addEventListener("click", startCamera);
+    $("nextRevealButton").addEventListener("click", () => { revealModal.classList.add("hidden"); notificationModal.classList.remove("hidden"); });
+    $("notNowButton").addEventListener("click", () => notificationModal.classList.add("hidden"));
+    $("yesNotifyButton").addEventListener("click", () => { notificationModal.classList.add("hidden"); showToast("Notifications will be added next."); });
+    $("shutterButton").addEventListener("click", capturePhoto);
+    $("closeCamera").addEventListener("click", closeCamera);
+    $("flipButton").addEventListener("click", async () => { currentFacingMode = currentFacingMode === "environment" ? "user" : "environment"; await startCamera(); revealModal.classList.add("hidden"); notificationModal.classList.add("hidden"); });
+    $("flashButton").addEventListener("click", () => showToast("Flash control depends on browser support."));
+    $("timerButton").addEventListener("click", () => showToast("Timer control comes next."));
 
     loadEvent();
   </script>
