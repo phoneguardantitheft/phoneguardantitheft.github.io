@@ -13,5 +13,10 @@
         ]
       }
     ]
+  },
+  "appclips": {
+    "apps": [
+      "D3F59C27PJ.com.daveonhawthorne.PixEvent.Clip"
+    ]
   }
 }
