@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>PixEvent Guest</title>
+  <script src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>
 
   <!-- Default link preview. Dynamic per-event cover previews need a server/rendered page later. -->
   <meta property="og:title" content="Open PixEvent Camera" />
@@ -453,6 +454,12 @@
     const db = getFirestore(app);
     const storage = getStorage(app);
 
+    // Web Sign in with Apple setup.
+    // IMPORTANT: Replace this with the Services ID you create in Apple Developer for the web fallback.
+    // Example format: com.yourcompany.pixevent.web
+    const APPLE_SIGN_IN_CLIENT_ID = "REPLACE_WITH_PIXEVENT_WEB_SERVICES_ID";
+    const APPLE_SIGN_IN_REDIRECT_URI = `${window.location.origin}${window.location.pathname}`;
+
     const $ = (id) => document.getElementById(id);
     const inviteScreen = $("inviteScreen");
     const cameraScreen = $("cameraScreen");
@@ -479,6 +486,8 @@
     let remaining = 25;
     let capturedCount = 0;
     let isUploadingPhoto = false;
+    let signedInGuestName = localStorage.getItem("pixeventAppleGuestName") || "";
+    let signedInGuestId = localStorage.getItem("pixeventAppleGuestId") || "";
 
     function guestIdentifier() {
       const key = "pixeventGuestId";
@@ -555,6 +564,54 @@
       window.location.href = "pixevent://event/" + encodeURIComponent(eventId);
     }
 
+
+    function hasAppleWebConfig() {
+      return APPLE_SIGN_IN_CLIENT_ID && !APPLE_SIGN_IN_CLIENT_ID.includes("REPLACE_WITH");
+    }
+
+    function appleDisplayName(credential = {}) {
+      const name = credential?.user?.name;
+      const first = name?.firstName || "";
+      const last = name?.lastName || "";
+      return `${first} ${last}`.trim();
+    }
+
+    async function requireAppleSignIn() {
+      if (signedInGuestName && signedInGuestId) {
+        showCameraAccessFlow();
+        return;
+      }
+
+      if (!hasAppleWebConfig() || !window.AppleID?.auth) {
+        showToast("Apple sign-in is not configured for the web fallback yet.");
+        return;
+      }
+
+      try {
+        AppleID.auth.init({
+          clientId: APPLE_SIGN_IN_CLIENT_ID,
+          scope: "name email",
+          redirectURI: APPLE_SIGN_IN_REDIRECT_URI,
+          usePopup: true
+        });
+
+        const response = await AppleID.auth.signIn();
+        const authorization = response?.authorization || {};
+        const displayName = appleDisplayName(response) || signedInGuestName || "Apple User";
+        const appleUserId = authorization.id_token || authorization.code || crypto?.randomUUID?.() || `apple-${Date.now()}`;
+
+        signedInGuestName = displayName;
+        signedInGuestId = appleUserId;
+        localStorage.setItem("pixeventAppleGuestName", signedInGuestName);
+        localStorage.setItem("pixeventAppleGuestId", signedInGuestId);
+
+        showCameraAccessFlow();
+      } catch (error) {
+        console.error("PixEvent Apple sign-in failed:", error);
+        showToast("Sign in with Apple is required to use PixEvent.");
+      }
+    }
+
     function showCameraAccessFlow() {
       if (!eventId || eventName.textContent === "Event Not Found") {
         showToast("This invite link is not valid.");
@@ -625,8 +682,10 @@
         photoId,
         eventId,
         eventName: name,
-        guestId: guestIdentifier(),
-        guestName: "Guest",
+        guestId: signedInGuestId || guestIdentifier(),
+        guestName: signedInGuestName || "Apple User",
+        uploadedByName: signedInGuestName || "Apple User",
+        uploadedBy: signedInGuestName || "Apple User",
         imageUrl,
         thumbnailUrl: imageUrl,
         storagePath: path,
@@ -734,7 +793,7 @@
           continueButton.disabled = true;
           continueButton.textContent = "Uploads Closed";
         } else {
-          statusText.textContent = "By continuing, you agree to capture memories for this event.";
+          statusText.textContent = "";
           continueButton.disabled = false;
           continueButton.textContent = " Continue with Apple";
         }
@@ -750,7 +809,7 @@
       }
     }
 
-    continueButton.addEventListener("click", showCameraAccessFlow);
+    continueButton.addEventListener("click", requireAppleSignIn);
     openAppButton.addEventListener("click", openDeepLink);
     $("allowCameraButton").addEventListener("click", startCamera);
     $("nextRevealButton").addEventListener("click", () => { revealModal.classList.add("hidden"); notificationModal.classList.remove("hidden"); });
