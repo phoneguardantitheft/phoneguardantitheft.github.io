@@ -427,7 +427,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-    import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, setDoc, serverTimestamp, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
     import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 
     const firebaseConfig = {
@@ -565,6 +565,10 @@
         showEventEndedMessage();
         return;
       }
+      if (remaining <= 0) {
+        showLimitReachedMessage();
+        return;
+      }
       inviteScreen.classList.add("hidden");
       cameraScreen.classList.remove("hidden");
       $("cameraEventName").textContent = eventData.name || eventData.eventName || "PixEvent";
@@ -591,6 +595,29 @@
       $("remainingShots").textContent = remaining;
       const counter = document.querySelector(".shot-counter span[style]");
       if (counter) counter.textContent = `/${maxPhotos}`;
+    }
+
+    async function refreshGuestUploadedCount() {
+      if (!eventId) return;
+
+      try {
+        const guestId = guestIdentifier();
+        const photosQuery = query(
+          collection(db, "events", eventId, "photos"),
+          where("guestId", "==", guestId)
+        );
+
+        const snapshot = await getDocs(photosQuery);
+        capturedCount = snapshot.size;
+        remaining = Math.max(0, maxPhotos - capturedCount);
+        updateShotUI();
+      } catch (error) {
+        console.warn("PixEvent web guest photo count refresh failed:", error);
+      }
+    }
+
+    function showLimitReachedMessage() {
+      showToast(`Photo limit reached. You’ve used all ${maxPhotos} photos for this event.`);
     }
 
     async function verifyEventStillOpen() {
@@ -650,7 +677,11 @@
       }
 
       if (!stream || remaining <= 0) {
-        showToast(remaining <= 0 ? "No shots remaining." : "Camera is not ready yet.");
+        if (remaining <= 0) {
+          showLimitReachedMessage();
+        } else {
+          showToast("Camera is not ready yet.");
+        }
         return;
       }
 
@@ -686,7 +717,11 @@
         remaining = Math.max(0, maxPhotos - capturedCount);
         updateShotUI();
 
-        showToast("Upload complete.");
+        if (remaining <= 0) {
+          showLimitReachedMessage();
+        } else {
+          showToast("Upload complete.");
+        }
       } catch (error) {
         console.error("PixEvent web upload failed:", error);
         showToast(error?.message ? `Upload failed: ${error.message}` : "Upload failed. Please try again.");
@@ -742,6 +777,7 @@
         $("revealTitle").textContent = revealLabel(eventData);
         $("revealBody").textContent = "Shared with the host only. The host may make the gallery visible to others later.";
         updateShotUI();
+        await refreshGuestUploadedCount();
         applyCover(eventCover(eventData));
       } catch (error) {
         eventName.textContent = "Unable to Load Event";
