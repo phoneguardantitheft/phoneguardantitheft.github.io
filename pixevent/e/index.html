@@ -478,6 +478,20 @@
     let remaining = 25;
     let capturedCount = 0;
     let isUploadingPhoto = false;
+    let isUnlimitedPhotos = false;
+
+    function eventHasUnlimitedPhotos(data = eventData) {
+      const rawLimit = (data?.photosPerGuest ?? data?.photoLimit ?? "").toString().trim().toLowerCase();
+      return data?.hasUnlimitedPhotos === true ||
+        data?.unlimitedPhotos === true ||
+        rawLimit === "unlimited" ||
+        rawLimit === "∞" ||
+        rawLimit === "infinity";
+    }
+
+    function photoLimitDisplayText() {
+      return isUnlimitedPhotos ? "Unlimited photos" : `Take up to ${maxPhotos} photos`;
+    }
 
     function guestIdentifier() {
       const key = "pixeventGuestId";
@@ -565,7 +579,7 @@
         showEventEndedMessage();
         return;
       }
-      if (remaining <= 0) {
+      if (!isUnlimitedPhotos && remaining <= 0) {
         showLimitReachedMessage();
         return;
       }
@@ -573,7 +587,7 @@
       cameraScreen.classList.remove("hidden");
       $("cameraEventName").textContent = eventData.name || eventData.eventName || "PixEvent";
       $("cameraEndText").textContent = eventData.endDate ? `Ends on ${formatDate(eventData.endDate)}` : "Event camera";
-      $("unlockCount").textContent = maxPhotos;
+      $("unlockCount").textContent = isUnlimitedPhotos ? "unlimited" : maxPhotos;
       cameraAccessModal.classList.remove("hidden");
     }
 
@@ -592,8 +606,14 @@
     }
 
     function updateShotUI() {
-      $("remainingShots").textContent = remaining;
       const counter = document.querySelector(".shot-counter span[style]");
+      if (isUnlimitedPhotos) {
+        $("remainingShots").textContent = "∞";
+        if (counter) counter.textContent = "";
+        return;
+      }
+
+      $("remainingShots").textContent = remaining;
       if (counter) counter.textContent = `/${maxPhotos}`;
     }
 
@@ -609,7 +629,7 @@
 
         const snapshot = await getDocs(photosQuery);
         capturedCount = snapshot.size;
-        remaining = Math.max(0, maxPhotos - capturedCount);
+        remaining = isUnlimitedPhotos ? Number.POSITIVE_INFINITY : Math.max(0, maxPhotos - capturedCount);
         updateShotUI();
       } catch (error) {
         console.warn("PixEvent web guest photo count refresh failed:", error);
@@ -617,6 +637,7 @@
     }
 
     function showLimitReachedMessage() {
+      if (isUnlimitedPhotos) return;
       showToast(`Photo limit reached. You’ve used all ${maxPhotos} photos for this event.`);
     }
 
@@ -676,8 +697,8 @@
         return;
       }
 
-      if (!stream || remaining <= 0) {
-        if (remaining <= 0) {
+      if (!stream || (!isUnlimitedPhotos && remaining <= 0)) {
+        if (!isUnlimitedPhotos && remaining <= 0) {
           showLimitReachedMessage();
         } else {
           showToast("Camera is not ready yet.");
@@ -714,10 +735,10 @@
         await uploadCapturedPhoto(blob);
 
         capturedCount += 1;
-        remaining = Math.max(0, maxPhotos - capturedCount);
+        remaining = isUnlimitedPhotos ? Number.POSITIVE_INFINITY : Math.max(0, maxPhotos - capturedCount);
         updateShotUI();
 
-        if (remaining <= 0) {
+        if (!isUnlimitedPhotos && remaining <= 0) {
           showLimitReachedMessage();
         } else {
           showToast("Upload complete.");
@@ -757,13 +778,14 @@
 
         eventData = snap.data();
         const name = eventData.name || eventData.eventName || "PixEvent";
-        maxPhotos = parseInt(eventData.photosPerGuest || eventData.photoLimit || "25", 10) || 25;
-        remaining = maxPhotos;
+        isUnlimitedPhotos = eventHasUnlimitedPhotos(eventData);
+        maxPhotos = isUnlimitedPhotos ? 25 : (parseInt(eventData.photosPerGuest || eventData.photoLimit || "25", 10) || 25);
+        remaining = isUnlimitedPhotos ? Number.POSITIVE_INFINITY : maxPhotos;
 
         eventName.textContent = name;
         deviceTitle.textContent = name;
         deviceDate.textContent = formatDate(eventData.startDate, true);
-        photoLimitText.textContent = `Take up to ${maxPhotos} photos`;
+        photoLimitText.textContent = photoLimitDisplayText();
         if (eventHasEnded(eventData)) {
           photoLimitText.textContent = "Uploads have closed";
           statusText.textContent = `This event has ended. Uploads closed on ${formatDate(eventData.endDate)}.`;
