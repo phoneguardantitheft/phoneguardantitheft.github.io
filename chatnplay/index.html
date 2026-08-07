@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Chat N' Play Support</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top, #222222 0%, #0d0d0d 45%, #050505 100%);
+      color: #ffffff;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(900px, 92%);
+      margin: 0 auto;
+      padding: 70px 0 40px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 55px;
+    }
+
+    .app-icon {
+      width: 150px;
+      height: 150px;
+      border-radius: 32px;
+      display: block;
+      margin: 0 auto 25px;
+      box-shadow:
+        0 0 0 1px rgba(255, 199, 73, 0.35),
+        0 12px 35px rgba(0, 0, 0, 0.65);
+    }
+
+    h1 {
+      font-size: 44px;
+      margin-bottom: 8px;
+      letter-spacing: -1px;
+    }
+
+    .tagline {
+      color: #d6ad50;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .intro {
+      max-width: 650px;
+      margin: 0 auto;
+      color: #bcbcbc;
+      font-size: 17px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 199, 73, 0.25);
+      border-radius: 22px;
+      padding: 30px;
+      margin-bottom: 24px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    }
+
+    .card h2 {
+      color: #f4c45e;
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: #cccccc;
+      margin-bottom: 12px;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .features {
+      list-style: none;
+      margin-top: 12px;
+    }
+
+    .features li {
+      color: #cccccc;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .features li:last-child {
+      border-bottom: none;
+    }
+
+    .features li::before {
+      content: "♠";
+      color: #f4c45e;
+      margin-right: 10px;
+    }
+
+    a {
+      color: #f4c45e;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .contact-button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 13px 24px;
+      background: #f4c45e;
+      color: #111111;
+      border-radius: 12px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .contact-button:hover {
+      opacity: 0.9;
+      text-decoration: none;
+    }
+
+    footer {
+      text-align: center;
+      color: #777777;
+      font-size: 14px;
+      padding: 25px 0 10px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding-top: 45px;
+      }
+
+      .app-icon {
+        width: 125px;
+        height: 125px;
+        border-radius: 27px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .tagline {
+        font-size: 18px;
+      }
+
+      .card {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <section class="hero">
+
+      <img
+        src="chatnplay-logo.png"
+        alt="Chat N' Play App Icon"
+        class="app-icon"
+      >
+
+      <h1>Chat N' Play</h1>
+
+      <p class="tagline">
+        Play together. Right inside Messages.
+      </p>
+
+      <p class="intro">
+        Chat N' Play brings multiplayer games directly into iMessage,
+        letting you challenge friends and family without leaving your
+        conversation.
+      </p>
+
+    </section>
+
+
+    <section class="card">
+
+      <h2>About Chat N' Play</h2>
+
+      <p>
+        Chat N' Play is an iMessage gaming experience designed for playing
+        games with friends and family directly through Apple Messages.
+      </p>
+
+      <p>
+        Start a game from your conversation, invite another player, and
+        compete without needing to leave Messages.
+      </p>
+
+    </section>
+
+
+    <section class="card">
+
+      <h2>Games</h2>
+
+      <ul class="features">
+        <li>Spade House – Multiplayer Spades</li>
+        <li>Play directly inside iMessage</li>
+        <li>Challenge friends and family</li>
+        <li>Computer players can fill available seats</li>
+        <li>More games and features may be added over time</li>
+      </ul>
+
+    </section>
+
+
+    <section class="card">
+
+      <h2>Need Help?</h2>
+
+      <p>
+        If you're experiencing an issue with Chat N' Play, have a question,
+        or would like to report a problem, contact our support team.
+      </p>
+
+      <a
+        class="contact-button"
+        href="mailto:admin@hawthorne-software.com">
+        Contact Support
+      </a>
+
+    </section>
+
+
+    <section class="card">
+
+      <h2>Developer</h2>
+
+      <p>
+        Chat N' Play is developed by Hawthornes Computer Repair LLC.
+      </p>
+
+      <p>
+        Support Email:
+        <a href="mailto:admin@hawthorne-software.com">
+          admin@hawthorne-software.com
+        </a>
+      </p>
+
+    </section>
+
+
+    <footer>
+      © 2026 Hawthornes Computer Repair LLC. All rights reserved.
+    </footer>
+
+  </main>
+
+</body>
+</html>
