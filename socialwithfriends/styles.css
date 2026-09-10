@@ -976,3 +976,154 @@ svg {
   }
 
 }
+/* =========================
+   HOME V0.2 INTERACTIONS
+   ========================= */
+
+.composer {
+  position: relative;
+}
+
+.composer-open {
+  border-color: rgba(154, 66, 255, 0.32);
+
+  box-shadow:
+    0 0 0 1px rgba(154, 66, 255, 0.06),
+    0 16px 45px rgba(0, 0, 0, 0.18);
+}
+
+.composer-textarea {
+  flex: 1;
+
+  min-height: 110px;
+
+  resize: vertical;
+
+  padding: 16px 18px;
+
+  border-radius: 18px;
+
+  border: 1px solid var(--border);
+
+  outline: none;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  color: white;
+
+  font: inherit;
+
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.composer-textarea::placeholder {
+  color: #aeb3c5;
+}
+
+.composer-textarea:focus {
+  border-color: rgba(154, 66, 255, 0.42);
+
+  box-shadow:
+    0 0 0 3px rgba(154, 66, 255, 0.08);
+}
+
+
+/* AUDIENCE MENU */
+
+.audience-menu {
+  position: absolute;
+
+  right: 105px;
+  top: calc(100% - 4px);
+
+  width: 260px;
+
+  padding: 8px;
+
+  border-radius: 18px;
+
+  border: 1px solid var(--border);
+
+  background: #111526;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.42);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transform: translateY(-5px) scale(0.98);
+
+  transform-origin: top right;
+
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease;
+
+  z-index: 50;
+}
+
+.audience-menu-open {
+  opacity: 1;
+
+  pointer-events: auto;
+
+  transform: translateY(6px) scale(1);
+}
+
+.audience-menu button {
+  width: 100%;
+
+  min-height: 58px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  gap: 4px;
+
+  padding: 10px 12px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: transparent;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.audience-menu button:hover {
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.audience-menu strong {
+  color: white;
+
+  font-size: 14px;
+}
+
+.audience-menu span {
+  color: var(--text-muted);
+
+  font-size: 12px;
+}
+
+
+/* NAV PRESS */
+
+.nav-item:active {
+  transform: scale(0.96);
+}
+
+.create-button:active {
+  transform: scale(0.93);
+}
+
+.post-button:active {
+  transform: scale(0.97);
+}
