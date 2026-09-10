@@ -20,7 +20,7 @@
 
     <nav class="main-nav">
 
-      <button class="nav-item active" aria-label="Home">
+      <button class="nav-item active" aria-label="Home" data-page="home">
         <svg viewBox="0 0 24 24">
           <path d="M3 11.5L12 4l9 7.5"></path>
           <path d="M5.5 10.5V20h13v-9.5"></path>
@@ -28,7 +28,7 @@
         <span class="nav-tooltip">Home</span>
       </button>
 
-      <button class="nav-item" aria-label="Explore">
+      <button class="nav-item" aria-label="Explore" data-page="explore">
         <svg viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="9"></circle>
           <path d="M15.5 8.5l-2.2 4.8-4.8 2.2 2.2-4.8 4.8-2.2z"></path>
@@ -83,7 +83,7 @@
 
 
   <!-- PAGE -->
-  <main class="page-layout">
+  <main class="page-layout page-view active-page" id="home-page">
 
     <!-- MAIN FEED -->
     <section class="feed-column">
@@ -384,7 +384,284 @@
   </main>
 
 
+
+  <!-- EXPLORE PAGE -->
+  <main class="explore-layout page-view" id="explore-page">
+
+    <section class="explore-main">
+
+      <div class="explore-hero">
+        <div class="explore-title-row">
+          <div class="explore-compass">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M15.5 8.5l-2.2 4.8-4.8 2.2 2.2-4.8 4.8-2.2z"></path>
+            </svg>
+          </div>
+
+          <div>
+            <span class="panel-label">DISCOVER</span>
+            <h1>Explore SOCIAL</h1>
+            <p>Find conversations, topics, and public posts shaped around what interests you.</p>
+          </div>
+        </div>
+
+        <div class="explore-tabs" role="tablist" aria-label="Explore sections">
+          <button class="explore-tab active">For You</button>
+          <button class="explore-tab">Trending</button>
+          <button class="explore-tab">Topics</button>
+        </div>
+      </div>
+
+      <section class="explore-section">
+        <div class="section-heading">
+          <div>
+            <span class="panel-label">PERSONALIZED</span>
+            <h2>For You</h2>
+            <p>Public conversations selected from your interests and activity.</p>
+          </div>
+
+          <button class="text-button">Tune your interests</button>
+        </div>
+
+        <div class="discovery-feed">
+
+          <article class="discovery-card card">
+            <div class="discovery-card-top">
+              <div class="avatar purple-avatar">KM</div>
+
+              <div class="discovery-user">
+                <strong>Kai Morgan</strong>
+                <span>Public · Technology</span>
+              </div>
+
+              <button class="more-button" aria-label="Post options">•••</button>
+            </div>
+
+            <div class="interest-reason">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 3v18"></path>
+                <path d="M3 12h18"></path>
+              </svg>
+              Because you interact with Technology
+            </div>
+
+            <p class="discovery-text">
+              What piece of technology do you use every day that you think is still way harder than it should be?
+            </p>
+
+            <div class="conversation-preview">
+              <span>Conversation picking up</span>
+              <strong>186 replies</strong>
+            </div>
+
+            <div class="discovery-actions">
+              <button>Like</button>
+              <button>Reply</button>
+              <button>Share</button>
+              <button class="not-interested">Not interested</button>
+            </div>
+          </article>
+
+          <article class="discovery-card card">
+            <div class="discovery-card-top">
+              <div class="avatar blue-avatar">AR</div>
+
+              <div class="discovery-user">
+                <strong>Alexis Reed</strong>
+                <span>Public · Relationships</span>
+              </div>
+
+              <button class="more-button" aria-label="Post options">•••</button>
+            </div>
+
+            <div class="interest-reason">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 12h16"></path>
+                <path d="M12 4v16"></path>
+              </svg>
+              Based on conversations you spend time reading
+            </div>
+
+            <p class="discovery-text">
+              What is something small your friends do that instantly lets you know they genuinely care about you?
+            </p>
+
+            <div class="conversation-preview">
+              <span>Active discussion</span>
+              <strong>312 replies</strong>
+            </div>
+
+            <div class="discovery-actions">
+              <button>Like</button>
+              <button>Reply</button>
+              <button>Share</button>
+              <button class="not-interested">Not interested</button>
+            </div>
+          </article>
+
+          <article class="discovery-card card">
+            <div class="discovery-card-top">
+              <div class="avatar explore-green-avatar">DT</div>
+
+              <div class="discovery-user">
+                <strong>Devin Thomas</strong>
+                <span>Public · Travel</span>
+              </div>
+
+              <button class="more-button" aria-label="Post options">•••</button>
+            </div>
+
+            <div class="interest-reason">
+              <svg viewBox="0 0 24 24">
+                <path d="M5 12h14"></path>
+                <path d="M12 5l7 7-7 7"></path>
+              </svg>
+              A little outside your usual interests
+            </div>
+
+            <p class="discovery-text">
+              If you could take one three-day trip anywhere without worrying about the cost, where are you going?
+            </p>
+
+            <div class="conversation-preview">
+              <span>Fresh discovery</span>
+              <strong>94 replies</strong>
+            </div>
+
+            <div class="discovery-actions">
+              <button>Like</button>
+              <button>Reply</button>
+              <button>Share</button>
+              <button class="not-interested">Not interested</button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+    </section>
+
+    <aside class="explore-side">
+
+      <section class="trending-card card">
+        <div class="panel-header">
+          <div>
+            <span class="panel-label">RIGHT NOW</span>
+            <h2>Trending Conversations</h2>
+          </div>
+        </div>
+
+        <div class="trend-list">
+
+          <button class="trend-item">
+            <span class="trend-rank">01</span>
+            <span class="trend-copy">
+              <strong>What counts as a real friendship?</strong>
+              <small>4.8K people talking</small>
+            </span>
+          </button>
+
+          <button class="trend-item">
+            <span class="trend-rank">02</span>
+            <span class="trend-copy">
+              <strong>Best advice you ignored at first</strong>
+              <small>3.1K people talking</small>
+            </span>
+          </button>
+
+          <button class="trend-item">
+            <span class="trend-rank">03</span>
+            <span class="trend-copy">
+              <strong>Technology that needs a redesign</strong>
+              <small>2.6K people talking</small>
+            </span>
+          </button>
+
+          <button class="trend-item">
+            <span class="trend-rank">04</span>
+            <span class="trend-copy">
+              <strong>Where would you travel tomorrow?</strong>
+              <small>1.9K people talking</small>
+            </span>
+          </button>
+
+        </div>
+
+        <button class="see-more-button">See more conversations</button>
+      </section>
+
+      <section class="topics-card card">
+        <div class="panel-header">
+          <div>
+            <span class="panel-label">DISCOVER MORE</span>
+            <h2>Topics</h2>
+          </div>
+        </div>
+
+        <div class="topic-grid">
+          <button>Sports</button>
+          <button>Relationships</button>
+          <button>Technology</button>
+          <button>Travel</button>
+          <button>Music</button>
+          <button>Food</button>
+          <button>Money</button>
+          <button>Entertainment</button>
+        </div>
+      </section>
+
+      <section class="algorithm-note card">
+        <span class="panel-label">YOUR EXPLORE</span>
+        <h2>You help shape it.</h2>
+        <p>
+          Likes, replies, time spent, followed topics, and “Not interested” choices help SOCIAL learn what you want to discover.
+        </p>
+      </section>
+
+    </aside>
+
+  </main>
+
+
   <script src="script.js"></script>
+
+  <script>
+    const homePage = document.getElementById("home-page");
+    const explorePage = document.getElementById("explore-page");
+    const homeNav = document.querySelector('[data-page="home"]');
+    const exploreNav = document.querySelector('[data-page="explore"]');
+
+    function showPage(pageName) {
+      if (pageName === "explore") {
+        homePage.classList.remove("active-page");
+        explorePage.classList.add("active-page");
+        homeNav.classList.remove("active");
+        exploreNav.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+
+      explorePage.classList.remove("active-page");
+      homePage.classList.add("active-page");
+      exploreNav.classList.remove("active");
+      homeNav.classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    homeNav.addEventListener("click", () => showPage("home"));
+    exploreNav.addEventListener("click", () => showPage("explore"));
+
+    document.querySelectorAll(".explore-tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".explore-tab").forEach((item) => {
+          item.classList.remove("active");
+        });
+
+        tab.classList.add("active");
+      });
+    });
+  </script>
 
 </body>
 </html>
