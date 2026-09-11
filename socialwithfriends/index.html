@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SOCIAL with friends</title>
 
-  <link rel="stylesheet" href="styles.css?v=5" />
+  <link rel="stylesheet" href="styles.css?v=6" />
 </head>
 
 <body>
@@ -44,7 +44,7 @@
         <span class="nav-tooltip">Create</span>
       </button>
 
-      <button class="nav-item" aria-label="Messages">
+      <button class="nav-item" aria-label="Messages" data-page="messages">
         <svg viewBox="0 0 24 24">
           <path d="M4 5h16v11H8l-4 3V5z"></path>
         </svg>
@@ -1195,7 +1195,175 @@
   </main>
 
 
-  <script src="script.js?v=5"></script>
+  <!-- MESSAGES PAGE -->
+  <main class="messages-page page-view" id="messages-page">
+
+    <section class="messages-shell card">
+
+      <!-- CONVERSATION LIST -->
+      <aside class="messages-list-panel">
+
+        <div class="messages-list-header">
+          <div>
+            <span class="panel-label">YOUR INBOX</span>
+            <h1>Messages</h1>
+          </div>
+
+          <button class="new-message-button">New Message</button>
+        </div>
+
+        <label class="messages-search">
+          <svg viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="6"></circle>
+            <path d="M16 16l4 4"></path>
+          </svg>
+          <input type="text" placeholder="Search conversations" />
+        </label>
+
+        <div class="conversation-list">
+
+          <button class="conversation-item active" data-conversation="jasmine">
+            <div class="conversation-avatar-wrap">
+              <img src="https://i.pravatar.cc/160?img=47" alt="Jasmine Carter" />
+              <span class="conversation-unread-dot"></span>
+            </div>
+            <div class="conversation-preview">
+              <div class="conversation-preview-top">
+                <strong>Jasmine Carter</strong>
+                <time>9:41 AM</time>
+              </div>
+              <div class="conversation-preview-bottom">
+                <span>You still going Saturday?</span>
+                <b>2</b>
+              </div>
+            </div>
+          </button>
+
+          <button class="conversation-item" data-conversation="marcus">
+            <img src="https://i.pravatar.cc/160?img=12" alt="Marcus Johnson" />
+            <div class="conversation-preview">
+              <div class="conversation-preview-top">
+                <strong>Marcus Johnson</strong>
+                <time>Yesterday</time>
+              </div>
+              <div class="conversation-preview-bottom">
+                <span>That actually makes sense.</span>
+              </div>
+            </div>
+          </button>
+
+          <button class="conversation-item" data-conversation="tiffany">
+            <img src="https://i.pravatar.cc/160?img=32" alt="Tiffany Brooks" />
+            <div class="conversation-preview">
+              <div class="conversation-preview-top">
+                <strong>Tiffany Brooks</strong>
+                <time>Tue</time>
+              </div>
+              <div class="conversation-preview-bottom">
+                <span>Send me the picture when you get a chance.</span>
+              </div>
+            </div>
+          </button>
+
+          <button class="conversation-item" data-conversation="chris">
+            <img src="https://i.pravatar.cc/160?img=11" alt="Chris Walker" />
+            <div class="conversation-preview">
+              <div class="conversation-preview-top">
+                <strong>Chris Walker</strong>
+                <time>Mon</time>
+              </div>
+              <div class="conversation-preview-bottom">
+                <span>Bet. I got you.</span>
+              </div>
+            </div>
+          </button>
+
+          <button class="conversation-item" data-conversation="avery">
+            <img src="https://i.pravatar.cc/160?img=45" alt="Avery Lewis" />
+            <div class="conversation-preview">
+              <div class="conversation-preview-top">
+                <strong>Avery Lewis</strong>
+                <time>Sep 7</time>
+              </div>
+              <div class="conversation-preview-bottom">
+                <span>That GIF had me crying.</span>
+              </div>
+            </div>
+          </button>
+
+        </div>
+
+      </aside>
+
+
+      <!-- SELECTED CONVERSATION -->
+      <section class="conversation-panel">
+
+        <header class="conversation-header">
+          <div class="conversation-person">
+            <img id="conversation-photo" src="https://i.pravatar.cc/160?img=47" alt="Jasmine Carter" />
+            <div>
+              <strong id="conversation-name">Jasmine Carter</strong>
+              <span id="conversation-handle">@jasminec</span>
+            </div>
+          </div>
+
+          <button class="conversation-options" aria-label="Conversation options">•••</button>
+        </header>
+
+        <div class="conversation-body" id="conversation-body">
+
+          <div class="conversation-date">Today</div>
+
+          <div class="message-row incoming">
+            <img src="https://i.pravatar.cc/80?img=47" alt="" />
+            <div class="message-stack">
+              <div class="message-bubble">You still going Saturday?</div>
+              <time>9:36 AM</time>
+            </div>
+          </div>
+
+          <div class="message-row outgoing">
+            <div class="message-stack">
+              <div class="message-bubble">Yeah, that's still the plan. What time y'all getting there?</div>
+              <time>9:38 AM</time>
+            </div>
+          </div>
+
+          <div class="message-row incoming">
+            <img src="https://i.pravatar.cc/80?img=47" alt="" />
+            <div class="message-stack">
+              <div class="message-bubble">Probably around 7. I'll let you know if anything changes.</div>
+              <time>9:41 AM</time>
+            </div>
+          </div>
+
+        </div>
+
+        <footer class="conversation-composer">
+          <button class="message-attachment-button" aria-label="Add photo">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+              <circle cx="9" cy="10" r="2"></circle>
+              <path d="M4 17l5-5 4 4 3-3 4 4"></path>
+            </svg>
+          </button>
+
+          <button class="message-gif-button" aria-label="Add GIF">GIF</button>
+
+          <textarea class="message-input" rows="1" placeholder="Write a message..."></textarea>
+
+          <button class="message-send-button">Send</button>
+        </footer>
+
+      </section>
+
+    </section>
+
+  </main>
+
+
+  <script src="script.js?v=6"></script>
 
 </body>
 </html>
