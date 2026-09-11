@@ -13,10 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const profilePage = document.getElementById("profile-page");
   const friendsPage = document.getElementById("friends-page");
   const messagesPage = document.getElementById("messages-page");
+  const notificationsPage = document.getElementById("notifications-page");
 
   const homeNav = document.querySelector('[data-page="home"]');
   const exploreNav = document.querySelector('[data-page="explore"]');
   const messagesNav = document.querySelector('[data-page="messages"]');
+  const notificationsNav = document.querySelector('[data-page="notifications"]');
 
   const exploreTabs = document.querySelectorAll("[data-explore-tab]");
   const explorePanels = document.querySelectorAll("[data-explore-panel]");
@@ -36,12 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const messageInput = document.querySelector(".message-input");
   const messageSendButton = document.querySelector(".message-send-button");
 
+  const notificationsTabs = document.querySelectorAll("[data-notifications-tab]");
+  const notificationsPanels = document.querySelectorAll("[data-notifications-panel]");
+  const markAllReadButton = document.querySelector(".mark-all-read-button");
+
   let composerOpen = false;
   let audienceMenuOpen = false;
-
-  // -------------------------
-  // PAGE NAVIGATION
-  // -------------------------
 
   function clearMainNavigationState() {
     navItems.forEach((nav) => nav.classList.remove("active"));
@@ -54,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     profilePage.classList.remove("active-page");
     friendsPage.classList.remove("active-page");
     messagesPage.classList.remove("active-page");
+    notificationsPage.classList.remove("active-page");
 
     clearMainNavigationState();
 
@@ -69,6 +72,9 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (pageName === "messages") {
       messagesPage.classList.add("active-page");
       messagesNav.classList.add("active");
+    } else if (pageName === "notifications") {
+      notificationsPage.classList.add("active-page");
+      notificationsNav.classList.add("active");
     } else {
       homePage.classList.add("active-page");
       homeNav.classList.add("active");
@@ -81,12 +87,14 @@ document.addEventListener("DOMContentLoaded", () => {
   exploreNav.addEventListener("click", () => showPage("explore"));
   profileButton.addEventListener("click", () => showPage("profile"));
   messagesNav.addEventListener("click", () => showPage("messages"));
+  notificationsNav.addEventListener("click", () => showPage("notifications"));
 
   navItems.forEach((item) => {
     if (
       item === homeNav ||
       item === exploreNav ||
       item === messagesNav ||
+      item === notificationsNav ||
       item.classList.contains("create-button")
     ) {
       return;
@@ -98,14 +106,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // -------------------------
-  // EXPLORE TABS
-  // -------------------------
-
   function showExplorePanel(panelName) {
     exploreTabs.forEach((tab) => {
       const isActive = tab.dataset.exploreTab === panelName;
-
       tab.classList.toggle("active", isActive);
       tab.setAttribute("aria-selected", isActive ? "true" : "false");
     });
@@ -124,14 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // -------------------------
-  // PROFILE TABS
-  // -------------------------
-
   function showProfilePanel(panelName) {
     profileTabs.forEach((tab) => {
       const isActive = tab.dataset.profileTab === panelName;
-
       tab.classList.toggle("active", isActive);
       tab.setAttribute("aria-selected", isActive ? "true" : "false");
     });
@@ -150,14 +148,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // -------------------------
-  // FRIENDS PAGE + TABS
-  // -------------------------
-
   function showFriendsPanel(panelName) {
     friendsTabs.forEach((tab) => {
       const isActive = tab.dataset.friendsTab === panelName;
-
       tab.classList.toggle("active", isActive);
       tab.setAttribute("aria-selected", isActive ? "true" : "false");
     });
@@ -184,9 +177,42 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // -------------------------
-  // MESSAGES + CONVERSATIONS
-  // -------------------------
+  function showNotificationsPanel(panelName) {
+    notificationsTabs.forEach((tab) => {
+      const isActive = tab.dataset.notificationsTab === panelName;
+      tab.classList.toggle("active", isActive);
+      tab.setAttribute("aria-selected", isActive ? "true" : "false");
+    });
+
+    notificationsPanels.forEach((panel) => {
+      panel.classList.toggle(
+        "active-notifications-panel",
+        panel.dataset.notificationsPanel === panelName
+      );
+    });
+  }
+
+  notificationsTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      showNotificationsPanel(tab.dataset.notificationsTab);
+    });
+  });
+
+  markAllReadButton.addEventListener("click", () => {
+    document.querySelectorAll(".notification-item.unread").forEach((item) => {
+      item.classList.remove("unread");
+    });
+
+    document.querySelectorAll(".notification-unread-dot").forEach((dot) => {
+      dot.remove();
+    });
+
+    document.querySelectorAll(".notifications-tab-count").forEach((count) => {
+      count.textContent = "0";
+    });
+
+    markAllReadButton.textContent = "All caught up";
+  });
 
   const conversationData = {
     jasmine: {
@@ -195,16 +221,8 @@ document.addEventListener("DOMContentLoaded", () => {
       image: "https://i.pravatar.cc/160?img=47",
       messages: [
         { type: "incoming", text: "You still going Saturday?", time: "9:36 AM" },
-        {
-          type: "outgoing",
-          text: "Yeah, that's still the plan. What time y'all getting there?",
-          time: "9:38 AM"
-        },
-        {
-          type: "incoming",
-          text: "Probably around 7. I'll let you know if anything changes.",
-          time: "9:41 AM"
-        }
+        { type: "outgoing", text: "Yeah, that's still the plan. What time y'all getting there?", time: "9:38 AM" },
+        { type: "incoming", text: "Probably around 7. I'll let you know if anything changes.", time: "9:41 AM" }
       ]
     },
     marcus: {
@@ -212,21 +230,9 @@ document.addEventListener("DOMContentLoaded", () => {
       handle: "@marcusj",
       image: "https://i.pravatar.cc/160?img=12",
       messages: [
-        {
-          type: "incoming",
-          text: "I looked at what you sent me.",
-          time: "Yesterday"
-        },
-        {
-          type: "outgoing",
-          text: "What you think?",
-          time: "Yesterday"
-        },
-        {
-          type: "incoming",
-          text: "That actually makes sense.",
-          time: "Yesterday"
-        }
+        { type: "incoming", text: "I looked at what you sent me.", time: "Yesterday" },
+        { type: "outgoing", text: "What you think?", time: "Yesterday" },
+        { type: "incoming", text: "That actually makes sense.", time: "Yesterday" }
       ]
     },
     tiffany: {
@@ -234,16 +240,8 @@ document.addEventListener("DOMContentLoaded", () => {
       handle: "@tiffanyb",
       image: "https://i.pravatar.cc/160?img=32",
       messages: [
-        {
-          type: "outgoing",
-          text: "I got a better one from earlier.",
-          time: "Tue"
-        },
-        {
-          type: "incoming",
-          text: "Send me the picture when you get a chance.",
-          time: "Tue"
-        }
+        { type: "outgoing", text: "I got a better one from earlier.", time: "Tue" },
+        { type: "incoming", text: "Send me the picture when you get a chance.", time: "Tue" }
       ]
     },
     chris: {
@@ -251,16 +249,8 @@ document.addEventListener("DOMContentLoaded", () => {
       handle: "@chrisw",
       image: "https://i.pravatar.cc/160?img=11",
       messages: [
-        {
-          type: "outgoing",
-          text: "Can you remind me later?",
-          time: "Mon"
-        },
-        {
-          type: "incoming",
-          text: "Bet. I got you.",
-          time: "Mon"
-        }
+        { type: "outgoing", text: "Can you remind me later?", time: "Mon" },
+        { type: "incoming", text: "Bet. I got you.", time: "Mon" }
       ]
     },
     avery: {
@@ -268,16 +258,8 @@ document.addEventListener("DOMContentLoaded", () => {
       handle: "@averyl",
       image: "https://i.pravatar.cc/160?img=45",
       messages: [
-        {
-          type: "outgoing",
-          text: "I knew you were going to laugh at that.",
-          time: "Sep 7"
-        },
-        {
-          type: "incoming",
-          text: "That GIF had me crying.",
-          time: "Sep 7"
-        }
+        { type: "outgoing", text: "I knew you were going to laugh at that.", time: "Sep 7" },
+        { type: "incoming", text: "That GIF had me crying.", time: "Sep 7" }
       ]
     }
   };
@@ -291,8 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
     conversationPhoto.src = conversation.image;
     conversationPhoto.alt = conversation.name;
 
-    conversationBody.innerHTML =
-      '<div class="conversation-date">Recent</div>';
+    conversationBody.innerHTML = '<div class="conversation-date">Recent</div>';
 
     conversation.messages.forEach((message) => {
       const row = document.createElement("div");
@@ -362,10 +343,7 @@ document.addEventListener("DOMContentLoaded", () => {
     messageInput.focus();
   }
 
-  messageSendButton.addEventListener(
-    "click",
-    sendPrototypeMessage
-  );
+  messageSendButton.addEventListener("click", sendPrototypeMessage);
 
   messageInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
@@ -373,10 +351,6 @@ document.addEventListener("DOMContentLoaded", () => {
       sendPrototypeMessage();
     }
   });
-
-  // -------------------------
-  // COMPOSER
-  // -------------------------
 
   function openComposer() {
     if (composerOpen) return;
@@ -389,9 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
     textarea.rows = 4;
 
     composerInput.replaceWith(textarea);
-
     textarea.focus();
-
     composer.classList.add("composer-open");
   }
 
@@ -401,10 +373,6 @@ document.addEventListener("DOMContentLoaded", () => {
     showPage("home");
     openComposer();
   });
-
-  // -------------------------
-  // AUDIENCE MENU
-  // -------------------------
 
   const audienceMenu = document.createElement("div");
   audienceMenu.className = "audience-menu";
@@ -444,20 +412,14 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
-  audienceMenu
-    .querySelectorAll("button")
-    .forEach((option) => {
-      option.addEventListener("click", () => {
-        audienceButton.textContent =
-          option.dataset.audience;
+  audienceMenu.querySelectorAll("button").forEach((option) => {
+    option.addEventListener("click", () => {
+      audienceButton.textContent = option.dataset.audience;
 
-        audienceMenuOpen = false;
-
-        audienceMenu.classList.remove(
-          "audience-menu-open"
-        );
-      });
+      audienceMenuOpen = false;
+      audienceMenu.classList.remove("audience-menu-open");
     });
+  });
 
   document.addEventListener("click", (event) => {
     if (
@@ -466,21 +428,12 @@ document.addEventListener("DOMContentLoaded", () => {
       !audienceButton.contains(event.target)
     ) {
       audienceMenuOpen = false;
-
-      audienceMenu.classList.remove(
-        "audience-menu-open"
-      );
+      audienceMenu.classList.remove("audience-menu-open");
     }
   });
 
-  // -------------------------
-  // POST BUTTON
-  // -------------------------
-
   postButton.addEventListener("click", () => {
-    const textarea = document.querySelector(
-      ".composer-textarea"
-    );
+    const textarea = document.querySelector(".composer-textarea");
 
     if (!textarea) {
       openComposer();
