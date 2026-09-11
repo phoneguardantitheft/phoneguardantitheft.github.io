@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SOCIAL with friends</title>
 
-  <link rel="stylesheet" href="styles.css?v=4" />
+  <link rel="stylesheet" href="styles.css?v=5" />
 </head>
 
 <body>
@@ -830,7 +830,7 @@
       <div class="profile-tabs" role="tablist" aria-label="Profile sections">
         <button class="profile-tab active" data-profile-tab="posts">Posts</button>
         <button class="profile-tab" data-profile-tab="photos">Photos</button>
-        <button class="profile-tab" data-profile-tab="friends">Friends</button>
+        <button class="profile-tab" data-profile-tab="friends" data-open-friends>Friends</button>
       </div>
 
 
@@ -1121,8 +1121,81 @@
 
   </main>
 
+  <!-- FRIENDS PAGE -->
+  <main class="friends-layout page-view" id="friends-page">
+    <section class="friends-main">
+      <div class="friends-hero">
+        <div><span class="panel-label">YOUR CIRCLE</span><h1>Friends</h1>
+          <p>Keep up with the people you chose to connect with on SOCIAL.</p></div>
+        <button class="find-friends-button">Find Friends</button>
+      </div>
 
-  <script src="script.js?v=4"></script>
+      <div class="friends-tabs" role="tablist" aria-label="Friends sections">
+        <button class="friends-tab active" data-friends-tab="all">All Friends</button>
+        <button class="friends-tab" data-friends-tab="requests">Requests <span class="friends-tab-count">3</span></button>
+        <button class="friends-tab" data-friends-tab="sent">Sent</button>
+      </div>
+
+      <section class="friends-content-panel active-friends-panel" data-friends-panel="all">
+        <div class="friends-section-heading"><div><span class="panel-label">842 CONNECTIONS</span><h2>Your Friends</h2></div>
+          <label class="friends-search"><input type="text" placeholder="Search friends" /></label></div>
+        <div class="friends-grid">
+<article class="friend-list-card card"><img src="https://i.pravatar.cc/180?img=47" alt="Jasmine Carter" />
+      <div class="friend-list-copy"><strong>Jasmine Carter</strong><span>@jasminec</span><small>38 mutual friends</small></div>
+      <button class="friend-card-more" aria-label="Jasmine Carter options">•••</button></article><article class="friend-list-card card"><img src="https://i.pravatar.cc/180?img=12" alt="Marcus Johnson" />
+      <div class="friend-list-copy"><strong>Marcus Johnson</strong><span>@marcusj</span><small>26 mutual friends</small></div>
+      <button class="friend-card-more" aria-label="Marcus Johnson options">•••</button></article><article class="friend-list-card card"><img src="https://i.pravatar.cc/180?img=32" alt="Tiffany Brooks" />
+      <div class="friend-list-copy"><strong>Tiffany Brooks</strong><span>@tiffanyb</span><small>19 mutual friends</small></div>
+      <button class="friend-card-more" aria-label="Tiffany Brooks options">•••</button></article><article class="friend-list-card card"><img src="https://i.pravatar.cc/180?img=11" alt="Chris Walker" />
+      <div class="friend-list-copy"><strong>Chris Walker</strong><span>@chrisw</span><small>31 mutual friends</small></div>
+      <button class="friend-card-more" aria-label="Chris Walker options">•••</button></article><article class="friend-list-card card"><img src="https://i.pravatar.cc/180?img=45" alt="Avery Lewis" />
+      <div class="friend-list-copy"><strong>Avery Lewis</strong><span>@averyl</span><small>14 mutual friends</small></div>
+      <button class="friend-card-more" aria-label="Avery Lewis options">•••</button></article><article class="friend-list-card card"><img src="https://i.pravatar.cc/180?img=14" alt="Jordan Miles" />
+      <div class="friend-list-copy"><strong>Jordan Miles</strong><span>@jordanm</span><small>22 mutual friends</small></div>
+      <button class="friend-card-more" aria-label="Jordan Miles options">•••</button></article><article class="friend-list-card card"><img src="https://i.pravatar.cc/180?img=49" alt="Taylor Green" />
+      <div class="friend-list-copy"><strong>Taylor Green</strong><span>@taylorg</span><small>17 mutual friends</small></div>
+      <button class="friend-card-more" aria-label="Taylor Green options">•••</button></article><article class="friend-list-card card"><img src="https://i.pravatar.cc/180?img=48" alt="Kendra Hall" />
+      <div class="friend-list-copy"><strong>Kendra Hall</strong><span>@kendrah</span><small>12 mutual friends</small></div>
+      <button class="friend-card-more" aria-label="Kendra Hall options">•••</button></article>
+        </div>
+      </section>
+
+      <section class="friends-content-panel" data-friends-panel="requests">
+        <div class="friends-section-heading"><div><span class="panel-label">WAITING ON YOU</span><h2>Friend Requests</h2><p>People who want to connect with you.</p></div></div>
+        <div class="request-list">
+          <article class="request-card card"><img src="https://i.pravatar.cc/180?img=5" alt="Nia Robinson" /><div class="request-copy"><strong>Nia Robinson</strong><span>@niarobinson</span><small>18 mutual friends</small></div><div class="request-actions"><button class="request-accept">Accept</button><button class="request-decline">Decline</button></div></article>
+          <article class="request-card card"><img src="https://i.pravatar.cc/180?img=13" alt="Darius King" /><div class="request-copy"><strong>Darius King</strong><span>@dariusking</span><small>7 mutual friends</small></div><div class="request-actions"><button class="request-accept">Accept</button><button class="request-decline">Decline</button></div></article>
+          <article class="request-card card"><img src="https://i.pravatar.cc/180?img=25" alt="Simone Price" /><div class="request-copy"><strong>Simone Price</strong><span>@simonep</span><small>11 mutual friends</small></div><div class="request-actions"><button class="request-accept">Accept</button><button class="request-decline">Decline</button></div></article>
+        </div>
+      </section>
+
+      <section class="friends-content-panel" data-friends-panel="sent">
+        <div class="friends-section-heading"><div><span class="panel-label">PENDING</span><h2>Sent Requests</h2><p>Friend requests you've sent that are still waiting for a response.</p></div></div>
+        <div class="request-list">
+          <article class="request-card card"><img src="https://i.pravatar.cc/180?img=16" alt="Cameron Ellis" /><div class="request-copy"><strong>Cameron Ellis</strong><span>@camerone</span><small>9 mutual friends</small></div><div class="request-actions"><button class="request-cancel">Cancel Request</button></div></article>
+          <article class="request-card card"><img src="https://i.pravatar.cc/180?img=33" alt="Lauren Scott" /><div class="request-copy"><strong>Lauren Scott</strong><span>@laurens</span><small>5 mutual friends</small></div><div class="request-actions"><button class="request-cancel">Cancel Request</button></div></article>
+        </div>
+      </section>
+    </section>
+
+    <aside class="friends-side">
+      <section class="friends-summary card"><span class="panel-label">YOUR SOCIAL CIRCLE</span><h2>842 Friends</h2>
+        <p>Your Home feed is built around the people you've chosen to connect with.</p>
+        <div class="friends-summary-stats"><div><strong>3</strong><span>Requests</span></div><div><strong>2</strong><span>Sent</span></div></div>
+      </section>
+      <section class="mutual-card card"><div class="panel-header"><div><span class="panel-label">PEOPLE YOU MAY KNOW</span><h2>Mutual Connections</h2></div></div>
+        <div class="mutual-list">
+          <div class="mutual-person"><img src="https://i.pravatar.cc/150?img=20" alt="Andre Collins" /><div><strong>Andre Collins</strong><span>24 mutual friends</span></div><button>Add</button></div>
+          <div class="mutual-person"><img src="https://i.pravatar.cc/150?img=36" alt="Monique Davis" /><div><strong>Monique Davis</strong><span>16 mutual friends</span></div><button>Add</button></div>
+          <div class="mutual-person"><img src="https://i.pravatar.cc/150?img=8" alt="Terrence Young" /><div><strong>Terrence Young</strong><span>10 mutual friends</span></div><button>Add</button></div>
+        </div>
+      </section>
+      <section class="friends-privacy card"><span class="panel-label">FRIENDSHIPS FIRST</span><h2>Your circle, your choice.</h2><p>Friendships shape your Home experience. Discovery stays separate in Explore.</p></section>
+    </aside>
+  </main>
+
+
+  <script src="script.js?v=5"></script>
 
 </body>
 </html>
