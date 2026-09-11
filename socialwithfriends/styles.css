@@ -2802,3 +2802,55 @@ svg {
   }
 }
 
+/* =========================
+   MESSAGES V0.1 — INBOX TEXT FIX
+   ========================= */
+
+.conversation-item {
+  grid-template-columns: 54px minmax(0, 1fr);
+}
+
+.conversation-preview {
+  min-width: 0;
+  width: 100%;
+}
+
+.conversation-preview-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.conversation-preview-top strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.conversation-preview-top time {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.conversation-preview-bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.conversation-preview-bottom span {
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.conversation-preview-bottom b {
+  flex-shrink: 0;
+}
+
