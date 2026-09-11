@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SOCIAL with friends</title>
 
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 </head>
 
 <body>
@@ -73,7 +73,7 @@
         <input type="text" placeholder="Search SOCIAL" />
       </div>
 
-      <button class="profile-button">
+      <button class="profile-button" aria-label="Profile" data-page="profile">
         ML
       </button>
 
@@ -767,7 +767,362 @@
   </main>
 
 
-  <script src="script.js?v=3"></script>
+  <!-- PROFILE PAGE -->
+  <main class="profile-layout page-view" id="profile-page">
+
+    <section class="profile-main">
+
+      <!-- PROFILE IDENTITY -->
+      <section class="profile-identity card">
+
+        <div class="profile-accent"></div>
+
+        <div class="profile-identity-content">
+
+          <div class="profile-avatar-wrap">
+            <div class="profile-avatar-large">ML</div>
+            <span class="profile-status-dot" aria-label="Online"></span>
+          </div>
+
+          <div class="profile-copy">
+            <span class="panel-label">PROFILE</span>
+            <h1>Mike Lowry</h1>
+            <div class="profile-handle">@mikelowry</div>
+
+            <p class="profile-bio">
+              Building, creating, and enjoying life one idea at a time.
+            </p>
+
+            <div class="profile-meta">
+              <span>Dallas–Fort Worth</span>
+              <span>Joined SOCIAL in 2026</span>
+            </div>
+          </div>
+
+          <div class="profile-actions">
+            <button class="profile-edit-button">Edit Profile</button>
+            <button class="profile-more-button" aria-label="More profile options">•••</button>
+          </div>
+
+        </div>
+
+        <div class="profile-stats">
+          <button>
+            <strong>842</strong>
+            <span>Friends</span>
+          </button>
+
+          <button>
+            <strong>126</strong>
+            <span>Posts</span>
+          </button>
+
+          <button>
+            <strong>38</strong>
+            <span>Photos</span>
+          </button>
+        </div>
+
+      </section>
+
+
+      <!-- PROFILE CONTENT TABS -->
+      <div class="profile-tabs" role="tablist" aria-label="Profile sections">
+        <button class="profile-tab active" data-profile-tab="posts">Posts</button>
+        <button class="profile-tab" data-profile-tab="photos">Photos</button>
+        <button class="profile-tab" data-profile-tab="friends">Friends</button>
+      </div>
+
+
+      <!-- POSTS TAB -->
+      <section class="profile-content-panel active-profile-panel" data-profile-panel="posts">
+
+        <div class="profile-section-heading">
+          <div>
+            <span class="panel-label">YOUR ACTIVITY</span>
+            <h2>Posts</h2>
+          </div>
+
+          <button class="text-button">Manage posts</button>
+        </div>
+
+        <article class="post card profile-post">
+
+          <div class="post-header">
+            <div class="avatar">ML</div>
+
+            <div class="post-user">
+              <strong>Mike Lowry</strong>
+              <span>3h · Friends</span>
+            </div>
+
+            <button class="post-menu">•••</button>
+          </div>
+
+          <div class="post-text">
+            Some ideas are worth bringing back.
+          </div>
+
+          <div class="profile-text-post">
+            Build the thing you wish existed.
+          </div>
+
+          <div class="post-stats">
+            <span>91 likes</span>
+            <span>18 comments</span>
+          </div>
+
+          <div class="post-actions">
+            <button>Like</button>
+            <button>Comment</button>
+            <button>Share</button>
+          </div>
+
+        </article>
+
+        <article class="post card profile-post">
+
+          <div class="post-header">
+            <div class="avatar">ML</div>
+
+            <div class="post-user">
+              <strong>Mike Lowry</strong>
+              <span>Yesterday · Public</span>
+            </div>
+
+            <button class="post-menu">•••</button>
+          </div>
+
+          <div class="post-text">
+            Weekend plans: good food, good people, and no unnecessary stress.
+          </div>
+
+          <div class="post-stats">
+            <span>64 likes</span>
+            <span>9 comments</span>
+          </div>
+
+          <div class="post-actions">
+            <button>Like</button>
+            <button>Comment</button>
+            <button>Share</button>
+          </div>
+
+        </article>
+
+      </section>
+
+
+      <!-- PHOTOS TAB -->
+      <section class="profile-content-panel" data-profile-panel="photos">
+
+        <div class="profile-section-heading">
+          <div>
+            <span class="panel-label">MEMORIES</span>
+            <h2>Photos</h2>
+          </div>
+        </div>
+
+        <div class="profile-photo-grid">
+          <button class="profile-photo-tile photo-tile-one" aria-label="Photo 1"></button>
+          <button class="profile-photo-tile photo-tile-two" aria-label="Photo 2"></button>
+          <button class="profile-photo-tile photo-tile-three" aria-label="Photo 3"></button>
+          <button class="profile-photo-tile photo-tile-four" aria-label="Photo 4"></button>
+          <button class="profile-photo-tile photo-tile-five" aria-label="Photo 5"></button>
+          <button class="profile-photo-tile photo-tile-six" aria-label="Photo 6"></button>
+        </div>
+
+      </section>
+
+
+      <!-- FRIENDS TAB -->
+      <section class="profile-content-panel" data-profile-panel="friends">
+
+        <div class="profile-section-heading">
+          <div>
+            <span class="panel-label">YOUR PEOPLE</span>
+            <h2>Friends</h2>
+          </div>
+
+          <button class="text-button">See all friends</button>
+        </div>
+
+        <div class="profile-friends-grid">
+
+          <button class="profile-friend-card card">
+            <img src="https://i.pravatar.cc/160?img=47" alt="Jasmine" />
+            <strong>Jasmine Carter</strong>
+            <span>38 mutual friends</span>
+          </button>
+
+          <button class="profile-friend-card card">
+            <img src="https://i.pravatar.cc/160?img=12" alt="Marcus" />
+            <strong>Marcus Johnson</strong>
+            <span>26 mutual friends</span>
+          </button>
+
+          <button class="profile-friend-card card">
+            <img src="https://i.pravatar.cc/160?img=32" alt="Tiffany" />
+            <strong>Tiffany Brooks</strong>
+            <span>19 mutual friends</span>
+          </button>
+
+          <button class="profile-friend-card card">
+            <img src="https://i.pravatar.cc/160?img=11" alt="Chris" />
+            <strong>Chris Walker</strong>
+            <span>31 mutual friends</span>
+          </button>
+
+          <button class="profile-friend-card card">
+            <img src="https://i.pravatar.cc/160?img=45" alt="Avery" />
+            <strong>Avery Lewis</strong>
+            <span>14 mutual friends</span>
+          </button>
+
+          <button class="profile-friend-card card">
+            <img src="https://i.pravatar.cc/160?img=14" alt="Jordan" />
+            <strong>Jordan Miles</strong>
+            <span>22 mutual friends</span>
+          </button>
+
+        </div>
+
+      </section>
+
+    </section>
+
+
+    <!-- PROFILE SIDE -->
+    <aside class="profile-side">
+
+      <section class="profile-top10 card">
+
+        <div class="panel-header">
+          <div>
+            <span class="panel-label">MY PEOPLE</span>
+            <h2>Top 10</h2>
+          </div>
+
+          <button>Edit</button>
+        </div>
+
+        <p class="profile-side-intro">
+          The people I keep closest on SOCIAL.
+        </p>
+
+        <div class="profile-top10-grid">
+
+          <div class="friend top-five">
+            <div class="friend-photo-wrap">
+              <img class="friend-photo" src="https://i.pravatar.cc/150?img=47" alt="Jasmine" />
+              <div class="star-badge" aria-label="Top 5 friend">★</div>
+            </div>
+            <span>Jasmine</span>
+          </div>
+
+          <div class="friend top-five">
+            <div class="friend-photo-wrap">
+              <img class="friend-photo" src="https://i.pravatar.cc/150?img=12" alt="Marcus" />
+              <div class="star-badge" aria-label="Top 5 friend">★</div>
+            </div>
+            <span>Marcus</span>
+          </div>
+
+          <div class="friend top-five">
+            <div class="friend-photo-wrap">
+              <img class="friend-photo" src="https://i.pravatar.cc/150?img=32" alt="Tiffany" />
+              <div class="star-badge" aria-label="Top 5 friend">★</div>
+            </div>
+            <span>Tiffany</span>
+          </div>
+
+          <div class="friend top-five">
+            <div class="friend-photo-wrap">
+              <img class="friend-photo" src="https://i.pravatar.cc/150?img=11" alt="Chris" />
+              <div class="star-badge" aria-label="Top 5 friend">★</div>
+            </div>
+            <span>Chris</span>
+          </div>
+
+          <div class="friend top-five">
+            <div class="friend-photo-wrap">
+              <img class="friend-photo" src="https://i.pravatar.cc/150?img=45" alt="Avery" />
+              <div class="star-badge" aria-label="Top 5 friend">★</div>
+            </div>
+            <span>Avery</span>
+          </div>
+
+          <div class="friend">
+            <div class="friend-photo-wrap">
+              <img class="friend-photo" src="https://i.pravatar.cc/150?img=14" alt="Jordan" />
+            </div>
+            <span>Jordan</span>
+          </div>
+
+          <div class="friend">
+            <div class="friend-photo-wrap">
+              <img class="friend-photo" src="https://i.pravatar.cc/150?img=49" alt="Taylor" />
+            </div>
+            <span>Taylor</span>
+          </div>
+
+          <div class="friend">
+            <div class="friend-photo-wrap">
+              <img class="friend-photo" src="https://i.pravatar.cc/150?img=48" alt="Kendra" />
+            </div>
+            <span>Kendra</span>
+          </div>
+
+          <div class="friend">
+            <div class="friend-photo-wrap">
+              <img class="friend-photo" src="https://i.pravatar.cc/150?img=15" alt="Devin" />
+            </div>
+            <span>Devin</span>
+          </div>
+
+          <div class="friend">
+            <div class="friend-photo-wrap">
+              <img class="friend-photo" src="https://i.pravatar.cc/150?img=44" alt="Brianna" />
+            </div>
+            <span>Brianna</span>
+          </div>
+
+        </div>
+
+        <div class="top10-visibility">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z"></path>
+            <circle cx="12" cy="12" r="2.5"></circle>
+          </svg>
+          Visible to Friends
+        </div>
+
+      </section>
+
+
+      <section class="profile-about card">
+        <span class="panel-label">ABOUT</span>
+        <h2>A little about me</h2>
+
+        <div class="about-row">
+          <span>Lives in</span>
+          <strong>Dallas–Fort Worth</strong>
+        </div>
+
+        <div class="about-row">
+          <span>Interests</span>
+          <strong>Technology, Travel, Business</strong>
+        </div>
+
+        <button class="profile-about-button">View full profile</button>
+      </section>
+
+    </aside>
+
+  </main>
+
+
+  <script src="script.js?v=4"></script>
 
 </body>
 </html>
