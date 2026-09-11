@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const homePage = document.getElementById("home-page");
   const explorePage = document.getElementById("explore-page");
   const profilePage = document.getElementById("profile-page");
+  const friendsPage = document.getElementById("friends-page");
 
   const homeNav = document.querySelector('[data-page="home"]');
   const exploreNav = document.querySelector('[data-page="explore"]');
@@ -20,6 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const profileTabs = document.querySelectorAll("[data-profile-tab]");
   const profilePanels = document.querySelectorAll("[data-profile-panel]");
+
+  const friendsTabs = document.querySelectorAll("[data-friends-tab]");
+  const friendsPanels = document.querySelectorAll("[data-friends-panel]");
+  const openFriendsButtons = document.querySelectorAll("[data-open-friends]");
 
   let composerOpen = false;
   let audienceMenuOpen = false;
@@ -37,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     homePage.classList.remove("active-page");
     explorePage.classList.remove("active-page");
     profilePage.classList.remove("active-page");
+    friendsPage.classList.remove("active-page");
 
     clearMainNavigationState();
 
@@ -45,6 +51,9 @@ document.addEventListener("DOMContentLoaded", () => {
       exploreNav.classList.add("active");
     } else if (pageName === "profile") {
       profilePage.classList.add("active-page");
+      profileButton.classList.add("active-profile");
+    } else if (pageName === "friends") {
+      friendsPage.classList.add("active-page");
       profileButton.classList.add("active-profile");
     } else {
       homePage.classList.add("active-page");
@@ -122,6 +131,40 @@ document.addEventListener("DOMContentLoaded", () => {
   profileTabs.forEach((tab) => {
     tab.addEventListener("click", () => {
       showProfilePanel(tab.dataset.profileTab);
+    });
+  });
+
+  // -------------------------
+  // FRIENDS PAGE + TABS
+  // -------------------------
+
+  function showFriendsPanel(panelName) {
+    friendsTabs.forEach((tab) => {
+      const isActive = tab.dataset.friendsTab === panelName;
+
+      tab.classList.toggle("active", isActive);
+      tab.setAttribute("aria-selected", isActive ? "true" : "false");
+    });
+
+    friendsPanels.forEach((panel) => {
+      panel.classList.toggle(
+        "active-friends-panel",
+        panel.dataset.friendsPanel === panelName
+      );
+    });
+  }
+
+  friendsTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      showFriendsPanel(tab.dataset.friendsTab);
+    });
+  });
+
+  openFriendsButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      showPage("friends");
+      showFriendsPanel("all");
     });
   });
 
