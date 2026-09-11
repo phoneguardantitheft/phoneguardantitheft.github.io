@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const navItems = document.querySelectorAll(".nav-item");
   const createButton = document.querySelector(".create-button");
+  const profileButton = document.querySelector(".profile-button");
 
   const composer = document.querySelector(".composer");
   const composerInput = document.querySelector(".composer-input");
@@ -9,38 +10,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const homePage = document.getElementById("home-page");
   const explorePage = document.getElementById("explore-page");
+  const profilePage = document.getElementById("profile-page");
+
   const homeNav = document.querySelector('[data-page="home"]');
   const exploreNav = document.querySelector('[data-page="explore"]');
 
   const exploreTabs = document.querySelectorAll("[data-explore-tab]");
   const explorePanels = document.querySelectorAll("[data-explore-panel]");
 
+  const profileTabs = document.querySelectorAll("[data-profile-tab]");
+  const profilePanels = document.querySelectorAll("[data-profile-panel]");
+
   let composerOpen = false;
   let audienceMenuOpen = false;
 
-  function showPage(pageName) {
-    if (pageName === "explore") {
-      homePage.classList.remove("active-page");
-      explorePage.classList.add("active-page");
+  // -------------------------
+  // PAGE NAVIGATION
+  // -------------------------
 
-      navItems.forEach((nav) => nav.classList.remove("active"));
-      exploreNav.classList.add("active");
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-
-    explorePage.classList.remove("active-page");
-    homePage.classList.add("active-page");
-
+  function clearMainNavigationState() {
     navItems.forEach((nav) => nav.classList.remove("active"));
-    homeNav.classList.add("active");
+    profileButton.classList.remove("active-profile");
+  }
+
+  function showPage(pageName) {
+    homePage.classList.remove("active-page");
+    explorePage.classList.remove("active-page");
+    profilePage.classList.remove("active-page");
+
+    clearMainNavigationState();
+
+    if (pageName === "explore") {
+      explorePage.classList.add("active-page");
+      exploreNav.classList.add("active");
+    } else if (pageName === "profile") {
+      profilePage.classList.add("active-page");
+      profileButton.classList.add("active-profile");
+    } else {
+      homePage.classList.add("active-page");
+      homeNav.classList.add("active");
+    }
 
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   homeNav.addEventListener("click", () => showPage("home"));
   exploreNav.addEventListener("click", () => showPage("explore"));
+  profileButton.addEventListener("click", () => showPage("profile"));
 
   navItems.forEach((item) => {
     if (
@@ -52,20 +68,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     item.addEventListener("click", () => {
-      navItems.forEach((nav) => nav.classList.remove("active"));
+      clearMainNavigationState();
       item.classList.add("active");
     });
   });
+
+  // -------------------------
+  // EXPLORE TABS
+  // -------------------------
 
   function showExplorePanel(panelName) {
     exploreTabs.forEach((tab) => {
       const isActive = tab.dataset.exploreTab === panelName;
 
       tab.classList.toggle("active", isActive);
-      tab.setAttribute(
-        "aria-selected",
-        isActive ? "true" : "false"
-      );
+      tab.setAttribute("aria-selected", isActive ? "true" : "false");
     });
 
     explorePanels.forEach((panel) => {
@@ -82,6 +99,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // -------------------------
+  // PROFILE TABS
+  // -------------------------
+
+  function showProfilePanel(panelName) {
+    profileTabs.forEach((tab) => {
+      const isActive = tab.dataset.profileTab === panelName;
+
+      tab.classList.toggle("active", isActive);
+      tab.setAttribute("aria-selected", isActive ? "true" : "false");
+    });
+
+    profilePanels.forEach((panel) => {
+      panel.classList.toggle(
+        "active-profile-panel",
+        panel.dataset.profilePanel === panelName
+      );
+    });
+  }
+
+  profileTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      showProfilePanel(tab.dataset.profileTab);
+    });
+  });
+
+  // -------------------------
+  // COMPOSER
+  // -------------------------
+
   function openComposer() {
     if (composerOpen) return;
 
@@ -93,7 +140,6 @@ document.addEventListener("DOMContentLoaded", () => {
     textarea.rows = 4;
 
     composerInput.replaceWith(textarea);
-
     textarea.focus();
 
     composer.classList.add("composer-open");
@@ -105,6 +151,10 @@ document.addEventListener("DOMContentLoaded", () => {
     showPage("home");
     openComposer();
   });
+
+  // -------------------------
+  // AUDIENCE MENU
+  // -------------------------
 
   const audienceMenu = document.createElement("div");
   audienceMenu.className = "audience-menu";
@@ -144,20 +194,14 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
-  audienceMenu
-    .querySelectorAll("button")
-    .forEach((option) => {
-      option.addEventListener("click", () => {
-        audienceButton.textContent =
-          option.dataset.audience;
+  audienceMenu.querySelectorAll("button").forEach((option) => {
+    option.addEventListener("click", () => {
+      audienceButton.textContent = option.dataset.audience;
 
-        audienceMenuOpen = false;
-
-        audienceMenu.classList.remove(
-          "audience-menu-open"
-        );
-      });
+      audienceMenuOpen = false;
+      audienceMenu.classList.remove("audience-menu-open");
     });
+  });
 
   document.addEventListener("click", (event) => {
     if (
@@ -166,17 +210,16 @@ document.addEventListener("DOMContentLoaded", () => {
       !audienceButton.contains(event.target)
     ) {
       audienceMenuOpen = false;
-
-      audienceMenu.classList.remove(
-        "audience-menu-open"
-      );
+      audienceMenu.classList.remove("audience-menu-open");
     }
   });
 
+  // -------------------------
+  // POST BUTTON
+  // -------------------------
+
   postButton.addEventListener("click", () => {
-    const textarea = document.querySelector(
-      ".composer-textarea"
-    );
+    const textarea = document.querySelector(".composer-textarea");
 
     if (!textarea) {
       openComposer();
