@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SOCIAL with friends</title>
 
-  <link rel="stylesheet" href="styles.css?v=6" />
+  <link rel="stylesheet" href="styles.css?v=7" />
 </head>
 
 <body>
@@ -51,7 +51,7 @@
         <span class="nav-tooltip">Messages</span>
       </button>
 
-      <button class="nav-item" aria-label="Notifications">
+      <button class="nav-item" aria-label="Notifications" data-page="notifications">
         <svg viewBox="0 0 24 24">
           <path d="M6 17h12"></path>
           <path d="M8 17V10a4 4 0 118 0v7"></path>
@@ -1362,8 +1362,54 @@
 
   </main>
 
+  <!-- NOTIFICATIONS PAGE -->
+  <main class="notifications-page page-view" id="notifications-page">
+    <section class="notifications-main">
+      <div class="notifications-hero">
+        <div><span class="panel-label">ACTIVITY</span><h1>Notifications</h1><p>See what needs your attention across SOCIAL.</p></div>
+        <button class="mark-all-read-button">Mark all as read</button>
+      </div>
 
-  <script src="script.js?v=6"></script>
+      <div class="notifications-tabs" role="tablist" aria-label="Notification sections">
+        <button class="notifications-tab active" data-notifications-tab="all">All</button>
+        <button class="notifications-tab" data-notifications-tab="unread">Unread <span class="notifications-tab-count">4</span></button>
+        <button class="notifications-tab" data-notifications-tab="requests">Friend Requests</button>
+      </div>
+
+      <section class="notifications-content-panel active-notifications-panel" data-notifications-panel="all">
+        <div class="notification-group-label">TODAY</div>
+        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=47" alt="Jasmine Carter"><div class="notification-copy"><p><strong>Jasmine Carter</strong> liked your post.</p><span>12 minutes ago</span></div><span class="notification-unread-dot"></span></article>
+        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=12" alt="Marcus Johnson"><div class="notification-copy"><p><strong>Marcus Johnson</strong> commented on your post: “That’s exactly what I was saying.”</p><span>34 minutes ago</span></div><span class="notification-unread-dot"></span></article>
+        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=5" alt="Nia Robinson"><div class="notification-copy"><p><strong>Nia Robinson</strong> sent you a friend request.</p><span>1 hour ago · 18 mutual friends</span></div><div class="notification-actions"><button class="notification-primary">Accept</button><button class="notification-secondary">Decline</button></div></article>
+        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=32" alt="Tiffany Brooks"><div class="notification-copy"><p><strong>Tiffany Brooks</strong> mentioned you in a conversation.</p><span>2 hours ago</span></div><span class="notification-unread-dot"></span></article>
+        <div class="notification-group-label older-label">EARLIER</div>
+        <article class="notification-item card"><div class="notification-social-mark">S</div><div class="notification-copy"><p><strong>SOCIAL</strong> Your profile privacy settings were updated.</p><span>Yesterday</span></div></article>
+        <article class="notification-item card"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=45" alt="Avery Lewis"><div class="notification-copy"><p><strong>Avery Lewis</strong> liked your photo.</p><span>Yesterday</span></div></article>
+      </section>
+
+      <section class="notifications-content-panel" data-notifications-panel="unread">
+        <div class="notification-group-label">UNREAD</div>
+        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=47" alt="Jasmine Carter"><div class="notification-copy"><p><strong>Jasmine Carter</strong> liked your post.</p><span>12 minutes ago</span></div><span class="notification-unread-dot"></span></article>
+        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=12" alt="Marcus Johnson"><div class="notification-copy"><p><strong>Marcus Johnson</strong> commented on your post.</p><span>34 minutes ago</span></div><span class="notification-unread-dot"></span></article>
+        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=5" alt="Nia Robinson"><div class="notification-copy"><p><strong>Nia Robinson</strong> sent you a friend request.</p><span>1 hour ago · 18 mutual friends</span></div><div class="notification-actions"><button class="notification-primary">Accept</button><button class="notification-secondary">Decline</button></div></article>
+        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=32" alt="Tiffany Brooks"><div class="notification-copy"><p><strong>Tiffany Brooks</strong> mentioned you in a conversation.</p><span>2 hours ago</span></div><span class="notification-unread-dot"></span></article>
+      </section>
+
+      <section class="notifications-content-panel" data-notifications-panel="requests">
+        <div class="notification-group-label">FRIEND REQUESTS</div>
+        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=5" alt="Nia Robinson"><div class="notification-copy"><p><strong>Nia Robinson</strong> sent you a friend request.</p><span>1 hour ago · 18 mutual friends</span></div><div class="notification-actions"><button class="notification-primary">Accept</button><button class="notification-secondary">Decline</button></div></article>
+        <article class="notification-item card"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=13" alt="Darius King"><div class="notification-copy"><p><strong>Darius King</strong> sent you a friend request.</p><span>Yesterday · 7 mutual friends</span></div><div class="notification-actions"><button class="notification-primary">Accept</button><button class="notification-secondary">Decline</button></div></article>
+      </section>
+    </section>
+
+    <aside class="notifications-side">
+      <section class="notifications-summary card"><span class="panel-label">AT A GLANCE</span><h2>4 Unread</h2><p>New activity since the last time you checked SOCIAL.</p><div class="notification-summary-grid"><div><strong>1</strong><span>Request</span></div><div><strong>1</strong><span>Comment</span></div><div><strong>1</strong><span>Reaction</span></div><div><strong>1</strong><span>Mention</span></div></div></section>
+      <section class="notifications-control card"><span class="panel-label">YOUR ATTENTION</span><h2>Keep it useful.</h2><p>SOCIAL should notify you about people and activity that actually matter, not flood you with noise.</p></section>
+    </aside>
+  </main>
+
+
+  <script src="script.js?v=7"></script>
 
 </body>
 </html>
