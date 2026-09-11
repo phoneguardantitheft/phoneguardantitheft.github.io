@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SOCIAL with friends</title>
 
-  <link rel="stylesheet" href="styles.css?v=8" />
+  <link rel="stylesheet" href="styles.css?v=9" />
 </head>
 
 <body>
@@ -70,7 +70,7 @@
           <path d="M16 16l4 4"></path>
         </svg>
 
-        <input type="text" placeholder="Search SOCIAL" />
+        <input type="text" id="global-search-input" placeholder="Search SOCIAL" autocomplete="off" />
       </div>
 
       <button class="profile-button" aria-label="Profile" data-page="profile">
@@ -1460,6 +1460,225 @@
       <section class="notifications-control card"><span class="panel-label">YOUR ATTENTION</span><h2>Keep it useful.</h2><p>SOCIAL should notify you about people and activity that actually matter, not flood you with noise.</p></section>
     </aside>
   </main>
+
+  <!-- SEARCH PAGE -->
+  <main class="search-page page-view" id="search-page">
+    <section class="search-main">
+      <div class="search-hero">
+        <span class="panel-label">SEARCH SOCIAL</span>
+        <h1>Find people, posts, and topics.</h1>
+        <p>Search across SOCIAL without changing what appears in your Home feed.</p>
+
+        <label class="search-page-box">
+          <svg viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="6"></circle>
+            <path d="M16 16l4 4"></path>
+          </svg>
+          <input id="search-page-input" type="text" placeholder="Search SOCIAL" autocomplete="off" />
+          <button id="search-submit-button" type="button">Search</button>
+        </label>
+      </div>
+
+      <div class="search-tabs" role="tablist" aria-label="Search result types">
+        <button class="search-tab active" data-search-tab="all">All</button>
+        <button class="search-tab" data-search-tab="people">People</button>
+        <button class="search-tab" data-search-tab="posts">Posts</button>
+        <button class="search-tab" data-search-tab="topics">Topics</button>
+      </div>
+
+      <div class="search-query-line">
+        Showing prototype results for <strong id="search-query-label">Dallas</strong>
+      </div>
+
+      <section class="search-content-panel active-search-panel" data-search-panel="all">
+        <div class="search-section-heading">
+          <div><span class="panel-label">PEOPLE</span><h2>People</h2></div>
+          <button class="text-button search-jump" data-search-jump="people">See all people</button>
+        </div>
+
+        <div class="search-people-grid">
+          <article class="search-person-card card">
+            <img src="https://i.pravatar.cc/180?img=20" alt="Andre Collins">
+            <div><strong>Andre Collins</strong><span>@andrec</span><small>Dallas · 24 mutual friends</small></div>
+            <button>Add Friend</button>
+          </article>
+          <article class="search-person-card card">
+            <img src="https://i.pravatar.cc/180?img=36" alt="Monique Davis">
+            <div><strong>Monique Davis</strong><span>@moniqued</span><small>Dallas · 16 mutual friends</small></div>
+            <button>Add Friend</button>
+          </article>
+        </div>
+
+        <div class="search-section-heading search-section-spaced">
+          <div><span class="panel-label">POSTS</span><h2>Public Posts</h2></div>
+          <button class="text-button search-jump" data-search-jump="posts">See all posts</button>
+        </div>
+
+        <article class="search-post card">
+          <div class="search-post-top">
+            <div class="avatar purple-avatar">KR</div>
+            <div><strong>Kayla Reed</strong><span>Public · 2h</span></div>
+          </div>
+          <p>Anybody know a good weekend brunch spot in Dallas that isn't packed by 10 AM?</p>
+          <div class="search-post-meta"><span>52 likes</span><span>31 replies</span></div>
+        </article>
+
+        <div class="search-section-heading search-section-spaced">
+          <div><span class="panel-label">TOPICS</span><h2>Related Topics</h2></div>
+          <button class="text-button search-jump" data-search-jump="topics">See all topics</button>
+        </div>
+
+        <div class="search-topic-row">
+          <button class="search-topic-card card"><span class="topic-kicker">LOCAL</span><strong>Dallas</strong><small>2.8K active conversations</small></button>
+          <button class="search-topic-card card"><span class="topic-kicker">TRAVEL</span><strong>Texas Weekend Trips</strong><small>1.1K active conversations</small></button>
+        </div>
+      </section>
+
+      <section class="search-content-panel" data-search-panel="people">
+        <div class="search-section-heading"><div><span class="panel-label">PEOPLE</span><h2>People matching your search</h2></div></div>
+        <div class="search-people-grid">
+          <article class="search-person-card card"><img src="https://i.pravatar.cc/180?img=20" alt="Andre Collins"><div><strong>Andre Collins</strong><span>@andrec</span><small>Dallas · 24 mutual friends</small></div><button>Add Friend</button></article>
+          <article class="search-person-card card"><img src="https://i.pravatar.cc/180?img=36" alt="Monique Davis"><div><strong>Monique Davis</strong><span>@moniqued</span><small>Dallas · 16 mutual friends</small></div><button>Add Friend</button></article>
+          <article class="search-person-card card"><img src="https://i.pravatar.cc/180?img=8" alt="Terrence Young"><div><strong>Terrence Young</strong><span>@terrencey</span><small>Dallas · 10 mutual friends</small></div><button>Add Friend</button></article>
+          <article class="search-person-card card"><img src="https://i.pravatar.cc/180?img=29" alt="Renee Foster"><div><strong>Renee Foster</strong><span>@reneef</span><small>Dallas · 8 mutual friends</small></div><button>Add Friend</button></article>
+        </div>
+      </section>
+
+      <section class="search-content-panel" data-search-panel="posts">
+        <div class="search-section-heading"><div><span class="panel-label">POSTS</span><h2>Public posts matching your search</h2></div></div>
+        <article class="search-post card"><div class="search-post-top"><div class="avatar purple-avatar">KR</div><div><strong>Kayla Reed</strong><span>Public · 2h</span></div></div><p>Anybody know a good weekend brunch spot in Dallas that isn't packed by 10 AM?</p><div class="search-post-meta"><span>52 likes</span><span>31 replies</span></div></article>
+        <article class="search-post card"><div class="search-post-top"><div class="avatar blue-avatar">DT</div><div><strong>Devin Thomas</strong><span>Public · 5h</span></div></div><p>Dallas traffic makes a 20 minute drive turn into a whole life decision.</p><div class="search-post-meta"><span>118 likes</span><span>46 replies</span></div></article>
+      </section>
+
+      <section class="search-content-panel" data-search-panel="topics">
+        <div class="search-section-heading"><div><span class="panel-label">TOPICS</span><h2>Topics matching your search</h2></div></div>
+        <div class="search-topic-grid">
+          <button class="search-topic-card card"><span class="topic-kicker">LOCAL</span><strong>Dallas</strong><small>2.8K active conversations</small></button>
+          <button class="search-topic-card card"><span class="topic-kicker">TRAVEL</span><strong>Texas Weekend Trips</strong><small>1.1K active conversations</small></button>
+          <button class="search-topic-card card"><span class="topic-kicker">FOOD</span><strong>Dallas Food</strong><small>3.4K active conversations</small></button>
+          <button class="search-topic-card card"><span class="topic-kicker">SPORTS</span><strong>DFW Sports</strong><small>4.2K active conversations</small></button>
+        </div>
+      </section>
+    </section>
+
+    <aside class="search-side">
+      <section class="search-tip card">
+        <span class="panel-label">SEARCH</span>
+        <h2>Find what you're looking for.</h2>
+        <p>Search can surface public people, posts, and topics while keeping Home focused on your friends.</p>
+      </section>
+
+      <section class="search-recent card">
+        <span class="panel-label">RECENT SEARCHES</span>
+        <div class="recent-search-list">
+          <button>Dallas</button>
+          <button>Technology</button>
+          <button>Spades</button>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const globalSearchInput = document.getElementById("global-search-input");
+      const searchPage = document.getElementById("search-page");
+      const searchPageInput = document.getElementById("search-page-input");
+      const searchSubmitButton = document.getElementById("search-submit-button");
+      const searchQueryLabel = document.getElementById("search-query-label");
+      const searchTabs = document.querySelectorAll("[data-search-tab]");
+      const searchPanels = document.querySelectorAll("[data-search-panel]");
+      const searchJumpButtons = document.querySelectorAll("[data-search-jump]");
+      const recentSearchButtons = document.querySelectorAll(".recent-search-list button");
+      const notificationPopover = document.getElementById("notification-popover");
+
+      function showSearchPanel(panelName) {
+        searchTabs.forEach((tab) => {
+          const active = tab.dataset.searchTab === panelName;
+          tab.classList.toggle("active", active);
+          tab.setAttribute("aria-selected", active ? "true" : "false");
+        });
+
+        searchPanels.forEach((panel) => {
+          panel.classList.toggle(
+            "active-search-panel",
+            panel.dataset.searchPanel === panelName
+          );
+        });
+      }
+
+      function openSearch(value) {
+        const query = value.trim() || "Dallas";
+
+        document.querySelectorAll(".page-view").forEach((page) => {
+          page.classList.remove("active-page");
+        });
+
+        document.querySelectorAll(".nav-item").forEach((item) => {
+          item.classList.remove("active");
+        });
+
+        document.querySelector(".profile-button")?.classList.remove("active-profile");
+
+        if (notificationPopover) {
+          notificationPopover.classList.remove("open");
+          notificationPopover.setAttribute("aria-hidden", "true");
+        }
+
+        searchPage.classList.add("active-page");
+        globalSearchInput.value = query;
+        searchPageInput.value = query;
+        searchQueryLabel.textContent = query;
+        showSearchPanel("all");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      globalSearchInput.addEventListener("focus", () => {
+        openSearch(globalSearchInput.value || "Dallas");
+        setTimeout(() => searchPageInput.focus(), 0);
+      });
+
+      globalSearchInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          openSearch(globalSearchInput.value);
+          searchPageInput.focus();
+        }
+      });
+
+      searchSubmitButton.addEventListener("click", () => {
+        openSearch(searchPageInput.value);
+        searchPageInput.focus();
+      });
+
+      searchPageInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          openSearch(searchPageInput.value);
+          searchPageInput.focus();
+        }
+      });
+
+      searchTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          showSearchPanel(tab.dataset.searchTab);
+        });
+      });
+
+      searchJumpButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          showSearchPanel(button.dataset.searchJump);
+        });
+      });
+
+      recentSearchButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          openSearch(button.textContent);
+          searchPageInput.focus();
+        });
+      });
+    });
+  </script>
 
 
   <script src="script.js?v=8"></script>
