@@ -38,12 +38,35 @@ document.addEventListener("DOMContentLoaded", () => {
   const messageInput = document.querySelector(".message-input");
   const messageSendButton = document.querySelector(".message-send-button");
 
-  const notificationsTabs = document.querySelectorAll("[data-notifications-tab]");
-  const notificationsPanels = document.querySelectorAll("[data-notifications-panel]");
-  const markAllReadButton = document.querySelector(".mark-all-read-button");
+  const notificationsTabs = document.querySelectorAll(
+    "[data-notifications-tab]"
+  );
+  const notificationsPanels = document.querySelectorAll(
+    "[data-notifications-panel]"
+  );
+
+  const markAllReadButton = document.querySelector(
+    ".mark-all-read-button"
+  );
+
+  const notificationPopover = document.getElementById(
+    "notification-popover"
+  );
+
+  const popoverMarkReadButton = document.querySelector(
+    ".popover-mark-read"
+  );
+
+  const notificationSeeAllButton = document.querySelector(
+    ".notification-see-all"
+  );
 
   let composerOpen = false;
   let audienceMenuOpen = false;
+
+  // -------------------------
+  // MAIN NAVIGATION
+  // -------------------------
 
   function clearMainNavigationState() {
     navItems.forEach((nav) => nav.classList.remove("active"));
@@ -51,6 +74,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showPage(pageName) {
+    if (
+      notificationPopover &&
+      notificationPopover.classList.contains("open")
+    ) {
+      notificationPopover.classList.remove("open");
+      notificationPopover.setAttribute("aria-hidden", "true");
+    }
+
     homePage.classList.remove("active-page");
     explorePage.classList.remove("active-page");
     profilePage.classList.remove("active-page");
@@ -80,14 +111,91 @@ document.addEventListener("DOMContentLoaded", () => {
       homeNav.classList.add("active");
     }
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
   }
 
-  homeNav.addEventListener("click", () => showPage("home"));
-  exploreNav.addEventListener("click", () => showPage("explore"));
-  profileButton.addEventListener("click", () => showPage("profile"));
-  messagesNav.addEventListener("click", () => showPage("messages"));
-  notificationsNav.addEventListener("click", () => showPage("notifications"));
+  homeNav.addEventListener("click", () => {
+    showPage("home");
+  });
+
+  exploreNav.addEventListener("click", () => {
+    showPage("explore");
+  });
+
+  profileButton.addEventListener("click", () => {
+    showPage("profile");
+  });
+
+  messagesNav.addEventListener("click", () => {
+    showPage("messages");
+  });
+
+  // -------------------------
+  // NOTIFICATION POPOVER
+  // -------------------------
+
+  function positionNotificationPopover() {
+    const rect = notificationsNav.getBoundingClientRect();
+    const popoverWidth = 390;
+
+    const left = Math.max(
+      12,
+      Math.min(
+        window.innerWidth - popoverWidth - 12,
+        rect.right - popoverWidth
+      )
+    );
+
+    notificationPopover.style.top =
+      `${rect.bottom + 10}px`;
+
+    notificationPopover.style.left =
+      `${left}px`;
+  }
+
+  function closeNotificationPopover() {
+    notificationPopover.classList.remove("open");
+
+    notificationPopover.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    notificationsNav.classList.remove("active");
+  }
+
+  function openNotificationPopover() {
+    positionNotificationPopover();
+
+    notificationPopover.classList.add("open");
+
+    notificationPopover.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+    clearMainNavigationState();
+
+    notificationsNav.classList.add("active");
+  }
+
+  notificationsNav.addEventListener(
+    "click",
+    (event) => {
+      event.stopPropagation();
+
+      if (
+        notificationPopover.classList.contains("open")
+      ) {
+        closeNotificationPopover();
+      } else {
+        openNotificationPopover();
+      }
+    }
+  );
 
   navItems.forEach((item) => {
     if (
@@ -106,11 +214,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // -------------------------
+  // EXPLORE
+  // -------------------------
+
   function showExplorePanel(panelName) {
     exploreTabs.forEach((tab) => {
-      const isActive = tab.dataset.exploreTab === panelName;
-      tab.classList.toggle("active", isActive);
-      tab.setAttribute("aria-selected", isActive ? "true" : "false");
+      const isActive =
+        tab.dataset.exploreTab === panelName;
+
+      tab.classList.toggle(
+        "active",
+        isActive
+      );
+
+      tab.setAttribute(
+        "aria-selected",
+        isActive ? "true" : "false"
+      );
     });
 
     explorePanels.forEach((panel) => {
@@ -123,15 +244,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   exploreTabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      showExplorePanel(tab.dataset.exploreTab);
+      showExplorePanel(
+        tab.dataset.exploreTab
+      );
     });
   });
 
+  // -------------------------
+  // PROFILE
+  // -------------------------
+
   function showProfilePanel(panelName) {
     profileTabs.forEach((tab) => {
-      const isActive = tab.dataset.profileTab === panelName;
-      tab.classList.toggle("active", isActive);
-      tab.setAttribute("aria-selected", isActive ? "true" : "false");
+      const isActive =
+        tab.dataset.profileTab === panelName;
+
+      tab.classList.toggle(
+        "active",
+        isActive
+      );
+
+      tab.setAttribute(
+        "aria-selected",
+        isActive ? "true" : "false"
+      );
     });
 
     profilePanels.forEach((panel) => {
@@ -144,15 +280,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   profileTabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      showProfilePanel(tab.dataset.profileTab);
+      showProfilePanel(
+        tab.dataset.profileTab
+      );
     });
   });
 
+  // -------------------------
+  // FRIENDS
+  // -------------------------
+
   function showFriendsPanel(panelName) {
     friendsTabs.forEach((tab) => {
-      const isActive = tab.dataset.friendsTab === panelName;
-      tab.classList.toggle("active", isActive);
-      tab.setAttribute("aria-selected", isActive ? "true" : "false");
+      const isActive =
+        tab.dataset.friendsTab === panelName;
+
+      tab.classList.toggle(
+        "active",
+        isActive
+      );
+
+      tab.setAttribute(
+        "aria-selected",
+        isActive ? "true" : "false"
+      );
     });
 
     friendsPanels.forEach((panel) => {
@@ -165,217 +316,509 @@ document.addEventListener("DOMContentLoaded", () => {
 
   friendsTabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      showFriendsPanel(tab.dataset.friendsTab);
+      showFriendsPanel(
+        tab.dataset.friendsTab
+      );
     });
   });
 
   openFriendsButtons.forEach((button) => {
-    button.addEventListener("click", (event) => {
-      event.stopPropagation();
-      showPage("friends");
-      showFriendsPanel("all");
-    });
+    button.addEventListener(
+      "click",
+      (event) => {
+        event.stopPropagation();
+
+        showPage("friends");
+        showFriendsPanel("all");
+      }
+    );
   });
+
+  // -------------------------
+  // FULL NOTIFICATIONS PAGE
+  // -------------------------
 
   function showNotificationsPanel(panelName) {
     notificationsTabs.forEach((tab) => {
-      const isActive = tab.dataset.notificationsTab === panelName;
-      tab.classList.toggle("active", isActive);
-      tab.setAttribute("aria-selected", isActive ? "true" : "false");
+      const isActive =
+        tab.dataset.notificationsTab === panelName;
+
+      tab.classList.toggle(
+        "active",
+        isActive
+      );
+
+      tab.setAttribute(
+        "aria-selected",
+        isActive ? "true" : "false"
+      );
     });
 
     notificationsPanels.forEach((panel) => {
       panel.classList.toggle(
         "active-notifications-panel",
-        panel.dataset.notificationsPanel === panelName
+        panel.dataset.notificationsPanel ===
+          panelName
       );
     });
   }
 
   notificationsTabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      showNotificationsPanel(tab.dataset.notificationsTab);
+      showNotificationsPanel(
+        tab.dataset.notificationsTab
+      );
     });
   });
 
-  markAllReadButton.addEventListener("click", () => {
-    document.querySelectorAll(".notification-item.unread").forEach((item) => {
-      item.classList.remove("unread");
-    });
+  // -------------------------
+  // MARK ALL AS READ
+  // -------------------------
 
-    document.querySelectorAll(".notification-unread-dot").forEach((dot) => {
-      dot.remove();
-    });
+  function markNotificationsRead() {
+    document
+      .querySelectorAll(
+        ".notification-item.unread"
+      )
+      .forEach((item) => {
+        item.classList.remove("unread");
+      });
 
-    document.querySelectorAll(".notifications-tab-count").forEach((count) => {
-      count.textContent = "0";
-    });
+    document
+      .querySelectorAll(
+        ".notification-unread-dot"
+      )
+      .forEach((dot) => {
+        dot.remove();
+      });
 
-    markAllReadButton.textContent = "All caught up";
-  });
+    document
+      .querySelectorAll(
+        ".popover-notification.unread"
+      )
+      .forEach((item) => {
+        item.classList.remove("unread");
+      });
+
+    document
+      .querySelectorAll(
+        ".popover-unread-dot"
+      )
+      .forEach((dot) => {
+        dot.remove();
+      });
+
+    document
+      .querySelectorAll(
+        ".notifications-tab-count"
+      )
+      .forEach((count) => {
+        count.textContent = "0";
+      });
+
+    markAllReadButton.textContent =
+      "All caught up";
+
+    popoverMarkReadButton.textContent =
+      "All read";
+  }
+
+  markAllReadButton.addEventListener(
+    "click",
+    markNotificationsRead
+  );
+
+  popoverMarkReadButton.addEventListener(
+    "click",
+    (event) => {
+      event.stopPropagation();
+      markNotificationsRead();
+    }
+  );
+
+  // -------------------------
+  // SEE ALL
+  // -------------------------
+
+  notificationSeeAllButton.addEventListener(
+    "click",
+    () => {
+      closeNotificationPopover();
+
+      showPage("notifications");
+
+      showNotificationsPanel("all");
+    }
+  );
+
+  // Do not close popup when clicking inside it.
+  notificationPopover.addEventListener(
+    "click",
+    (event) => {
+      event.stopPropagation();
+    }
+  );
+
+  // Clicking anywhere else closes popup.
+  document.addEventListener(
+    "click",
+    () => {
+      closeNotificationPopover();
+    }
+  );
+
+  window.addEventListener(
+    "resize",
+    () => {
+      if (
+        notificationPopover.classList.contains(
+          "open"
+        )
+      ) {
+        positionNotificationPopover();
+      }
+    }
+  );
+
+  // -------------------------
+  // MESSAGES
+  // -------------------------
 
   const conversationData = {
     jasmine: {
       name: "Jasmine Carter",
       handle: "@jasminec",
-      image: "https://i.pravatar.cc/160?img=47",
+      image:
+        "https://i.pravatar.cc/160?img=47",
+
       messages: [
-        { type: "incoming", text: "You still going Saturday?", time: "9:36 AM" },
-        { type: "outgoing", text: "Yeah, that's still the plan. What time y'all getting there?", time: "9:38 AM" },
-        { type: "incoming", text: "Probably around 7. I'll let you know if anything changes.", time: "9:41 AM" }
+        {
+          type: "incoming",
+          text:
+            "You still going Saturday?",
+          time: "9:36 AM"
+        },
+        {
+          type: "outgoing",
+          text:
+            "Yeah, that's still the plan. What time y'all getting there?",
+          time: "9:38 AM"
+        },
+        {
+          type: "incoming",
+          text:
+            "Probably around 7. I'll let you know if anything changes.",
+          time: "9:41 AM"
+        }
       ]
     },
+
     marcus: {
       name: "Marcus Johnson",
       handle: "@marcusj",
-      image: "https://i.pravatar.cc/160?img=12",
+      image:
+        "https://i.pravatar.cc/160?img=12",
+
       messages: [
-        { type: "incoming", text: "I looked at what you sent me.", time: "Yesterday" },
-        { type: "outgoing", text: "What you think?", time: "Yesterday" },
-        { type: "incoming", text: "That actually makes sense.", time: "Yesterday" }
+        {
+          type: "incoming",
+          text:
+            "I looked at what you sent me.",
+          time: "Yesterday"
+        },
+        {
+          type: "outgoing",
+          text: "What you think?",
+          time: "Yesterday"
+        },
+        {
+          type: "incoming",
+          text:
+            "That actually makes sense.",
+          time: "Yesterday"
+        }
       ]
     },
+
     tiffany: {
       name: "Tiffany Brooks",
       handle: "@tiffanyb",
-      image: "https://i.pravatar.cc/160?img=32",
+      image:
+        "https://i.pravatar.cc/160?img=32",
+
       messages: [
-        { type: "outgoing", text: "I got a better one from earlier.", time: "Tue" },
-        { type: "incoming", text: "Send me the picture when you get a chance.", time: "Tue" }
+        {
+          type: "outgoing",
+          text:
+            "I got a better one from earlier.",
+          time: "Tue"
+        },
+        {
+          type: "incoming",
+          text:
+            "Send me the picture when you get a chance.",
+          time: "Tue"
+        }
       ]
     },
+
     chris: {
       name: "Chris Walker",
       handle: "@chrisw",
-      image: "https://i.pravatar.cc/160?img=11",
+      image:
+        "https://i.pravatar.cc/160?img=11",
+
       messages: [
-        { type: "outgoing", text: "Can you remind me later?", time: "Mon" },
-        { type: "incoming", text: "Bet. I got you.", time: "Mon" }
+        {
+          type: "outgoing",
+          text:
+            "Can you remind me later?",
+          time: "Mon"
+        },
+        {
+          type: "incoming",
+          text: "Bet. I got you.",
+          time: "Mon"
+        }
       ]
     },
+
     avery: {
       name: "Avery Lewis",
       handle: "@averyl",
-      image: "https://i.pravatar.cc/160?img=45",
+      image:
+        "https://i.pravatar.cc/160?img=45",
+
       messages: [
-        { type: "outgoing", text: "I knew you were going to laugh at that.", time: "Sep 7" },
-        { type: "incoming", text: "That GIF had me crying.", time: "Sep 7" }
+        {
+          type: "outgoing",
+          text:
+            "I knew you were going to laugh at that.",
+          time: "Sep 7"
+        },
+        {
+          type: "incoming",
+          text:
+            "That GIF had me crying.",
+          time: "Sep 7"
+        }
       ]
     }
   };
 
   function renderConversation(key) {
-    const conversation = conversationData[key];
+    const conversation =
+      conversationData[key];
+
     if (!conversation) return;
 
-    conversationName.textContent = conversation.name;
-    conversationHandle.textContent = conversation.handle;
-    conversationPhoto.src = conversation.image;
-    conversationPhoto.alt = conversation.name;
+    conversationName.textContent =
+      conversation.name;
 
-    conversationBody.innerHTML = '<div class="conversation-date">Recent</div>';
+    conversationHandle.textContent =
+      conversation.handle;
 
-    conversation.messages.forEach((message) => {
-      const row = document.createElement("div");
-      row.className = `message-row ${message.type}`;
+    conversationPhoto.src =
+      conversation.image;
 
-      if (message.type === "incoming") {
-        const avatar = document.createElement("img");
-        avatar.src = conversation.image;
-        avatar.alt = "";
-        row.appendChild(avatar);
+    conversationPhoto.alt =
+      conversation.name;
+
+    conversationBody.innerHTML =
+      '<div class="conversation-date">Recent</div>';
+
+    conversation.messages.forEach(
+      (message) => {
+        const row =
+          document.createElement("div");
+
+        row.className =
+          `message-row ${message.type}`;
+
+        if (
+          message.type === "incoming"
+        ) {
+          const avatar =
+            document.createElement("img");
+
+          avatar.src =
+            conversation.image;
+
+          avatar.alt = "";
+
+          row.appendChild(avatar);
+        }
+
+        const stack =
+          document.createElement("div");
+
+        stack.className =
+          "message-stack";
+
+        const bubble =
+          document.createElement("div");
+
+        bubble.className =
+          "message-bubble";
+
+        bubble.textContent =
+          message.text;
+
+        const time =
+          document.createElement("time");
+
+        time.textContent =
+          message.time;
+
+        stack.appendChild(bubble);
+        stack.appendChild(time);
+        row.appendChild(stack);
+
+        conversationBody.appendChild(
+          row
+        );
       }
+    );
 
-      const stack = document.createElement("div");
-      stack.className = "message-stack";
-
-      const bubble = document.createElement("div");
-      bubble.className = "message-bubble";
-      bubble.textContent = message.text;
-
-      const time = document.createElement("time");
-      time.textContent = message.time;
-
-      stack.appendChild(bubble);
-      stack.appendChild(time);
-      row.appendChild(stack);
-      conversationBody.appendChild(row);
-    });
-
-    conversationBody.scrollTop = conversationBody.scrollHeight;
+    conversationBody.scrollTop =
+      conversationBody.scrollHeight;
   }
 
   conversationItems.forEach((item) => {
-    item.addEventListener("click", () => {
-      conversationItems.forEach((conversation) => {
-        conversation.classList.remove("active");
-      });
+    item.addEventListener(
+      "click",
+      () => {
+        conversationItems.forEach(
+          (conversation) => {
+            conversation.classList.remove(
+              "active"
+            );
+          }
+        );
 
-      item.classList.add("active");
-      renderConversation(item.dataset.conversation);
-    });
+        item.classList.add("active");
+
+        renderConversation(
+          item.dataset.conversation
+        );
+      }
+    );
   });
 
   function sendPrototypeMessage() {
-    const text = messageInput.value.trim();
+    const text =
+      messageInput.value.trim();
 
     if (!text) {
       messageInput.focus();
       return;
     }
 
-    const activeConversation = document.querySelector(
-      ".conversation-item.active"
+    const activeConversation =
+      document.querySelector(
+        ".conversation-item.active"
+      );
+
+    const key =
+      activeConversation?.dataset
+        .conversation;
+
+    if (
+      !key ||
+      !conversationData[key]
+    ) {
+      return;
+    }
+
+    conversationData[key].messages.push(
+      {
+        type: "outgoing",
+        text,
+        time: "Now"
+      }
     );
 
-    const key = activeConversation?.dataset.conversation;
-
-    if (!key || !conversationData[key]) return;
-
-    conversationData[key].messages.push({
-      type: "outgoing",
-      text,
-      time: "Now"
-    });
-
     messageInput.value = "";
+
     renderConversation(key);
+
     messageInput.focus();
   }
 
-  messageSendButton.addEventListener("click", sendPrototypeMessage);
+  messageSendButton.addEventListener(
+    "click",
+    sendPrototypeMessage
+  );
 
-  messageInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-      sendPrototypeMessage();
+  messageInput.addEventListener(
+    "keydown",
+    (event) => {
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
+
+        sendPrototypeMessage();
+      }
     }
-  });
+  );
+
+  // -------------------------
+  // CREATE POST
+  // -------------------------
 
   function openComposer() {
     if (composerOpen) return;
 
     composerOpen = true;
 
-    const textarea = document.createElement("textarea");
-    textarea.className = "composer-textarea";
-    textarea.placeholder = "Speak your mind...";
+    const textarea =
+      document.createElement(
+        "textarea"
+      );
+
+    textarea.className =
+      "composer-textarea";
+
+    textarea.placeholder =
+      "Speak your mind...";
+
     textarea.rows = 4;
 
-    composerInput.replaceWith(textarea);
+    composerInput.replaceWith(
+      textarea
+    );
+
     textarea.focus();
-    composer.classList.add("composer-open");
+
+    composer.classList.add(
+      "composer-open"
+    );
   }
 
-  composerInput.addEventListener("click", openComposer);
+  composerInput.addEventListener(
+    "click",
+    openComposer
+  );
 
-  createButton.addEventListener("click", () => {
-    showPage("home");
-    openComposer();
-  });
+  createButton.addEventListener(
+    "click",
+    () => {
+      showPage("home");
+      openComposer();
+    }
+  );
 
-  const audienceMenu = document.createElement("div");
-  audienceMenu.className = "audience-menu";
+  // -------------------------
+  // AUDIENCE MENU
+  // -------------------------
+
+  const audienceMenu =
+    document.createElement("div");
+
+  audienceMenu.className =
+    "audience-menu";
 
   audienceMenu.innerHTML = `
     <button data-audience="Public">
@@ -399,56 +842,88 @@ document.addEventListener("DOMContentLoaded", () => {
     </button>
   `;
 
-  composer.appendChild(audienceMenu);
+  composer.appendChild(
+    audienceMenu
+  );
 
-  audienceButton.addEventListener("click", (event) => {
-    event.stopPropagation();
+  audienceButton.addEventListener(
+    "click",
+    (event) => {
+      event.stopPropagation();
 
-    audienceMenuOpen = !audienceMenuOpen;
+      audienceMenuOpen =
+        !audienceMenuOpen;
 
-    audienceMenu.classList.toggle(
-      "audience-menu-open",
-      audienceMenuOpen
-    );
-  });
+      audienceMenu.classList.toggle(
+        "audience-menu-open",
+        audienceMenuOpen
+      );
+    }
+  );
 
-  audienceMenu.querySelectorAll("button").forEach((option) => {
-    option.addEventListener("click", () => {
-      audienceButton.textContent = option.dataset.audience;
+  audienceMenu
+    .querySelectorAll("button")
+    .forEach((option) => {
+      option.addEventListener(
+        "click",
+        () => {
+          audienceButton.textContent =
+            option.dataset.audience;
 
-      audienceMenuOpen = false;
-      audienceMenu.classList.remove("audience-menu-open");
+          audienceMenuOpen = false;
+
+          audienceMenu.classList.remove(
+            "audience-menu-open"
+          );
+        }
+      );
     });
-  });
 
-  document.addEventListener("click", (event) => {
-    if (
-      audienceMenuOpen &&
-      !audienceMenu.contains(event.target) &&
-      !audienceButton.contains(event.target)
-    ) {
-      audienceMenuOpen = false;
-      audienceMenu.classList.remove("audience-menu-open");
+  document.addEventListener(
+    "click",
+    (event) => {
+      if (
+        audienceMenuOpen &&
+        !audienceMenu.contains(
+          event.target
+        ) &&
+        !audienceButton.contains(
+          event.target
+        )
+      ) {
+        audienceMenuOpen = false;
+
+        audienceMenu.classList.remove(
+          "audience-menu-open"
+        );
+      }
     }
-  });
+  );
 
-  postButton.addEventListener("click", () => {
-    const textarea = document.querySelector(".composer-textarea");
+  postButton.addEventListener(
+    "click",
+    () => {
+      const textarea =
+        document.querySelector(
+          ".composer-textarea"
+        );
 
-    if (!textarea) {
-      openComposer();
-      return;
+      if (!textarea) {
+        openComposer();
+        return;
+      }
+
+      const text =
+        textarea.value.trim();
+
+      if (!text) {
+        textarea.focus();
+        return;
+      }
+
+      alert(
+        `Post preview:\n\n${text}\n\nAudience: ${audienceButton.textContent}`
+      );
     }
-
-    const text = textarea.value.trim();
-
-    if (!text) {
-      textarea.focus();
-      return;
-    }
-
-    alert(
-      `Post preview:\n\n${text}\n\nAudience: ${audienceButton.textContent}`
-    );
-  });
+  );
 });
