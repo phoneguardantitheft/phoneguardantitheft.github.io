@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SOCIAL with friends</title>
 
-  <link rel="stylesheet" href="styles.css?v=7" />
+  <link rel="stylesheet" href="styles.css?v=8" />
 </head>
 
 <body>
@@ -1362,6 +1362,59 @@
 
   </main>
 
+
+  <!-- NOTIFICATION POPOVER -->
+  <section class="notification-popover" id="notification-popover" aria-hidden="true">
+    <div class="notification-popover-header">
+      <div>
+        <span class="panel-label">RECENT</span>
+        <h2>Notifications</h2>
+      </div>
+      <button class="popover-mark-read" type="button">Mark all as read</button>
+    </div>
+
+    <div class="notification-popover-list">
+      <button class="popover-notification unread" type="button">
+        <img src="https://i.pravatar.cc/160?img=47" alt="Jasmine Carter">
+        <span class="popover-notification-copy">
+          <span><strong>Jasmine Carter</strong> liked your post.</span>
+          <small>12 minutes ago</small>
+        </span>
+        <span class="popover-unread-dot"></span>
+      </button>
+
+      <button class="popover-notification unread" type="button">
+        <img src="https://i.pravatar.cc/160?img=12" alt="Marcus Johnson">
+        <span class="popover-notification-copy">
+          <span><strong>Marcus Johnson</strong> commented on your post.</span>
+          <small>34 minutes ago</small>
+        </span>
+        <span class="popover-unread-dot"></span>
+      </button>
+
+      <button class="popover-notification unread" type="button">
+        <img src="https://i.pravatar.cc/160?img=5" alt="Nia Robinson">
+        <span class="popover-notification-copy">
+          <span><strong>Nia Robinson</strong> sent you a friend request.</span>
+          <small>1 hour ago</small>
+        </span>
+        <span class="popover-unread-dot"></span>
+      </button>
+
+      <button class="popover-notification unread" type="button">
+        <img src="https://i.pravatar.cc/160?img=32" alt="Tiffany Brooks">
+        <span class="popover-notification-copy">
+          <span><strong>Tiffany Brooks</strong> mentioned you in a conversation.</span>
+          <small>2 hours ago</small>
+        </span>
+        <span class="popover-unread-dot"></span>
+      </button>
+    </div>
+
+    <button class="notification-see-all" type="button">See all</button>
+  </section>
+
+
   <!-- NOTIFICATIONS PAGE -->
   <main class="notifications-page page-view" id="notifications-page">
     <section class="notifications-main">
@@ -1409,7 +1462,7 @@
   </main>
 
 
-  <script src="script.js?v=7"></script>
+  <script src="script.js?v=8"></script>
 
 </body>
 </html>
