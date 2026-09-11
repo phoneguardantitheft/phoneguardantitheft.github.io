@@ -1,1687 +1,3233 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SOCIAL with friends</title>
-
-  <link rel="stylesheet" href="styles.css?v=9" />
-</head>
-
-<body>
-
-  <!-- TOP HEADER -->
-  <header class="topbar">
-
-    <div class="brand">
-      <div class="brand-main">SOCIAL</div>
-      <div class="brand-sub">with friends</div>
-    </div>
-
-    <nav class="main-nav">
-
-      <button class="nav-item active" aria-label="Home" data-page="home">
-        <svg viewBox="0 0 24 24">
-          <path d="M3 11.5L12 4l9 7.5"></path>
-          <path d="M5.5 10.5V20h13v-9.5"></path>
-        </svg>
-        <span class="nav-tooltip">Home</span>
-      </button>
-
-      <button class="nav-item" aria-label="Explore" data-page="explore">
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="9"></circle>
-          <path d="M15.5 8.5l-2.2 4.8-4.8 2.2 2.2-4.8 4.8-2.2z"></path>
-        </svg>
-        <span class="nav-tooltip">Explore</span>
-      </button>
-
-      <button class="nav-item create-button" aria-label="Create">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 5v14"></path>
-          <path d="M5 12h14"></path>
-        </svg>
-        <span class="nav-tooltip">Create</span>
-      </button>
-
-      <button class="nav-item" aria-label="Messages" data-page="messages">
-        <svg viewBox="0 0 24 24">
-          <path d="M4 5h16v11H8l-4 3V5z"></path>
-        </svg>
-        <span class="nav-tooltip">Messages</span>
-      </button>
-
-      <button class="nav-item" aria-label="Notifications" data-page="notifications">
-        <svg viewBox="0 0 24 24">
-          <path d="M6 17h12"></path>
-          <path d="M8 17V10a4 4 0 118 0v7"></path>
-          <path d="M10 20h4"></path>
-        </svg>
-        <span class="nav-tooltip">Notifications</span>
-      </button>
-
-    </nav>
+:root {
+  --background: #070811;
+  --background-soft: #0d1020;
+  --surface: #111526;
+  --surface-light: #161b30;
+
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #ffffff;
+  --text-muted: #9499ad;
 
-    <div class="header-actions">
-
-      <div class="search-box">
-        <svg viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="6"></circle>
-          <path d="M16 16l4 4"></path>
-        </svg>
-
-        <input type="text" id="global-search-input" placeholder="Search SOCIAL" autocomplete="off" />
-      </div>
-
-      <button class="profile-button" aria-label="Profile" data-page="profile">
-        ML
-      </button>
+  --purple: #9a42ff;
+  --purple-light: #bb72ff;
+  --purple-dark: #6520d3;
 
-    </div>
+  --nav-height: 82px;
+}
 
-  </header>
 
+/* RESET */
 
-  <!-- PAGE -->
-  <main class="page-layout page-view active-page" id="home-page">
-
-    <!-- MAIN FEED -->
-    <section class="feed-column">
-
-      <!-- COMPOSER -->
-      <div class="composer card">
-
-        <div class="composer-top">
-
-          <div class="avatar">
-            ML
-          </div>
-
-          <button class="composer-input">
-            Speak your mind...
-          </button>
-
-        </div>
+* {
+  box-sizing: border-box;
+}
 
-        <div class="composer-actions">
-
-          <button>
-            <svg viewBox="0 0 24 24">
-              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-              <circle cx="9" cy="10" r="2"></circle>
-              <path d="M4 17l5-5 4 4 3-3 4 4"></path>
-            </svg>
-            Photo
-          </button>
-
-          <button>
-            <span class="gif-icon">GIF</span>
-            GIF
-          </button>
-
-          <button>
-            <svg viewBox="0 0 24 24">
-              <path d="M6 19V9"></path>
-              <path d="M12 19V5"></path>
-              <path d="M18 19v-7"></path>
-            </svg>
-            Poll
-          </button>
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
 
-          <div class="composer-spacer"></div>
+body {
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 
-          <button class="audience-button">
-            Friends
-          </button>
+  background:
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(124, 46, 255, 0.15),
+      transparent 35%
+    ),
+    var(--background);
 
-          <button class="post-button">
-            Post
-          </button>
+  color: var(--text);
+  min-height: 100vh;
+}
 
-        </div>
 
-      </div>
+/* GENERAL */
 
+button,
+input {
+  font: inherit;
+}
 
-      <!-- FEED HEADER -->
-      <div class="feed-heading">
-        <div>
-          <h1>Your Home</h1>
-          <p>Posts from your friends.</p>
-        </div>
+button {
+  color: inherit;
+}
 
-        <button class="feed-options">
-          •••
-        </button>
-      </div>
+svg {
+  width: 22px;
+  height: 22px;
 
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
-      <!-- POST -->
-      <article class="post card">
+.card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(22, 27, 48, 0.96),
+      rgba(13, 16, 31, 0.98)
+    );
 
-        <div class="post-header">
+  border: 1px solid var(--border);
+  border-radius: 22px;
+}
 
-          <div class="avatar purple-avatar">
-            JC
-          </div>
 
-          <div class="post-user">
-            <strong>Jasmine Carter</strong>
-            <span>2h · Friends</span>
-          </div>
+/* TOP BAR */
 
-          <button class="post-menu">
-            •••
-          </button>
+.topbar {
+  height: var(--nav-height);
 
-        </div>
+  position: sticky;
+  top: 0;
+  z-index: 100;
 
-        <div class="post-text">
-          Weekend reset. Good food, good people, good energy.
-        </div>
+  display: grid;
 
-        <div class="photo-placeholder">
-          <div class="photo-message">
-            Friend photo / post media
-          </div>
-        </div>
+  grid-template-columns:
+    240px
+    1fr
+    380px;
 
-        <div class="post-stats">
-          <span>128 likes</span>
-          <span>24 comments</span>
-        </div>
+  align-items: center;
 
-        <div class="post-actions">
+  padding: 0 30px;
 
-          <button>
-            <svg viewBox="0 0 24 24">
-              <path d="M7 10v10H4V10h3z"></path>
-              <path d="M7 10l4-6c1-1.4 3 .1 2.4 1.6L12 10h6c1.5 0 2.4 1.4 2 2.7L18 20H7"></path>
-            </svg>
-            Like
-          </button>
+  background: rgba(7, 8, 17, 0.88);
 
-          <button>
-            <svg viewBox="0 0 24 24">
-              <path d="M4 5h16v11H8l-4 3V5z"></path>
-            </svg>
-            Comment
-          </button>
+  backdrop-filter: blur(18px);
 
-          <button>
-            <svg viewBox="0 0 24 24">
-              <path d="M9 8l6-4v4c4 .5 6 3.2 6 7.5-1.5-2-3.5-3-6-3v4L9 12"></path>
-              <path d="M9 12H4v7"></path>
-            </svg>
-            Share
-          </button>
+  border-bottom: 1px solid var(--border);
+}
 
-        </div>
 
-      </article>
-
-
-      <!-- SECOND POST -->
-      <article class="post card">
-
-        <div class="post-header">
-
-          <div class="avatar blue-avatar">
-            MJ
-          </div>
-
-          <div class="post-user">
-            <strong>Marcus Johnson</strong>
-            <span>5h · Friends</span>
-          </div>
-
-          <button class="post-menu">
-            •••
-          </button>
-
-        </div>
-
-        <div class="post-text">
-          Sometimes you need a day away from everything.
-        </div>
-
-        <div class="text-post">
-          Protect your peace.
-        </div>
-
-        <div class="post-stats">
-          <span>74 likes</span>
-          <span>11 comments</span>
-        </div>
-
-        <div class="post-actions">
-
-          <button>Like</button>
-          <button>Comment</button>
-          <button>Share</button>
-
-        </div>
-
-      </article>
-
-    </section>
-
-
-    <!-- RIGHT SIDE -->
-    <aside class="social-panel">
-
-      <section class="top10 card">
-
-        <div class="panel-header">
-          <div>
-            <span class="panel-label">YOUR</span>
-            <h2>Top 10</h2>
-          </div>
-
-          <button>Edit</button>
-        </div>
-
-        <div class="top10-grid">
-
-          <div class="friend top-five">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=47" alt="Jasmine" />
-              <div class="star-badge" aria-label="Top 5 friend">★</div>
-            </div>
-            <span>Jasmine</span>
-          </div>
+/* BRAND */
 
-          <div class="friend top-five">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=12" alt="Marcus" />
-              <div class="star-badge" aria-label="Top 5 friend">★</div>
-            </div>
-            <span>Marcus</span>
-          </div>
+.brand {
+  width: fit-content;
+  line-height: 1;
+}
 
-          <div class="friend top-five">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=32" alt="Tiffany" />
-              <div class="star-badge" aria-label="Top 5 friend">★</div>
-            </div>
-            <span>Tiffany</span>
-          </div>
+.brand-main {
+  font-size: 29px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
 
-          <div class="friend top-five">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=11" alt="Chris" />
-              <div class="star-badge" aria-label="Top 5 friend">★</div>
-            </div>
-            <span>Chris</span>
-          </div>
-
-          <div class="friend top-five">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=45" alt="Avery" />
-              <div class="star-badge" aria-label="Top 5 friend">★</div>
-            </div>
-            <span>Avery</span>
-          </div>
-
-          <div class="friend">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=14" alt="Jordan" />
-            </div>
-            <span>Jordan</span>
-          </div>
-
-          <div class="friend">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=49" alt="Taylor" />
-            </div>
-            <span>Taylor</span>
-          </div>
-
-          <div class="friend">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=48" alt="Kendra" />
-            </div>
-            <span>Kendra</span>
-          </div>
-
-          <div class="friend">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=15" alt="Devin" />
-            </div>
-            <span>Devin</span>
-          </div>
-
-          <div class="friend">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=44" alt="Brianna" />
-            </div>
-            <span>Brianna</span>
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <section class="social-message card">
-
-        <span class="panel-label">SOCIAL</span>
-
-        <h2>
-          Your feed.<br />
-          Your friends.<br />
-          Your choice.
-        </h2>
-
-        <p>
-          Home is built around the people you actually chose to connect with.
-        </p>
-
-      </section>
-
-    </aside>
-
-  </main>
-
-
-
-  <!-- EXPLORE PAGE -->
-  <main class="explore-layout page-view" id="explore-page">
-
-    <section class="explore-main">
-
-      <div class="explore-hero">
-        <div class="explore-title-row">
-          <div class="explore-compass">
-            <svg viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="9"></circle>
-              <path d="M15.5 8.5l-2.2 4.8-4.8 2.2 2.2-4.8 4.8-2.2z"></path>
-            </svg>
-          </div>
-
-          <div>
-            <span class="panel-label">DISCOVER</span>
-            <h1>Explore SOCIAL</h1>
-            <p>Find conversations, topics, and public posts shaped around what interests you.</p>
-          </div>
-        </div>
-
-        <div class="explore-tabs" role="tablist" aria-label="Explore sections">
-          <button class="explore-tab active" data-explore-tab="for-you">For You</button>
-          <button class="explore-tab" data-explore-tab="trending">Trending</button>
-          <button class="explore-tab" data-explore-tab="topics">Topics</button>
-        </div>
-      </div>
-
-      <!-- FOR YOU -->
-      <section class="explore-section explore-content-panel active-explore-panel" data-explore-panel="for-you">
-        <div class="section-heading">
-          <div>
-            <span class="panel-label">PERSONALIZED</span>
-            <h2>For You</h2>
-            <p>Public conversations selected from your interests and activity.</p>
-          </div>
-
-          <button class="text-button">Tune your interests</button>
-        </div>
-
-        <div class="discovery-feed">
-
-          <article class="discovery-card card">
-            <div class="discovery-card-top">
-              <div class="avatar purple-avatar">KM</div>
-
-              <div class="discovery-user">
-                <strong>Kai Morgan</strong>
-                <span>Public · Technology</span>
-              </div>
-
-              <button class="more-button" aria-label="Post options">•••</button>
-            </div>
-
-            <div class="interest-reason">
-              <svg viewBox="0 0 24 24">
-                <path d="M12 3v18"></path>
-                <path d="M3 12h18"></path>
-              </svg>
-              Because you interact with Technology
-            </div>
-
-            <p class="discovery-text">
-              What piece of technology do you use every day that you think is still way harder than it should be?
-            </p>
-
-            <div class="conversation-preview">
-              <span>Conversation picking up</span>
-              <strong>186 replies</strong>
-            </div>
-
-            <div class="discovery-actions">
-              <button>Like</button>
-              <button>Reply</button>
-              <button>Share</button>
-              <button class="not-interested">Not interested</button>
-            </div>
-          </article>
-
-          <article class="discovery-card card">
-            <div class="discovery-card-top">
-              <div class="avatar blue-avatar">AR</div>
-
-              <div class="discovery-user">
-                <strong>Alexis Reed</strong>
-                <span>Public · Relationships</span>
-              </div>
-
-              <button class="more-button" aria-label="Post options">•••</button>
-            </div>
-
-            <div class="interest-reason">
-              <svg viewBox="0 0 24 24">
-                <path d="M4 12h16"></path>
-                <path d="M12 4v16"></path>
-              </svg>
-              Based on conversations you spend time reading
-            </div>
-
-            <p class="discovery-text">
-              What is something small your friends do that instantly lets you know they genuinely care about you?
-            </p>
-
-            <div class="conversation-preview">
-              <span>Active discussion</span>
-              <strong>312 replies</strong>
-            </div>
-
-            <div class="discovery-actions">
-              <button>Like</button>
-              <button>Reply</button>
-              <button>Share</button>
-              <button class="not-interested">Not interested</button>
-            </div>
-          </article>
-
-          <article class="discovery-card card">
-            <div class="discovery-card-top">
-              <div class="avatar explore-green-avatar">DT</div>
-
-              <div class="discovery-user">
-                <strong>Devin Thomas</strong>
-                <span>Public · Travel</span>
-              </div>
-
-              <button class="more-button" aria-label="Post options">•••</button>
-            </div>
-
-            <div class="interest-reason">
-              <svg viewBox="0 0 24 24">
-                <path d="M5 12h14"></path>
-                <path d="M12 5l7 7-7 7"></path>
-              </svg>
-              A little outside your usual interests
-            </div>
-
-            <p class="discovery-text">
-              If you could take one three-day trip anywhere without worrying about the cost, where are you going?
-            </p>
-
-            <div class="conversation-preview">
-              <span>Fresh discovery</span>
-              <strong>94 replies</strong>
-            </div>
-
-            <div class="discovery-actions">
-              <button>Like</button>
-              <button>Reply</button>
-              <button>Share</button>
-              <button class="not-interested">Not interested</button>
-            </div>
-          </article>
-
-        </div>
-      </section>
-
-      <!-- TRENDING -->
-      <section class="explore-section explore-content-panel" data-explore-panel="trending">
-        <div class="section-heading">
-          <div>
-            <span class="panel-label">RIGHT NOW</span>
-            <h2>Trending Conversations</h2>
-            <p>Public conversations getting people talking across SOCIAL.</p>
-          </div>
-        </div>
-
-        <div class="trending-feed">
-
-          <button class="trending-conversation card">
-            <div class="trending-number">01</div>
-            <div class="trending-conversation-copy">
-              <span class="trend-topic">FRIENDSHIP</span>
-              <h3>What counts as a real friendship?</h3>
-              <p>People are sharing the moments that made them realize who was truly in their corner.</p>
-              <div class="trend-meta">
-                <strong>4.8K people talking</strong>
-                <span>1.2K replies today</span>
-              </div>
-            </div>
-            <span class="trend-arrow">→</span>
-          </button>
-
-          <button class="trending-conversation card">
-            <div class="trending-number">02</div>
-            <div class="trending-conversation-copy">
-              <span class="trend-topic">LIFE</span>
-              <h3>Best advice you ignored at first</h3>
-              <p>The advice made no sense at the time. Years later, you finally understood it.</p>
-              <div class="trend-meta">
-                <strong>3.1K people talking</strong>
-                <span>826 replies today</span>
-              </div>
-            </div>
-            <span class="trend-arrow">→</span>
-          </button>
-
-          <button class="trending-conversation card">
-            <div class="trending-number">03</div>
-            <div class="trending-conversation-copy">
-              <span class="trend-topic">TECHNOLOGY</span>
-              <h3>Technology that desperately needs a redesign</h3>
-              <p>Everyone has one app, device, or everyday system that somehow still makes simple things difficult.</p>
-              <div class="trend-meta">
-                <strong>2.6K people talking</strong>
-                <span>704 replies today</span>
-              </div>
-            </div>
-            <span class="trend-arrow">→</span>
-          </button>
-
-          <button class="trending-conversation card">
-            <div class="trending-number">04</div>
-            <div class="trending-conversation-copy">
-              <span class="trend-topic">TRAVEL</span>
-              <h3>Where would you travel tomorrow?</h3>
-              <p>No planning stress, no budget limits. Pick the destination and tell everybody why.</p>
-              <div class="trend-meta">
-                <strong>1.9K people talking</strong>
-                <span>488 replies today</span>
-              </div>
-            </div>
-            <span class="trend-arrow">→</span>
-          </button>
-
-        </div>
-      </section>
-
-      <!-- TOPICS -->
-      <section class="explore-section explore-content-panel" data-explore-panel="topics">
-        <div class="section-heading">
-          <div>
-            <span class="panel-label">CHOOSE YOUR INTERESTS</span>
-            <h2>Topics</h2>
-            <p>Explore categories directly and eventually follow the ones you want more of.</p>
-          </div>
-        </div>
-
-        <div class="topic-browser">
-
-          <button class="topic-browser-card card">
-            <span class="topic-kicker">SPORTS</span>
-            <h3>Sports</h3>
-            <p>Games, players, predictions, debates, and the moments everybody is talking about.</p>
-            <span class="topic-activity">12.4K active conversations</span>
-          </button>
-
-          <button class="topic-browser-card card">
-            <span class="topic-kicker">RELATIONSHIPS</span>
-            <h3>Relationships</h3>
-            <p>Dating, friendship, marriage, boundaries, and everyday relationship conversations.</p>
-            <span class="topic-activity">9.8K active conversations</span>
-          </button>
-
-          <button class="topic-browser-card card">
-            <span class="topic-kicker">TECHNOLOGY</span>
-            <h3>Technology</h3>
-            <p>Apps, devices, AI, new ideas, and the technology people actually use every day.</p>
-            <span class="topic-activity">7.2K active conversations</span>
-          </button>
-
-          <button class="topic-browser-card card">
-            <span class="topic-kicker">TRAVEL</span>
-            <h3>Travel</h3>
-            <p>Destinations, trip stories, recommendations, and places people want to experience next.</p>
-            <span class="topic-activity">5.6K active conversations</span>
-          </button>
-
-          <button class="topic-browser-card card">
-            <span class="topic-kicker">MUSIC</span>
-            <h3>Music</h3>
-            <p>Artists, albums, throwbacks, new releases, and songs people cannot stop playing.</p>
-            <span class="topic-activity">8.1K active conversations</span>
-          </button>
-
-          <button class="topic-browser-card card">
-            <span class="topic-kicker">FOOD</span>
-            <h3>Food</h3>
-            <p>Favorite meals, restaurant conversations, recipes, debates, and food discoveries.</p>
-            <span class="topic-activity">6.3K active conversations</span>
-          </button>
-
-          <button class="topic-browser-card card">
-            <span class="topic-kicker">MONEY</span>
-            <h3>Money</h3>
-            <p>Saving, credit, side income, business ideas, and everyday conversations about money.</p>
-            <span class="topic-activity">4.9K active conversations</span>
-          </button>
-
-          <button class="topic-browser-card card">
-            <span class="topic-kicker">ENTERTAINMENT</span>
-            <h3>Entertainment</h3>
-            <p>TV, movies, culture, viral moments, and the entertainment conversations worth joining.</p>
-            <span class="topic-activity">10.7K active conversations</span>
-          </button>
-
-        </div>
-      </section>
-
-    </section>
-
-    <aside class="explore-side">
-
-      <section class="trending-card card">
-        <div class="panel-header">
-          <div>
-            <span class="panel-label">RIGHT NOW</span>
-            <h2>Trending Conversations</h2>
-          </div>
-        </div>
-
-        <div class="trend-list">
-
-          <button class="trend-item">
-            <span class="trend-rank">01</span>
-            <span class="trend-copy">
-              <strong>What counts as a real friendship?</strong>
-              <small>4.8K people talking</small>
-            </span>
-          </button>
-
-          <button class="trend-item">
-            <span class="trend-rank">02</span>
-            <span class="trend-copy">
-              <strong>Best advice you ignored at first</strong>
-              <small>3.1K people talking</small>
-            </span>
-          </button>
-
-          <button class="trend-item">
-            <span class="trend-rank">03</span>
-            <span class="trend-copy">
-              <strong>Technology that needs a redesign</strong>
-              <small>2.6K people talking</small>
-            </span>
-          </button>
-
-          <button class="trend-item">
-            <span class="trend-rank">04</span>
-            <span class="trend-copy">
-              <strong>Where would you travel tomorrow?</strong>
-              <small>1.9K people talking</small>
-            </span>
-          </button>
-
-        </div>
-
-        <button class="see-more-button">See more conversations</button>
-      </section>
-
-      <section class="topics-card card">
-        <div class="panel-header">
-          <div>
-            <span class="panel-label">DISCOVER MORE</span>
-            <h2>Topics</h2>
-          </div>
-        </div>
-
-        <div class="topic-grid">
-          <button>Sports</button>
-          <button>Relationships</button>
-          <button>Technology</button>
-          <button>Travel</button>
-          <button>Music</button>
-          <button>Food</button>
-          <button>Money</button>
-          <button>Entertainment</button>
-        </div>
-      </section>
-
-      <section class="algorithm-note card">
-        <span class="panel-label">YOUR EXPLORE</span>
-        <h2>You help shape it.</h2>
-        <p>
-          Likes, replies, time spent, followed topics, and “Not interested” choices help SOCIAL learn what you want to discover.
-        </p>
-      </section>
-
-    </aside>
-
-  </main>
-
-
-  <!-- PROFILE PAGE -->
-  <main class="profile-layout page-view" id="profile-page">
-
-    <section class="profile-main">
-
-      <!-- PROFILE IDENTITY -->
-      <section class="profile-identity card">
-
-        <div class="profile-accent"></div>
-
-        <div class="profile-identity-content">
-
-          <div class="profile-avatar-wrap">
-            <div class="profile-avatar-large">ML</div>
-            <span class="profile-status-dot" aria-label="Online"></span>
-          </div>
-
-          <div class="profile-copy">
-            <span class="panel-label">PROFILE</span>
-            <h1>Mike Lowry</h1>
-            <div class="profile-handle">@mikelowry</div>
-
-            <p class="profile-bio">
-              Building, creating, and enjoying life one idea at a time.
-            </p>
-
-            <div class="profile-meta">
-              <span>Dallas–Fort Worth</span>
-              <span>Joined SOCIAL in 2026</span>
-            </div>
-          </div>
-
-          <div class="profile-actions">
-            <button class="profile-edit-button">Edit Profile</button>
-            <button class="profile-more-button" aria-label="More profile options">•••</button>
-          </div>
-
-        </div>
-
-        <div class="profile-stats">
-          <button>
-            <strong>842</strong>
-            <span>Friends</span>
-          </button>
-
-          <button>
-            <strong>126</strong>
-            <span>Posts</span>
-          </button>
-
-          <button>
-            <strong>38</strong>
-            <span>Photos</span>
-          </button>
-        </div>
-
-      </section>
-
-
-      <!-- PROFILE CONTENT TABS -->
-      <div class="profile-tabs" role="tablist" aria-label="Profile sections">
-        <button class="profile-tab active" data-profile-tab="posts">Posts</button>
-        <button class="profile-tab" data-profile-tab="photos">Photos</button>
-        <button class="profile-tab" data-profile-tab="friends" data-open-friends>Friends</button>
-      </div>
-
-
-      <!-- POSTS TAB -->
-      <section class="profile-content-panel active-profile-panel" data-profile-panel="posts">
-
-        <div class="profile-section-heading">
-          <div>
-            <span class="panel-label">YOUR ACTIVITY</span>
-            <h2>Posts</h2>
-          </div>
-
-          <button class="text-button">Manage posts</button>
-        </div>
-
-        <article class="post card profile-post">
-
-          <div class="post-header">
-            <div class="avatar">ML</div>
-
-            <div class="post-user">
-              <strong>Mike Lowry</strong>
-              <span>3h · Friends</span>
-            </div>
-
-            <button class="post-menu">•••</button>
-          </div>
-
-          <div class="post-text">
-            Some ideas are worth bringing back.
-          </div>
-
-          <div class="profile-text-post">
-            Build the thing you wish existed.
-          </div>
-
-          <div class="post-stats">
-            <span>91 likes</span>
-            <span>18 comments</span>
-          </div>
-
-          <div class="post-actions">
-            <button>Like</button>
-            <button>Comment</button>
-            <button>Share</button>
-          </div>
-
-        </article>
-
-        <article class="post card profile-post">
-
-          <div class="post-header">
-            <div class="avatar">ML</div>
-
-            <div class="post-user">
-              <strong>Mike Lowry</strong>
-              <span>Yesterday · Public</span>
-            </div>
-
-            <button class="post-menu">•••</button>
-          </div>
-
-          <div class="post-text">
-            Weekend plans: good food, good people, and no unnecessary stress.
-          </div>
-
-          <div class="post-stats">
-            <span>64 likes</span>
-            <span>9 comments</span>
-          </div>
-
-          <div class="post-actions">
-            <button>Like</button>
-            <button>Comment</button>
-            <button>Share</button>
-          </div>
-
-        </article>
-
-      </section>
-
-
-      <!-- PHOTOS TAB -->
-      <section class="profile-content-panel" data-profile-panel="photos">
-
-        <div class="profile-section-heading">
-          <div>
-            <span class="panel-label">MEMORIES</span>
-            <h2>Photos</h2>
-          </div>
-        </div>
-
-        <div class="profile-photo-grid">
-          <button class="profile-photo-tile photo-tile-one" aria-label="Photo 1"></button>
-          <button class="profile-photo-tile photo-tile-two" aria-label="Photo 2"></button>
-          <button class="profile-photo-tile photo-tile-three" aria-label="Photo 3"></button>
-          <button class="profile-photo-tile photo-tile-four" aria-label="Photo 4"></button>
-          <button class="profile-photo-tile photo-tile-five" aria-label="Photo 5"></button>
-          <button class="profile-photo-tile photo-tile-six" aria-label="Photo 6"></button>
-        </div>
-
-      </section>
-
-
-      <!-- FRIENDS TAB -->
-      <section class="profile-content-panel" data-profile-panel="friends">
-
-        <div class="profile-section-heading">
-          <div>
-            <span class="panel-label">YOUR PEOPLE</span>
-            <h2>Friends</h2>
-          </div>
-
-          <button class="text-button">See all friends</button>
-        </div>
-
-        <div class="profile-friends-grid">
-
-          <button class="profile-friend-card card">
-            <img src="https://i.pravatar.cc/160?img=47" alt="Jasmine" />
-            <strong>Jasmine Carter</strong>
-            <span>38 mutual friends</span>
-          </button>
-
-          <button class="profile-friend-card card">
-            <img src="https://i.pravatar.cc/160?img=12" alt="Marcus" />
-            <strong>Marcus Johnson</strong>
-            <span>26 mutual friends</span>
-          </button>
-
-          <button class="profile-friend-card card">
-            <img src="https://i.pravatar.cc/160?img=32" alt="Tiffany" />
-            <strong>Tiffany Brooks</strong>
-            <span>19 mutual friends</span>
-          </button>
-
-          <button class="profile-friend-card card">
-            <img src="https://i.pravatar.cc/160?img=11" alt="Chris" />
-            <strong>Chris Walker</strong>
-            <span>31 mutual friends</span>
-          </button>
-
-          <button class="profile-friend-card card">
-            <img src="https://i.pravatar.cc/160?img=45" alt="Avery" />
-            <strong>Avery Lewis</strong>
-            <span>14 mutual friends</span>
-          </button>
-
-          <button class="profile-friend-card card">
-            <img src="https://i.pravatar.cc/160?img=14" alt="Jordan" />
-            <strong>Jordan Miles</strong>
-            <span>22 mutual friends</span>
-          </button>
-
-        </div>
-
-      </section>
-
-    </section>
-
-
-    <!-- PROFILE SIDE -->
-    <aside class="profile-side">
-
-      <section class="profile-top10 card">
-
-        <div class="panel-header">
-          <div>
-            <span class="panel-label">MY PEOPLE</span>
-            <h2>Top 10</h2>
-          </div>
-
-          <button>Edit</button>
-        </div>
-
-        <p class="profile-side-intro">
-          The people I keep closest on SOCIAL.
-        </p>
-
-        <div class="profile-top10-grid">
-
-          <div class="friend top-five">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=47" alt="Jasmine" />
-              <div class="star-badge" aria-label="Top 5 friend">★</div>
-            </div>
-            <span>Jasmine</span>
-          </div>
-
-          <div class="friend top-five">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=12" alt="Marcus" />
-              <div class="star-badge" aria-label="Top 5 friend">★</div>
-            </div>
-            <span>Marcus</span>
-          </div>
-
-          <div class="friend top-five">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=32" alt="Tiffany" />
-              <div class="star-badge" aria-label="Top 5 friend">★</div>
-            </div>
-            <span>Tiffany</span>
-          </div>
-
-          <div class="friend top-five">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=11" alt="Chris" />
-              <div class="star-badge" aria-label="Top 5 friend">★</div>
-            </div>
-            <span>Chris</span>
-          </div>
-
-          <div class="friend top-five">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=45" alt="Avery" />
-              <div class="star-badge" aria-label="Top 5 friend">★</div>
-            </div>
-            <span>Avery</span>
-          </div>
-
-          <div class="friend">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=14" alt="Jordan" />
-            </div>
-            <span>Jordan</span>
-          </div>
-
-          <div class="friend">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=49" alt="Taylor" />
-            </div>
-            <span>Taylor</span>
-          </div>
-
-          <div class="friend">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=48" alt="Kendra" />
-            </div>
-            <span>Kendra</span>
-          </div>
-
-          <div class="friend">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=15" alt="Devin" />
-            </div>
-            <span>Devin</span>
-          </div>
-
-          <div class="friend">
-            <div class="friend-photo-wrap">
-              <img class="friend-photo" src="https://i.pravatar.cc/150?img=44" alt="Brianna" />
-            </div>
-            <span>Brianna</span>
-          </div>
-
-        </div>
-
-        <div class="top10-visibility">
-          <svg viewBox="0 0 24 24">
-            <path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z"></path>
-            <circle cx="12" cy="12" r="2.5"></circle>
-          </svg>
-          Visible to Friends
-        </div>
-
-      </section>
-
-
-      <section class="profile-about card">
-        <span class="panel-label">ABOUT</span>
-        <h2>A little about me</h2>
-
-        <div class="about-row">
-          <span>Lives in</span>
-          <strong>Dallas–Fort Worth</strong>
-        </div>
-
-        <div class="about-row">
-          <span>Interests</span>
-          <strong>Technology, Travel, Business</strong>
-        </div>
-
-        <button class="profile-about-button">View full profile</button>
-      </section>
-
-    </aside>
-
-  </main>
-
-  <!-- FRIENDS PAGE -->
-  <main class="friends-layout page-view" id="friends-page">
-    <section class="friends-main">
-      <div class="friends-hero">
-        <div><span class="panel-label">YOUR CIRCLE</span><h1>Friends</h1>
-          <p>Keep up with the people you chose to connect with on SOCIAL.</p></div>
-        <button class="find-friends-button">Find Friends</button>
-      </div>
-
-      <div class="friends-tabs" role="tablist" aria-label="Friends sections">
-        <button class="friends-tab active" data-friends-tab="all">All Friends</button>
-        <button class="friends-tab" data-friends-tab="requests">Requests <span class="friends-tab-count">3</span></button>
-        <button class="friends-tab" data-friends-tab="sent">Sent</button>
-      </div>
-
-      <section class="friends-content-panel active-friends-panel" data-friends-panel="all">
-        <div class="friends-section-heading"><div><span class="panel-label">842 CONNECTIONS</span><h2>Your Friends</h2></div>
-          <label class="friends-search"><input type="text" placeholder="Search friends" /></label></div>
-        <div class="friends-grid">
-<article class="friend-list-card card"><img src="https://i.pravatar.cc/180?img=47" alt="Jasmine Carter" />
-      <div class="friend-list-copy"><strong>Jasmine Carter</strong><span>@jasminec</span><small>38 mutual friends</small></div>
-      <button class="friend-card-more" aria-label="Jasmine Carter options">•••</button></article><article class="friend-list-card card"><img src="https://i.pravatar.cc/180?img=12" alt="Marcus Johnson" />
-      <div class="friend-list-copy"><strong>Marcus Johnson</strong><span>@marcusj</span><small>26 mutual friends</small></div>
-      <button class="friend-card-more" aria-label="Marcus Johnson options">•••</button></article><article class="friend-list-card card"><img src="https://i.pravatar.cc/180?img=32" alt="Tiffany Brooks" />
-      <div class="friend-list-copy"><strong>Tiffany Brooks</strong><span>@tiffanyb</span><small>19 mutual friends</small></div>
-      <button class="friend-card-more" aria-label="Tiffany Brooks options">•••</button></article><article class="friend-list-card card"><img src="https://i.pravatar.cc/180?img=11" alt="Chris Walker" />
-      <div class="friend-list-copy"><strong>Chris Walker</strong><span>@chrisw</span><small>31 mutual friends</small></div>
-      <button class="friend-card-more" aria-label="Chris Walker options">•••</button></article><article class="friend-list-card card"><img src="https://i.pravatar.cc/180?img=45" alt="Avery Lewis" />
-      <div class="friend-list-copy"><strong>Avery Lewis</strong><span>@averyl</span><small>14 mutual friends</small></div>
-      <button class="friend-card-more" aria-label="Avery Lewis options">•••</button></article><article class="friend-list-card card"><img src="https://i.pravatar.cc/180?img=14" alt="Jordan Miles" />
-      <div class="friend-list-copy"><strong>Jordan Miles</strong><span>@jordanm</span><small>22 mutual friends</small></div>
-      <button class="friend-card-more" aria-label="Jordan Miles options">•••</button></article><article class="friend-list-card card"><img src="https://i.pravatar.cc/180?img=49" alt="Taylor Green" />
-      <div class="friend-list-copy"><strong>Taylor Green</strong><span>@taylorg</span><small>17 mutual friends</small></div>
-      <button class="friend-card-more" aria-label="Taylor Green options">•••</button></article><article class="friend-list-card card"><img src="https://i.pravatar.cc/180?img=48" alt="Kendra Hall" />
-      <div class="friend-list-copy"><strong>Kendra Hall</strong><span>@kendrah</span><small>12 mutual friends</small></div>
-      <button class="friend-card-more" aria-label="Kendra Hall options">•••</button></article>
-        </div>
-      </section>
-
-      <section class="friends-content-panel" data-friends-panel="requests">
-        <div class="friends-section-heading"><div><span class="panel-label">WAITING ON YOU</span><h2>Friend Requests</h2><p>People who want to connect with you.</p></div></div>
-        <div class="request-list">
-          <article class="request-card card"><img src="https://i.pravatar.cc/180?img=5" alt="Nia Robinson" /><div class="request-copy"><strong>Nia Robinson</strong><span>@niarobinson</span><small>18 mutual friends</small></div><div class="request-actions"><button class="request-accept">Accept</button><button class="request-decline">Decline</button></div></article>
-          <article class="request-card card"><img src="https://i.pravatar.cc/180?img=13" alt="Darius King" /><div class="request-copy"><strong>Darius King</strong><span>@dariusking</span><small>7 mutual friends</small></div><div class="request-actions"><button class="request-accept">Accept</button><button class="request-decline">Decline</button></div></article>
-          <article class="request-card card"><img src="https://i.pravatar.cc/180?img=25" alt="Simone Price" /><div class="request-copy"><strong>Simone Price</strong><span>@simonep</span><small>11 mutual friends</small></div><div class="request-actions"><button class="request-accept">Accept</button><button class="request-decline">Decline</button></div></article>
-        </div>
-      </section>
-
-      <section class="friends-content-panel" data-friends-panel="sent">
-        <div class="friends-section-heading"><div><span class="panel-label">PENDING</span><h2>Sent Requests</h2><p>Friend requests you've sent that are still waiting for a response.</p></div></div>
-        <div class="request-list">
-          <article class="request-card card"><img src="https://i.pravatar.cc/180?img=16" alt="Cameron Ellis" /><div class="request-copy"><strong>Cameron Ellis</strong><span>@camerone</span><small>9 mutual friends</small></div><div class="request-actions"><button class="request-cancel">Cancel Request</button></div></article>
-          <article class="request-card card"><img src="https://i.pravatar.cc/180?img=33" alt="Lauren Scott" /><div class="request-copy"><strong>Lauren Scott</strong><span>@laurens</span><small>5 mutual friends</small></div><div class="request-actions"><button class="request-cancel">Cancel Request</button></div></article>
-        </div>
-      </section>
-    </section>
-
-    <aside class="friends-side">
-      <section class="friends-summary card"><span class="panel-label">YOUR SOCIAL CIRCLE</span><h2>842 Friends</h2>
-        <p>Your Home feed is built around the people you've chosen to connect with.</p>
-        <div class="friends-summary-stats"><div><strong>3</strong><span>Requests</span></div><div><strong>2</strong><span>Sent</span></div></div>
-      </section>
-      <section class="mutual-card card"><div class="panel-header"><div><span class="panel-label">PEOPLE YOU MAY KNOW</span><h2>Mutual Connections</h2></div></div>
-        <div class="mutual-list">
-          <div class="mutual-person"><img src="https://i.pravatar.cc/150?img=20" alt="Andre Collins" /><div><strong>Andre Collins</strong><span>24 mutual friends</span></div><button>Add</button></div>
-          <div class="mutual-person"><img src="https://i.pravatar.cc/150?img=36" alt="Monique Davis" /><div><strong>Monique Davis</strong><span>16 mutual friends</span></div><button>Add</button></div>
-          <div class="mutual-person"><img src="https://i.pravatar.cc/150?img=8" alt="Terrence Young" /><div><strong>Terrence Young</strong><span>10 mutual friends</span></div><button>Add</button></div>
-        </div>
-      </section>
-      <section class="friends-privacy card"><span class="panel-label">FRIENDSHIPS FIRST</span><h2>Your circle, your choice.</h2><p>Friendships shape your Home experience. Discovery stays separate in Explore.</p></section>
-    </aside>
-  </main>
-
-
-  <!-- MESSAGES PAGE -->
-  <main class="messages-page page-view" id="messages-page">
-
-    <section class="messages-shell card">
-
-      <!-- CONVERSATION LIST -->
-      <aside class="messages-list-panel">
-
-        <div class="messages-list-header">
-          <div>
-            <span class="panel-label">YOUR INBOX</span>
-            <h1>Messages</h1>
-          </div>
-
-          <button class="new-message-button">New Message</button>
-        </div>
-
-        <label class="messages-search">
-          <svg viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="6"></circle>
-            <path d="M16 16l4 4"></path>
-          </svg>
-          <input type="text" placeholder="Search conversations" />
-        </label>
-
-        <div class="conversation-list">
-
-          <button class="conversation-item active" data-conversation="jasmine">
-            <div class="conversation-avatar-wrap">
-              <img src="https://i.pravatar.cc/160?img=47" alt="Jasmine Carter" />
-              <span class="conversation-unread-dot"></span>
-            </div>
-            <div class="conversation-preview">
-              <div class="conversation-preview-top">
-                <strong>Jasmine Carter</strong>
-                <time>9:41 AM</time>
-              </div>
-              <div class="conversation-preview-bottom">
-                <span>You still going Saturday?</span>
-                <b>2</b>
-              </div>
-            </div>
-          </button>
-
-          <button class="conversation-item" data-conversation="marcus">
-            <img src="https://i.pravatar.cc/160?img=12" alt="Marcus Johnson" />
-            <div class="conversation-preview">
-              <div class="conversation-preview-top">
-                <strong>Marcus Johnson</strong>
-                <time>Yesterday</time>
-              </div>
-              <div class="conversation-preview-bottom">
-                <span>That actually makes sense.</span>
-              </div>
-            </div>
-          </button>
-
-          <button class="conversation-item" data-conversation="tiffany">
-            <img src="https://i.pravatar.cc/160?img=32" alt="Tiffany Brooks" />
-            <div class="conversation-preview">
-              <div class="conversation-preview-top">
-                <strong>Tiffany Brooks</strong>
-                <time>Tue</time>
-              </div>
-              <div class="conversation-preview-bottom">
-                <span>Send me the picture when you get a chance.</span>
-              </div>
-            </div>
-          </button>
-
-          <button class="conversation-item" data-conversation="chris">
-            <img src="https://i.pravatar.cc/160?img=11" alt="Chris Walker" />
-            <div class="conversation-preview">
-              <div class="conversation-preview-top">
-                <strong>Chris Walker</strong>
-                <time>Mon</time>
-              </div>
-              <div class="conversation-preview-bottom">
-                <span>Bet. I got you.</span>
-              </div>
-            </div>
-          </button>
-
-          <button class="conversation-item" data-conversation="avery">
-            <img src="https://i.pravatar.cc/160?img=45" alt="Avery Lewis" />
-            <div class="conversation-preview">
-              <div class="conversation-preview-top">
-                <strong>Avery Lewis</strong>
-                <time>Sep 7</time>
-              </div>
-              <div class="conversation-preview-bottom">
-                <span>That GIF had me crying.</span>
-              </div>
-            </div>
-          </button>
-
-        </div>
-
-      </aside>
-
-
-      <!-- SELECTED CONVERSATION -->
-      <section class="conversation-panel">
-
-        <header class="conversation-header">
-          <div class="conversation-person">
-            <img id="conversation-photo" src="https://i.pravatar.cc/160?img=47" alt="Jasmine Carter" />
-            <div>
-              <strong id="conversation-name">Jasmine Carter</strong>
-              <span id="conversation-handle">@jasminec</span>
-            </div>
-          </div>
-
-          <button class="conversation-options" aria-label="Conversation options">•••</button>
-        </header>
-
-        <div class="conversation-body" id="conversation-body">
-
-          <div class="conversation-date">Today</div>
-
-          <div class="message-row incoming">
-            <img src="https://i.pravatar.cc/80?img=47" alt="" />
-            <div class="message-stack">
-              <div class="message-bubble">You still going Saturday?</div>
-              <time>9:36 AM</time>
-            </div>
-          </div>
-
-          <div class="message-row outgoing">
-            <div class="message-stack">
-              <div class="message-bubble">Yeah, that's still the plan. What time y'all getting there?</div>
-              <time>9:38 AM</time>
-            </div>
-          </div>
-
-          <div class="message-row incoming">
-            <img src="https://i.pravatar.cc/80?img=47" alt="" />
-            <div class="message-stack">
-              <div class="message-bubble">Probably around 7. I'll let you know if anything changes.</div>
-              <time>9:41 AM</time>
-            </div>
-          </div>
-
-        </div>
-
-        <footer class="conversation-composer">
-          <button class="message-attachment-button" aria-label="Add photo">
-            <svg viewBox="0 0 24 24">
-              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-              <circle cx="9" cy="10" r="2"></circle>
-              <path d="M4 17l5-5 4 4 3-3 4 4"></path>
-            </svg>
-          </button>
-
-          <button class="message-gif-button" aria-label="Add GIF">GIF</button>
-
-          <textarea class="message-input" rows="1" placeholder="Write a message..."></textarea>
-
-          <button class="message-send-button">Send</button>
-        </footer>
-
-      </section>
-
-    </section>
-
-  </main>
-
-
-  <!-- NOTIFICATION POPOVER -->
-  <section class="notification-popover" id="notification-popover" aria-hidden="true">
-    <div class="notification-popover-header">
-      <div>
-        <span class="panel-label">RECENT</span>
-        <h2>Notifications</h2>
-      </div>
-      <button class="popover-mark-read" type="button">Mark all as read</button>
-    </div>
-
-    <div class="notification-popover-list">
-      <button class="popover-notification unread" type="button">
-        <img src="https://i.pravatar.cc/160?img=47" alt="Jasmine Carter">
-        <span class="popover-notification-copy">
-          <span><strong>Jasmine Carter</strong> liked your post.</span>
-          <small>12 minutes ago</small>
-        </span>
-        <span class="popover-unread-dot"></span>
-      </button>
-
-      <button class="popover-notification unread" type="button">
-        <img src="https://i.pravatar.cc/160?img=12" alt="Marcus Johnson">
-        <span class="popover-notification-copy">
-          <span><strong>Marcus Johnson</strong> commented on your post.</span>
-          <small>34 minutes ago</small>
-        </span>
-        <span class="popover-unread-dot"></span>
-      </button>
-
-      <button class="popover-notification unread" type="button">
-        <img src="https://i.pravatar.cc/160?img=5" alt="Nia Robinson">
-        <span class="popover-notification-copy">
-          <span><strong>Nia Robinson</strong> sent you a friend request.</span>
-          <small>1 hour ago</small>
-        </span>
-        <span class="popover-unread-dot"></span>
-      </button>
-
-      <button class="popover-notification unread" type="button">
-        <img src="https://i.pravatar.cc/160?img=32" alt="Tiffany Brooks">
-        <span class="popover-notification-copy">
-          <span><strong>Tiffany Brooks</strong> mentioned you in a conversation.</span>
-          <small>2 hours ago</small>
-        </span>
-        <span class="popover-unread-dot"></span>
-      </button>
-    </div>
-
-    <button class="notification-see-all" type="button">See all</button>
-  </section>
-
-
-  <!-- NOTIFICATIONS PAGE -->
-  <main class="notifications-page page-view" id="notifications-page">
-    <section class="notifications-main">
-      <div class="notifications-hero">
-        <div><span class="panel-label">ACTIVITY</span><h1>Notifications</h1><p>See what needs your attention across SOCIAL.</p></div>
-        <button class="mark-all-read-button">Mark all as read</button>
-      </div>
-
-      <div class="notifications-tabs" role="tablist" aria-label="Notification sections">
-        <button class="notifications-tab active" data-notifications-tab="all">All</button>
-        <button class="notifications-tab" data-notifications-tab="unread">Unread <span class="notifications-tab-count">4</span></button>
-        <button class="notifications-tab" data-notifications-tab="requests">Friend Requests</button>
-      </div>
-
-      <section class="notifications-content-panel active-notifications-panel" data-notifications-panel="all">
-        <div class="notification-group-label">TODAY</div>
-        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=47" alt="Jasmine Carter"><div class="notification-copy"><p><strong>Jasmine Carter</strong> liked your post.</p><span>12 minutes ago</span></div><span class="notification-unread-dot"></span></article>
-        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=12" alt="Marcus Johnson"><div class="notification-copy"><p><strong>Marcus Johnson</strong> commented on your post: “That’s exactly what I was saying.”</p><span>34 minutes ago</span></div><span class="notification-unread-dot"></span></article>
-        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=5" alt="Nia Robinson"><div class="notification-copy"><p><strong>Nia Robinson</strong> sent you a friend request.</p><span>1 hour ago · 18 mutual friends</span></div><div class="notification-actions"><button class="notification-primary">Accept</button><button class="notification-secondary">Decline</button></div></article>
-        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=32" alt="Tiffany Brooks"><div class="notification-copy"><p><strong>Tiffany Brooks</strong> mentioned you in a conversation.</p><span>2 hours ago</span></div><span class="notification-unread-dot"></span></article>
-        <div class="notification-group-label older-label">EARLIER</div>
-        <article class="notification-item card"><div class="notification-social-mark">S</div><div class="notification-copy"><p><strong>SOCIAL</strong> Your profile privacy settings were updated.</p><span>Yesterday</span></div></article>
-        <article class="notification-item card"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=45" alt="Avery Lewis"><div class="notification-copy"><p><strong>Avery Lewis</strong> liked your photo.</p><span>Yesterday</span></div></article>
-      </section>
-
-      <section class="notifications-content-panel" data-notifications-panel="unread">
-        <div class="notification-group-label">UNREAD</div>
-        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=47" alt="Jasmine Carter"><div class="notification-copy"><p><strong>Jasmine Carter</strong> liked your post.</p><span>12 minutes ago</span></div><span class="notification-unread-dot"></span></article>
-        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=12" alt="Marcus Johnson"><div class="notification-copy"><p><strong>Marcus Johnson</strong> commented on your post.</p><span>34 minutes ago</span></div><span class="notification-unread-dot"></span></article>
-        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=5" alt="Nia Robinson"><div class="notification-copy"><p><strong>Nia Robinson</strong> sent you a friend request.</p><span>1 hour ago · 18 mutual friends</span></div><div class="notification-actions"><button class="notification-primary">Accept</button><button class="notification-secondary">Decline</button></div></article>
-        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=32" alt="Tiffany Brooks"><div class="notification-copy"><p><strong>Tiffany Brooks</strong> mentioned you in a conversation.</p><span>2 hours ago</span></div><span class="notification-unread-dot"></span></article>
-      </section>
-
-      <section class="notifications-content-panel" data-notifications-panel="requests">
-        <div class="notification-group-label">FRIEND REQUESTS</div>
-        <article class="notification-item card unread"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=5" alt="Nia Robinson"><div class="notification-copy"><p><strong>Nia Robinson</strong> sent you a friend request.</p><span>1 hour ago · 18 mutual friends</span></div><div class="notification-actions"><button class="notification-primary">Accept</button><button class="notification-secondary">Decline</button></div></article>
-        <article class="notification-item card"><img class="notification-avatar" src="https://i.pravatar.cc/160?img=13" alt="Darius King"><div class="notification-copy"><p><strong>Darius King</strong> sent you a friend request.</p><span>Yesterday · 7 mutual friends</span></div><div class="notification-actions"><button class="notification-primary">Accept</button><button class="notification-secondary">Decline</button></div></article>
-      </section>
-    </section>
-
-    <aside class="notifications-side">
-      <section class="notifications-summary card"><span class="panel-label">AT A GLANCE</span><h2>4 Unread</h2><p>New activity since the last time you checked SOCIAL.</p><div class="notification-summary-grid"><div><strong>1</strong><span>Request</span></div><div><strong>1</strong><span>Comment</span></div><div><strong>1</strong><span>Reaction</span></div><div><strong>1</strong><span>Mention</span></div></div></section>
-      <section class="notifications-control card"><span class="panel-label">YOUR ATTENTION</span><h2>Keep it useful.</h2><p>SOCIAL should notify you about people and activity that actually matter, not flood you with noise.</p></section>
-    </aside>
-  </main>
-
-  <!-- SEARCH PAGE -->
-  <main class="search-page page-view" id="search-page">
-    <section class="search-main">
-      <div class="search-hero">
-        <span class="panel-label">SEARCH SOCIAL</span>
-        <h1>Find people, posts, and topics.</h1>
-        <p>Search across SOCIAL without changing what appears in your Home feed.</p>
-
-        <label class="search-page-box">
-          <svg viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="6"></circle>
-            <path d="M16 16l4 4"></path>
-          </svg>
-          <input id="search-page-input" type="text" placeholder="Search SOCIAL" autocomplete="off" />
-          <button id="search-submit-button" type="button">Search</button>
-        </label>
-      </div>
-
-      <div class="search-tabs" role="tablist" aria-label="Search result types">
-        <button class="search-tab active" data-search-tab="all">All</button>
-        <button class="search-tab" data-search-tab="people">People</button>
-        <button class="search-tab" data-search-tab="posts">Posts</button>
-        <button class="search-tab" data-search-tab="topics">Topics</button>
-      </div>
-
-      <div class="search-query-line">
-        Showing prototype results for <strong id="search-query-label">Dallas</strong>
-      </div>
-
-      <section class="search-content-panel active-search-panel" data-search-panel="all">
-        <div class="search-section-heading">
-          <div><span class="panel-label">PEOPLE</span><h2>People</h2></div>
-          <button class="text-button search-jump" data-search-jump="people">See all people</button>
-        </div>
-
-        <div class="search-people-grid">
-          <article class="search-person-card card">
-            <img src="https://i.pravatar.cc/180?img=20" alt="Andre Collins">
-            <div><strong>Andre Collins</strong><span>@andrec</span><small>Dallas · 24 mutual friends</small></div>
-            <button>Add Friend</button>
-          </article>
-          <article class="search-person-card card">
-            <img src="https://i.pravatar.cc/180?img=36" alt="Monique Davis">
-            <div><strong>Monique Davis</strong><span>@moniqued</span><small>Dallas · 16 mutual friends</small></div>
-            <button>Add Friend</button>
-          </article>
-        </div>
-
-        <div class="search-section-heading search-section-spaced">
-          <div><span class="panel-label">POSTS</span><h2>Public Posts</h2></div>
-          <button class="text-button search-jump" data-search-jump="posts">See all posts</button>
-        </div>
-
-        <article class="search-post card">
-          <div class="search-post-top">
-            <div class="avatar purple-avatar">KR</div>
-            <div><strong>Kayla Reed</strong><span>Public · 2h</span></div>
-          </div>
-          <p>Anybody know a good weekend brunch spot in Dallas that isn't packed by 10 AM?</p>
-          <div class="search-post-meta"><span>52 likes</span><span>31 replies</span></div>
-        </article>
-
-        <div class="search-section-heading search-section-spaced">
-          <div><span class="panel-label">TOPICS</span><h2>Related Topics</h2></div>
-          <button class="text-button search-jump" data-search-jump="topics">See all topics</button>
-        </div>
-
-        <div class="search-topic-row">
-          <button class="search-topic-card card"><span class="topic-kicker">LOCAL</span><strong>Dallas</strong><small>2.8K active conversations</small></button>
-          <button class="search-topic-card card"><span class="topic-kicker">TRAVEL</span><strong>Texas Weekend Trips</strong><small>1.1K active conversations</small></button>
-        </div>
-      </section>
-
-      <section class="search-content-panel" data-search-panel="people">
-        <div class="search-section-heading"><div><span class="panel-label">PEOPLE</span><h2>People matching your search</h2></div></div>
-        <div class="search-people-grid">
-          <article class="search-person-card card"><img src="https://i.pravatar.cc/180?img=20" alt="Andre Collins"><div><strong>Andre Collins</strong><span>@andrec</span><small>Dallas · 24 mutual friends</small></div><button>Add Friend</button></article>
-          <article class="search-person-card card"><img src="https://i.pravatar.cc/180?img=36" alt="Monique Davis"><div><strong>Monique Davis</strong><span>@moniqued</span><small>Dallas · 16 mutual friends</small></div><button>Add Friend</button></article>
-          <article class="search-person-card card"><img src="https://i.pravatar.cc/180?img=8" alt="Terrence Young"><div><strong>Terrence Young</strong><span>@terrencey</span><small>Dallas · 10 mutual friends</small></div><button>Add Friend</button></article>
-          <article class="search-person-card card"><img src="https://i.pravatar.cc/180?img=29" alt="Renee Foster"><div><strong>Renee Foster</strong><span>@reneef</span><small>Dallas · 8 mutual friends</small></div><button>Add Friend</button></article>
-        </div>
-      </section>
-
-      <section class="search-content-panel" data-search-panel="posts">
-        <div class="search-section-heading"><div><span class="panel-label">POSTS</span><h2>Public posts matching your search</h2></div></div>
-        <article class="search-post card"><div class="search-post-top"><div class="avatar purple-avatar">KR</div><div><strong>Kayla Reed</strong><span>Public · 2h</span></div></div><p>Anybody know a good weekend brunch spot in Dallas that isn't packed by 10 AM?</p><div class="search-post-meta"><span>52 likes</span><span>31 replies</span></div></article>
-        <article class="search-post card"><div class="search-post-top"><div class="avatar blue-avatar">DT</div><div><strong>Devin Thomas</strong><span>Public · 5h</span></div></div><p>Dallas traffic makes a 20 minute drive turn into a whole life decision.</p><div class="search-post-meta"><span>118 likes</span><span>46 replies</span></div></article>
-      </section>
-
-      <section class="search-content-panel" data-search-panel="topics">
-        <div class="search-section-heading"><div><span class="panel-label">TOPICS</span><h2>Topics matching your search</h2></div></div>
-        <div class="search-topic-grid">
-          <button class="search-topic-card card"><span class="topic-kicker">LOCAL</span><strong>Dallas</strong><small>2.8K active conversations</small></button>
-          <button class="search-topic-card card"><span class="topic-kicker">TRAVEL</span><strong>Texas Weekend Trips</strong><small>1.1K active conversations</small></button>
-          <button class="search-topic-card card"><span class="topic-kicker">FOOD</span><strong>Dallas Food</strong><small>3.4K active conversations</small></button>
-          <button class="search-topic-card card"><span class="topic-kicker">SPORTS</span><strong>DFW Sports</strong><small>4.2K active conversations</small></button>
-        </div>
-      </section>
-    </section>
-
-    <aside class="search-side">
-      <section class="search-tip card">
-        <span class="panel-label">SEARCH</span>
-        <h2>Find what you're looking for.</h2>
-        <p>Search can surface public people, posts, and topics while keeping Home focused on your friends.</p>
-      </section>
-
-      <section class="search-recent card">
-        <span class="panel-label">RECENT SEARCHES</span>
-        <div class="recent-search-list">
-          <button>Dallas</button>
-          <button>Technology</button>
-          <button>Spades</button>
-        </div>
-      </section>
-    </aside>
-  </main>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const globalSearchInput = document.getElementById("global-search-input");
-      const searchPage = document.getElementById("search-page");
-      const searchPageInput = document.getElementById("search-page-input");
-      const searchSubmitButton = document.getElementById("search-submit-button");
-      const searchQueryLabel = document.getElementById("search-query-label");
-      const searchTabs = document.querySelectorAll("[data-search-tab]");
-      const searchPanels = document.querySelectorAll("[data-search-panel]");
-      const searchJumpButtons = document.querySelectorAll("[data-search-jump]");
-      const recentSearchButtons = document.querySelectorAll(".recent-search-list button");
-      const notificationPopover = document.getElementById("notification-popover");
-
-      function showSearchPanel(panelName) {
-        searchTabs.forEach((tab) => {
-          const active = tab.dataset.searchTab === panelName;
-          tab.classList.toggle("active", active);
-          tab.setAttribute("aria-selected", active ? "true" : "false");
-        });
-
-        searchPanels.forEach((panel) => {
-          panel.classList.toggle(
-            "active-search-panel",
-            panel.dataset.searchPanel === panelName
-          );
-        });
-      }
-
-      function openSearch(value) {
-        const query = value.trim() || "Dallas";
-
-        document.querySelectorAll(".page-view").forEach((page) => {
-          page.classList.remove("active-page");
-        });
-
-        document.querySelectorAll(".nav-item").forEach((item) => {
-          item.classList.remove("active");
-        });
-
-        document.querySelector(".profile-button")?.classList.remove("active-profile");
-
-        if (notificationPopover) {
-          notificationPopover.classList.remove("open");
-          notificationPopover.setAttribute("aria-hidden", "true");
-        }
-
-        searchPage.classList.add("active-page");
-        globalSearchInput.value = query;
-        searchPageInput.value = query;
-        searchQueryLabel.textContent = query;
-        showSearchPanel("all");
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-
-      globalSearchInput.addEventListener("focus", () => {
-        openSearch(globalSearchInput.value || "Dallas");
-        setTimeout(() => searchPageInput.focus(), 0);
-      });
-
-      globalSearchInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-          event.preventDefault();
-          openSearch(globalSearchInput.value);
-          searchPageInput.focus();
-        }
-      });
-
-      searchSubmitButton.addEventListener("click", () => {
-        openSearch(searchPageInput.value);
-        searchPageInput.focus();
-      });
-
-      searchPageInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-          event.preventDefault();
-          openSearch(searchPageInput.value);
-          searchPageInput.focus();
-        }
-      });
-
-      searchTabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
-          showSearchPanel(tab.dataset.searchTab);
-        });
-      });
-
-      searchJumpButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          showSearchPanel(button.dataset.searchJump);
-        });
-      });
-
-      recentSearchButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          openSearch(button.textContent);
-          searchPageInput.focus();
-        });
-      });
-    });
-  </script>
-
-
-  <script src="script.js?v=8"></script>
-
-</body>
-</html>
+.brand-main::after {
+  content: ".";
+  color: var(--purple);
+}
+
+.brand-sub {
+  font-size: 12px;
+  color: var(--purple-light);
+  letter-spacing: 3px;
+  margin-top: 5px;
+}
+
+
+/* NAVIGATION */
+
+.main-nav {
+  justify-self: center;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 7px;
+
+  border: 1px solid var(--border);
+  border-radius: 28px;
+
+  background: rgba(16, 19, 35, 0.72);
+}
+
+.nav-item {
+  position: relative;
+
+  width: 56px;
+  height: 48px;
+
+  border: 0;
+  border-radius: 18px;
+
+  background: transparent;
+
+  color: var(--text-muted);
+
+  display: grid;
+  place-items: center;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nav-item:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.06);
+
+  transform: translateY(-1px);
+}
+
+.nav-item.active {
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(154, 66, 255, 0.28),
+      rgba(101, 32, 211, 0.15)
+    );
+}
+
+.nav-item.active::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: 3px;
+
+  width: 21px;
+  height: 3px;
+
+  border-radius: 10px;
+
+  background: var(--purple);
+}
+
+.create-button {
+  width: 52px;
+  height: 52px;
+
+  margin: 0 6px;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--purple-light),
+      var(--purple-dark)
+    );
+
+  box-shadow:
+    0 0 25px rgba(154, 66, 255, 0.36);
+}
+
+.create-button:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #c685ff,
+      #7729ee
+    );
+}
+
+.nav-tooltip {
+  position: absolute;
+
+  top: 59px;
+
+  padding: 6px 9px;
+
+  border-radius: 8px;
+
+  background: #191d2d;
+
+  color: white;
+
+  font-size: 12px;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transform: translateY(-4px);
+
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+
+.nav-item:hover .nav-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* SEARCH / PROFILE */
+
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 14px;
+}
+
+.search-box {
+  width: 270px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0 16px;
+
+  border: 1px solid var(--border);
+  border-radius: 22px;
+
+  background: var(--background-soft);
+
+  color: var(--text-muted);
+}
+
+.search-box input {
+  width: 100%;
+
+  border: 0;
+  outline: none;
+
+  color: white;
+  background: transparent;
+}
+
+.search-box input::placeholder {
+  color: #6f7488;
+}
+
+.profile-button {
+  width: 44px;
+  height: 44px;
+
+  border-radius: 50%;
+
+  border: 2px solid rgba(154, 66, 255, 0.4);
+
+  background:
+    linear-gradient(
+      135deg,
+      #292f4b,
+      #171a2b
+    );
+
+  color: white;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* PAGE LAYOUT */
+
+.page-layout {
+  width: min(1180px, calc(100% - 40px));
+
+  margin: 30px auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    330px;
+
+  gap: 28px;
+
+  align-items: start;
+}
+
+
+/* FEED */
+
+.feed-column {
+  min-width: 0;
+}
+
+
+/* COMPOSER */
+
+.composer {
+  padding: 18px;
+}
+
+.composer-top {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #482078,
+      #191729
+    );
+
+  color: white;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.composer-input {
+  flex: 1;
+
+  height: 52px;
+
+  text-align: left;
+
+  padding: 0 20px;
+
+  border-radius: 18px;
+
+  border: 1px solid var(--border);
+
+  color: #aeb3c5;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  cursor: text;
+}
+
+.composer-input:hover {
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.composer-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 16px;
+}
+
+.composer-actions button {
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 0 14px;
+
+  border-radius: 14px;
+
+  border: 1px solid var(--border);
+
+  background: transparent;
+
+  color: #c5c8d7;
+
+  cursor: pointer;
+}
+
+.composer-actions button:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.gif-icon {
+  display: grid;
+  place-items: center;
+
+  width: 25px;
+  height: 20px;
+
+  border: 1px solid var(--purple);
+  border-radius: 5px;
+
+  color: var(--purple-light);
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.composer-spacer {
+  flex: 1;
+}
+
+.audience-button {
+  color: white !important;
+}
+
+.post-button {
+  min-width: 85px;
+
+  justify-content: center;
+
+  border: 0 !important;
+
+  color: white !important;
+
+  font-weight: 700;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--purple),
+      var(--purple-dark)
+    ) !important;
+}
+
+
+/* FEED TITLE */
+
+.feed-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+
+  margin: 28px 4px 14px;
+}
+
+.feed-heading h1 {
+  margin: 0;
+
+  font-size: 24px;
+  font-weight: 720;
+}
+
+.feed-heading p {
+  margin: 5px 0 0;
+
+  color: var(--text-muted);
+
+  font-size: 14px;
+}
+
+.feed-options {
+  border: 0;
+  background: transparent;
+
+  color: var(--text-muted);
+
+  cursor: pointer;
+}
+
+
+/* POST */
+
+.post {
+  margin-bottom: 20px;
+
+  padding: 20px;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.post-user {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.post-user strong {
+  font-size: 15px;
+}
+
+.post-user span {
+  color: var(--text-muted);
+
+  font-size: 13px;
+}
+
+.post-menu {
+  margin-left: auto;
+
+  border: 0;
+  background: transparent;
+
+  color: var(--text-muted);
+
+  cursor: pointer;
+}
+
+.post-text {
+  margin: 18px 0;
+
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.purple-avatar {
+  background:
+    linear-gradient(
+      135deg,
+      #7c35d6,
+      #341558
+    );
+}
+
+.blue-avatar {
+  background:
+    linear-gradient(
+      135deg,
+      #3d4d99,
+      #1a1f48
+    );
+}
+
+
+/* PHOTO PLACEHOLDER */
+
+.photo-placeholder {
+  min-height: 370px;
+
+  border-radius: 18px;
+
+  display: grid;
+  place-items: center;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 75% 20%,
+      rgba(200, 94, 255, 0.5),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 20% 80%,
+      rgba(73, 98, 255, 0.48),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #151a34,
+      #39155f
+    );
+}
+
+.photo-message {
+  padding: 14px 18px;
+
+  border-radius: 12px;
+
+  background: rgba(0, 0, 0, 0.35);
+
+  color: rgba(255, 255, 255, 0.82);
+
+  backdrop-filter: blur(8px);
+
+  font-size: 14px;
+}
+
+
+/* TEXT POST */
+
+.text-post {
+  min-height: 230px;
+
+  display: grid;
+  place-items: center;
+
+  text-align: center;
+
+  padding: 35px;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #4b1a80,
+      #1c214d
+    );
+
+  font-size: 30px;
+  font-weight: 700;
+}
+
+
+/* POST INFO */
+
+.post-stats {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 13px 2px;
+
+  color: var(--text-muted);
+
+  font-size: 13px;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.post-actions {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  padding-top: 7px;
+}
+
+.post-actions button {
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: transparent;
+
+  color: #adb2c5;
+
+  cursor: pointer;
+}
+
+.post-actions button:hover {
+  color: white;
+
+  background: rgba(255, 255, 255, 0.04);
+}
+
+
+/* RIGHT PANEL */
+
+.social-panel {
+  position: sticky;
+  top: calc(var(--nav-height) + 26px);
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+
+/* PANEL HEADER */
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 18px;
+}
+
+.panel-header h2 {
+  margin: 3px 0 0;
+
+  font-size: 23px;
+}
+
+.panel-header button {
+  border: 0;
+  background: transparent;
+
+  color: var(--purple-light);
+
+  cursor: pointer;
+}
+
+.panel-label {
+  color: var(--purple-light);
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+
+/* TOP 10 */
+
+.top10 {
+  padding: 20px;
+}
+
+.top10-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px 8px;
+}
+
+.friend {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 7px;
+
+  text-align: center;
+}
+
+.friend-photo-wrap {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(
+    135deg,
+    var(--purple-light),
+    var(--purple-dark)
+  );
+  box-shadow: 0 0 0 3px rgba(154, 66, 255, 0.08);
+}
+
+.friend-photo {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--surface);
+}
+
+.star-badge {
+  position: absolute;
+  right: -4px;
+  bottom: -2px;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    var(--purple-light),
+    var(--purple-dark)
+  );
+  color: white;
+  font-size: 11px;
+  line-height: 1;
+  border: 2px solid var(--surface);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.friend span {
+  width: 100%;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: #c9ccda;
+
+  font-size: 11px;
+}
+
+
+/* SOCIAL MESSAGE */
+
+.social-message {
+  padding: 25px;
+}
+
+.social-message h2 {
+  margin: 10px 0 14px;
+
+  font-size: 30px;
+  line-height: 1.08;
+}
+
+.social-message p {
+  margin: 0;
+
+  color: var(--text-muted);
+
+  line-height: 1.6;
+
+  font-size: 14px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1050px) {
+
+  .topbar {
+    grid-template-columns:
+      180px
+      1fr
+      150px;
+  }
+
+  .search-box {
+    display: none;
+  }
+
+  .page-layout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      285px;
+  }
+
+}
+
+
+@media (max-width: 820px) {
+
+  .topbar {
+    grid-template-columns:
+      130px
+      1fr
+      50px;
+
+    padding: 0 14px;
+  }
+
+  .brand-main {
+    font-size: 21px;
+  }
+
+  .brand-sub {
+    display: none;
+  }
+
+  .main-nav {
+    gap: 2px;
+    padding: 5px;
+  }
+
+  .nav-item {
+    width: 44px;
+  }
+
+  .create-button {
+    width: 46px;
+    height: 46px;
+  }
+
+  .page-layout {
+    width: min(680px, calc(100% - 24px));
+
+    grid-template-columns: 1fr;
+  }
+
+  .social-panel {
+    position: static;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .topbar {
+    grid-template-columns:
+      1fr
+      auto;
+
+    height: 64px;
+  }
+
+  .brand {
+    display: none;
+  }
+
+  .main-nav {
+    justify-self: start;
+  }
+
+  .header-actions {
+    justify-self: end;
+  }
+
+  .composer-actions {
+    flex-wrap: wrap;
+  }
+
+  .composer-spacer {
+    display: none;
+  }
+
+  .audience-button {
+    margin-left: auto;
+  }
+
+  .photo-placeholder {
+    min-height: 280px;
+  }
+
+}
+/* =========================
+   HOME V0.2 INTERACTIONS
+   ========================= */
+
+.composer {
+  position: relative;
+}
+
+.composer-open {
+  border-color: rgba(154, 66, 255, 0.32);
+
+  box-shadow:
+    0 0 0 1px rgba(154, 66, 255, 0.06),
+    0 16px 45px rgba(0, 0, 0, 0.18);
+}
+
+.composer-textarea {
+  flex: 1;
+
+  min-height: 110px;
+
+  resize: vertical;
+
+  padding: 16px 18px;
+
+  border-radius: 18px;
+
+  border: 1px solid var(--border);
+
+  outline: none;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  color: white;
+
+  font: inherit;
+
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.composer-textarea::placeholder {
+  color: #aeb3c5;
+}
+
+.composer-textarea:focus {
+  border-color: rgba(154, 66, 255, 0.42);
+
+  box-shadow:
+    0 0 0 3px rgba(154, 66, 255, 0.08);
+}
+
+
+/* AUDIENCE MENU */
+
+.audience-menu {
+  position: absolute;
+
+  right: 105px;
+  top: calc(100% - 4px);
+
+  width: 260px;
+
+  padding: 8px;
+
+  border-radius: 18px;
+
+  border: 1px solid var(--border);
+
+  background: #111526;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.42);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transform: translateY(-5px) scale(0.98);
+
+  transform-origin: top right;
+
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease;
+
+  z-index: 50;
+}
+
+.audience-menu-open {
+  opacity: 1;
+
+  pointer-events: auto;
+
+  transform: translateY(6px) scale(1);
+}
+
+.audience-menu button {
+  width: 100%;
+
+  min-height: 58px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  gap: 4px;
+
+  padding: 10px 12px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: transparent;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.audience-menu button:hover {
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.audience-menu strong {
+  color: white;
+
+  font-size: 14px;
+}
+
+.audience-menu span {
+  color: var(--text-muted);
+
+  font-size: 12px;
+}
+
+
+/* NAV PRESS */
+
+.nav-item:active {
+  transform: scale(0.96);
+}
+
+.create-button:active {
+  transform: scale(0.93);
+}
+
+.post-button:active {
+  transform: scale(0.97);
+}
+
+/* =========================
+   EXPLORE V0.1
+   ========================= */
+
+.page-view {
+  display: none;
+}
+
+.page-view.active-page {
+  display: grid;
+}
+
+.explore-layout {
+  width: min(1180px, calc(100% - 40px));
+  margin: 30px auto;
+  grid-template-columns: minmax(0, 1fr) 350px;
+  gap: 28px;
+  align-items: start;
+}
+
+.explore-main {
+  min-width: 0;
+}
+
+.explore-hero {
+  padding: 8px 4px 24px;
+}
+
+.explore-title-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.explore-compass {
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(187, 114, 255, 0.28),
+      rgba(101, 32, 211, 0.16)
+    );
+  border: 1px solid rgba(187, 114, 255, 0.26);
+  color: var(--purple-light);
+  box-shadow: 0 14px 40px rgba(101, 32, 211, 0.14);
+}
+
+.explore-compass svg {
+  width: 28px;
+  height: 28px;
+}
+
+.explore-hero h1 {
+  margin: 4px 0 6px;
+  font-size: 32px;
+  line-height: 1.05;
+}
+
+.explore-hero p {
+  margin: 0;
+  max-width: 620px;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.explore-tabs {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+  padding: 5px;
+  width: fit-content;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(16, 19, 35, 0.72);
+}
+
+.explore-tab {
+  min-width: 96px;
+  height: 38px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.explore-tab:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.explore-tab.active {
+  color: white;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(154, 66, 255, 0.34),
+      rgba(101, 32, 211, 0.18)
+    );
+  box-shadow: inset 0 0 0 1px rgba(187, 114, 255, 0.16);
+}
+
+.explore-section {
+  min-width: 0;
+}
+
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 4px 4px 14px;
+}
+
+.section-heading h2 {
+  margin: 3px 0 4px;
+  font-size: 24px;
+}
+
+.section-heading p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.text-button {
+  flex-shrink: 0;
+  border: 0;
+  background: transparent;
+  color: var(--purple-light);
+  cursor: pointer;
+}
+
+.discovery-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.discovery-card {
+  padding: 20px;
+}
+
+.discovery-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.discovery-user {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.discovery-user strong {
+  font-size: 15px;
+}
+
+.discovery-user span {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.more-button {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.interest-reason {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 16px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: rgba(154, 66, 255, 0.08);
+  border: 1px solid rgba(154, 66, 255, 0.12);
+  color: #c8a1f6;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.interest-reason svg {
+  width: 14px;
+  height: 14px;
+}
+
+.discovery-text {
+  margin: 18px 0;
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.conversation-preview {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.conversation-preview strong {
+  color: #d8dbea;
+  font-weight: 650;
+}
+
+.discovery-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  gap: 6px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.discovery-actions button {
+  min-height: 40px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: #adb2c5;
+  cursor: pointer;
+}
+
+.discovery-actions button:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.discovery-actions .not-interested {
+  color: var(--purple-light);
+}
+
+.explore-green-avatar {
+  background:
+    linear-gradient(
+      135deg,
+      #284e54,
+      #18252d
+    );
+}
+
+.explore-side {
+  position: sticky;
+  top: calc(var(--nav-height) + 26px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.trending-card,
+.topics-card,
+.algorithm-note {
+  padding: 20px;
+}
+
+.trending-card .panel-header,
+.topics-card .panel-header {
+  margin-bottom: 10px;
+}
+
+.trending-card .panel-header h2,
+.topics-card .panel-header h2 {
+  font-size: 21px;
+}
+
+.trend-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.trend-item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 14px 4px;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.trend-item:last-child {
+  border-bottom: 0;
+}
+
+.trend-item:hover .trend-copy strong {
+  color: var(--purple-light);
+}
+
+.trend-rank {
+  color: var(--purple-light);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.trend-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.trend-copy strong {
+  color: #f1f2f7;
+  font-size: 13px;
+  line-height: 1.35;
+  transition: color 0.18s ease;
+}
+
+.trend-copy small {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.see-more-button {
+  width: 100%;
+  height: 40px;
+  margin-top: 8px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--purple-light);
+  cursor: pointer;
+}
+
+.see-more-button:hover {
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.topic-grid button {
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  color: #d3d6e2;
+  cursor: pointer;
+  text-align: left;
+}
+
+.topic-grid button:hover {
+  border-color: rgba(154, 66, 255, 0.26);
+  background: rgba(154, 66, 255, 0.07);
+  color: white;
+}
+
+.algorithm-note {
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(154, 66, 255, 0.14),
+      transparent 45%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(22, 27, 48, 0.96),
+      rgba(13, 16, 31, 0.98)
+    );
+}
+
+.algorithm-note h2 {
+  margin: 8px 0 10px;
+  font-size: 23px;
+}
+
+.algorithm-note p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+@media (max-width: 1050px) {
+  .explore-layout {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+}
+
+@media (max-width: 820px) {
+  .explore-layout {
+    width: min(680px, calc(100% - 24px));
+    grid-template-columns: 1fr;
+  }
+
+  .explore-side {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .explore-layout {
+    margin-top: 20px;
+  }
+
+  .explore-title-row {
+    align-items: flex-start;
+  }
+
+  .explore-compass {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+  }
+
+  .explore-hero h1 {
+    font-size: 27px;
+  }
+
+  .explore-tabs {
+    width: 100%;
+  }
+
+  .explore-tab {
+    min-width: 0;
+    flex: 1;
+    padding: 0 8px;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .discovery-actions {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .discovery-actions .not-interested {
+    grid-column: 1 / -1;
+  }
+}
+
+/* =========================
+   EXPLORE V0.2 INTERACTIONS
+   ========================= */
+
+.explore-content-panel {
+  display: none;
+}
+
+.explore-content-panel.active-explore-panel {
+  display: block;
+}
+
+.trending-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.trending-conversation {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) 34px;
+  align-items: center;
+  gap: 16px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+.trending-conversation:hover {
+  transform: translateY(-2px);
+  border-color: rgba(154, 66, 255, 0.24);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(27, 31, 53, 0.98),
+      rgba(15, 18, 34, 0.98)
+    );
+}
+
+.trending-number {
+  color: var(--purple-light);
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  opacity: 0.9;
+}
+
+.trending-conversation-copy {
+  min-width: 0;
+}
+
+.trend-topic,
+.topic-kicker {
+  color: var(--purple-light);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+}
+
+.trending-conversation h3,
+.topic-browser-card h3 {
+  margin: 6px 0 7px;
+  color: white;
+}
+
+.trending-conversation h3 {
+  font-size: 19px;
+}
+
+.trending-conversation p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.trend-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 13px;
+  font-size: 11px;
+}
+
+.trend-meta strong {
+  color: #d8dbea;
+}
+
+.trend-meta span {
+  color: var(--text-muted);
+}
+
+.trend-arrow {
+  justify-self: end;
+  color: var(--purple-light);
+  font-size: 22px;
+}
+
+.topic-browser {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.topic-browser-card {
+  min-height: 190px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.topic-browser-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(154, 66, 255, 0.26);
+}
+
+.topic-browser-card h3 {
+  font-size: 21px;
+}
+
+.topic-browser-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.topic-activity {
+  display: block;
+  margin-top: 18px;
+  color: #c8a1f6;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+@media (max-width: 700px) {
+  .topic-browser {
+    grid-template-columns: 1fr;
+  }
+
+  .trending-conversation {
+    grid-template-columns: 44px minmax(0, 1fr);
+  }
+
+  .trend-arrow {
+    display: none;
+  }
+}
+
+/* =========================
+   PROFILE V0.1
+   ========================= */
+
+.profile-layout {
+  width: min(1180px, calc(100% - 40px));
+  margin: 30px auto;
+  grid-template-columns: minmax(0, 1fr) 350px;
+  gap: 28px;
+  align-items: start;
+}
+
+.profile-main {
+  min-width: 0;
+}
+
+.profile-side {
+  position: sticky;
+  top: calc(var(--nav-height) + 26px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.profile-button.active-profile {
+  border-color: var(--purple-light);
+  box-shadow:
+    0 0 0 3px rgba(154, 66, 255, 0.10),
+    0 0 24px rgba(154, 66, 255, 0.22);
+}
+
+.profile-identity {
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-accent {
+  height: 120px;
+  background:
+    radial-gradient(
+      circle at 18% 40%,
+      rgba(205, 120, 255, 0.55),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 82% 30%,
+      rgba(83, 92, 255, 0.40),
+      transparent 26%
+    ),
+    linear-gradient(
+      120deg,
+      #2a1246,
+      #151a3c 56%,
+      #24113b
+    );
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.profile-identity-content {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: end;
+  padding: 0 24px 22px;
+  margin-top: -43px;
+}
+
+.profile-avatar-wrap {
+  position: relative;
+}
+
+.profile-avatar-large {
+  width: 106px;
+  height: 106px;
+  display: grid;
+  place-items: center;
+  border-radius: 32px;
+  background:
+    linear-gradient(
+      145deg,
+      #47226d,
+      #1a1830
+    );
+  border: 5px solid #101426;
+  color: white;
+  font-size: 28px;
+  font-weight: 800;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.32);
+}
+
+.profile-status-dot {
+  position: absolute;
+  right: 5px;
+  bottom: 7px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #54c58b;
+  border: 3px solid #101426;
+}
+
+.profile-copy {
+  padding-top: 50px;
+}
+
+.profile-copy h1 {
+  margin: 4px 0 3px;
+  font-size: 31px;
+  line-height: 1.1;
+}
+
+.profile-handle {
+  color: #a9adc0;
+  font-size: 14px;
+}
+
+.profile-bio {
+  max-width: 560px;
+  margin: 13px 0 10px;
+  color: #d0d3df;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.profile-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 9px;
+  align-self: start;
+  padding-top: 55px;
+}
+
+.profile-edit-button,
+.profile-more-button {
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  cursor: pointer;
+}
+
+.profile-edit-button {
+  padding: 0 17px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(154, 66, 255, 0.28),
+      rgba(101, 32, 211, 0.16)
+    );
+  color: white;
+  font-weight: 700;
+}
+
+.profile-more-button {
+  width: 42px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-muted);
+}
+
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--border);
+}
+
+.profile-stats button {
+  min-height: 72px;
+  border: 0;
+  border-right: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+}
+
+.profile-stats button:last-child {
+  border-right: 0;
+}
+
+.profile-stats strong,
+.profile-stats span {
+  display: block;
+}
+
+.profile-stats strong {
+  color: white;
+  font-size: 18px;
+}
+
+.profile-stats span {
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.profile-stats button:hover {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.profile-tabs {
+  display: flex;
+  width: fit-content;
+  gap: 8px;
+  margin: 22px 0 18px;
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(16, 19, 35, 0.72);
+}
+
+.profile-tab {
+  min-width: 96px;
+  height: 38px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.profile-tab:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.profile-tab.active {
+  color: white;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(154, 66, 255, 0.34),
+      rgba(101, 32, 211, 0.18)
+    );
+  box-shadow: inset 0 0 0 1px rgba(187, 114, 255, 0.16);
+}
+
+.profile-content-panel {
+  display: none;
+}
+
+.profile-content-panel.active-profile-panel {
+  display: block;
+}
+
+.profile-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  margin: 0 4px 14px;
+}
+
+.profile-section-heading h2 {
+  margin: 3px 0 0;
+  font-size: 24px;
+}
+
+.profile-post {
+  margin-bottom: 18px;
+}
+
+.profile-text-post {
+  min-height: 250px;
+  display: grid;
+  place-items: center;
+  padding: 34px;
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      circle at 75% 22%,
+      rgba(197, 101, 255, 0.34),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      #31124f,
+      #171d43
+    );
+  text-align: center;
+  font-size: 30px;
+  font-weight: 750;
+}
+
+.profile-top10,
+.profile-about {
+  padding: 20px;
+}
+
+.profile-side-intro {
+  margin: -4px 0 19px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.profile-top10-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px 8px;
+}
+
+.top10-visibility {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  color: #b6bacb;
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.top10-visibility svg {
+  width: 15px;
+  height: 15px;
+  color: var(--purple-light);
+}
+
+.profile-about h2 {
+  margin: 7px 0 18px;
+  font-size: 22px;
+}
+
+.about-row {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.about-row span,
+.about-row strong {
+  display: block;
+}
+
+.about-row span {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.about-row strong {
+  margin-top: 5px;
+  color: #d7d9e5;
+  font-size: 13px;
+}
+
+.profile-about-button {
+  width: 100%;
+  height: 42px;
+  margin-top: 16px;
+  border: 1px solid rgba(154, 66, 255, 0.20);
+  border-radius: 13px;
+  background: rgba(154, 66, 255, 0.08);
+  color: var(--purple-light);
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.profile-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.profile-photo-tile {
+  aspect-ratio: 1 / 1;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.profile-photo-tile:hover {
+  transform: translateY(-2px);
+  border-color: rgba(154, 66, 255, 0.28);
+}
+
+.photo-tile-one {
+  background:
+    radial-gradient(circle at 70% 25%, rgba(211, 110, 255, 0.55), transparent 27%),
+    linear-gradient(135deg, #171a38, #4a1e6a);
+}
+
+.photo-tile-two {
+  background:
+    radial-gradient(circle at 30% 75%, rgba(82, 120, 255, 0.45), transparent 31%),
+    linear-gradient(135deg, #161b32, #252d61);
+}
+
+.photo-tile-three {
+  background:
+    radial-gradient(circle at 55% 35%, rgba(84, 197, 139, 0.38), transparent 28%),
+    linear-gradient(135deg, #16252d, #203f42);
+}
+
+.photo-tile-four {
+  background:
+    radial-gradient(circle at 78% 72%, rgba(187, 114, 255, 0.42), transparent 31%),
+    linear-gradient(135deg, #1e1631, #3f1d5f);
+}
+
+.photo-tile-five {
+  background:
+    radial-gradient(circle at 25% 25%, rgba(255, 171, 91, 0.28), transparent 28%),
+    linear-gradient(135deg, #241b28, #403044);
+}
+
+.photo-tile-six {
+  background:
+    radial-gradient(circle at 66% 27%, rgba(75, 105, 255, 0.44), transparent 28%),
+    linear-gradient(135deg, #16182c, #29214f);
+}
+
+.profile-friends-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.profile-friend-card {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 13px;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid var(--border);
+  text-align: left;
+  cursor: pointer;
+}
+
+.profile-friend-card img {
+  grid-row: 1 / 3;
+  width: 58px;
+  height: 58px;
+  object-fit: cover;
+  border-radius: 17px;
+  border: 2px solid rgba(154, 66, 255, 0.24);
+}
+
+.profile-friend-card strong {
+  align-self: end;
+  color: white;
+  font-size: 14px;
+}
+
+.profile-friend-card span {
+  align-self: start;
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.profile-friend-card:hover {
+  border-color: rgba(154, 66, 255, 0.26);
+}
+
+@media (max-width: 1050px) {
+  .profile-layout {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+
+  .profile-identity-content {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .profile-actions {
+    grid-column: 2;
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 820px) {
+  .profile-layout {
+    width: min(680px, calc(100% - 24px));
+    grid-template-columns: 1fr;
+  }
+
+  .profile-side {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-layout {
+    margin-top: 18px;
+  }
+
+  .profile-accent {
+    height: 95px;
+  }
+
+  .profile-identity-content {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    margin-top: -45px;
+  }
+
+  .profile-copy {
+    padding-top: 0;
+  }
+
+  .profile-meta {
+    justify-content: center;
+  }
+
+  .profile-actions {
+    grid-column: auto;
+    justify-content: center;
+  }
+
+  .profile-stats {
+    margin-top: 8px;
+  }
+
+  .profile-tabs {
+    width: 100%;
+  }
+
+  .profile-tab {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .profile-photo-grid,
+  .profile-friends-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ========================= FRIENDS V0.1 ========================= */
+.friends-layout{width:min(1180px,calc(100% - 40px));margin:30px auto;grid-template-columns:minmax(0,1fr) 330px;gap:28px;align-items:start}
+.friends-main{min-width:0}.friends-side{position:sticky;top:calc(var(--nav-height) + 26px);display:flex;flex-direction:column;gap:18px}
+.friends-hero{display:flex;align-items:end;justify-content:space-between;gap:20px;padding:8px 4px 22px}.friends-hero h1{margin:5px 0 7px;font-size:34px}
+.friends-hero p,.friends-section-heading p{margin:0;color:var(--text-muted);font-size:14px;line-height:1.55}
+.find-friends-button{height:44px;padding:0 17px;border:1px solid rgba(187,114,255,.24);border-radius:14px;background:linear-gradient(135deg,rgba(154,66,255,.25),rgba(101,32,211,.13));color:white;font-weight:700;cursor:pointer}
+.friends-tabs{display:flex;gap:8px;width:fit-content;margin-bottom:22px;padding:5px;border:1px solid var(--border);border-radius:16px;background:rgba(16,19,35,.72)}
+.friends-tab{min-width:112px;height:40px;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 16px;border:0;border-radius:12px;background:transparent;color:var(--text-muted);cursor:pointer;font-weight:650}
+.friends-tab.active{color:white;background:linear-gradient(135deg,rgba(154,66,255,.34),rgba(101,32,211,.18))}
+.friends-tab-count{min-width:21px;height:21px;display:grid;place-items:center;padding:0 6px;border-radius:999px;background:var(--purple);color:white;font-size:10px;font-weight:800}
+.friends-content-panel{display:none}.friends-content-panel.active-friends-panel{display:block}
+.friends-section-heading{min-height:52px;display:flex;justify-content:space-between;align-items:end;gap:18px;margin:0 4px 15px}.friends-section-heading h2{margin:4px 0 0;font-size:24px}
+.friends-search{width:230px;height:42px;display:flex;align-items:center;padding:0 13px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.025)}
+.friends-search input{width:100%;border:0;outline:none;background:transparent;color:white;font-size:13px}
+.friends-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.friend-list-card{display:grid;grid-template-columns:66px minmax(0,1fr) auto;gap:14px;align-items:center;padding:16px}.friend-list-card>img{width:66px;height:66px;object-fit:cover;border-radius:20px;border:2px solid rgba(154,66,255,.28)}
+.friend-list-copy{min-width:0}.friend-list-copy strong,.friend-list-copy span,.friend-list-copy small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.friend-list-copy strong{font-size:14px}.friend-list-copy span{margin-top:4px;color:#aeb2c3;font-size:12px}.friend-list-copy small{margin-top:7px;color:var(--text-muted);font-size:11px}
+.friend-card-more{align-self:start;border:0;background:transparent;color:var(--text-muted);cursor:pointer}
+.request-list{display:flex;flex-direction:column;gap:14px}.request-card{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:16px;align-items:center;padding:17px}.request-card>img{width:72px;height:72px;object-fit:cover;border-radius:22px;border:2px solid rgba(154,66,255,.24)}
+.request-copy strong,.request-copy span,.request-copy small{display:block}.request-copy span{margin-top:4px;color:#aeb2c3;font-size:12px}.request-copy small{margin-top:8px;color:var(--text-muted);font-size:11px}
+.request-actions{display:flex;gap:8px}.request-actions button{height:39px;padding:0 15px;border-radius:12px;cursor:pointer;font-weight:700;font-size:12px}.request-accept{border:0;background:linear-gradient(135deg,var(--purple),var(--purple-dark));color:white}.request-decline,.request-cancel{border:1px solid var(--border);background:rgba(255,255,255,.03);color:#c5c8d7}
+.friends-summary,.mutual-card,.friends-privacy{padding:21px}.friends-summary h2,.friends-privacy h2{margin:8px 0 10px;font-size:24px}.friends-summary p,.friends-privacy p{margin:0;color:var(--text-muted);font-size:13px;line-height:1.6}
+.friends-summary-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}.friends-summary-stats div{padding:13px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.025)}.friends-summary-stats strong,.friends-summary-stats span{display:block}.friends-summary-stats span{margin-top:3px;color:var(--text-muted);font-size:10px}
+.mutual-list{display:flex;flex-direction:column}.mutual-person{display:grid;grid-template-columns:46px minmax(0,1fr) auto;gap:11px;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}.mutual-person:last-child{border-bottom:0}.mutual-person img{width:46px;height:46px;object-fit:cover;border-radius:15px}.mutual-person strong,.mutual-person span{display:block}.mutual-person strong{font-size:12px}.mutual-person span{margin-top:4px;color:var(--text-muted);font-size:10px}.mutual-person button{height:31px;border:1px solid rgba(154,66,255,.22);border-radius:10px;background:rgba(154,66,255,.08);color:var(--purple-light);cursor:pointer;font-size:11px;font-weight:700}
+@media(max-width:1050px){.friends-layout{grid-template-columns:minmax(0,1fr) 285px}.friends-grid{grid-template-columns:1fr}}
+@media(max-width:820px){.friends-layout{width:min(680px,calc(100% - 24px));grid-template-columns:1fr}.friends-side{position:static}}
+@media(max-width:600px){.friends-hero,.friends-section-heading{align-items:stretch;flex-direction:column}.friends-tabs{width:100%}.friends-tab{flex:1;min-width:0;padding:0 8px}.friends-search{width:100%}.request-card{grid-template-columns:62px minmax(0,1fr)}.request-card>img{width:62px;height:62px}.request-actions{grid-column:1/-1}}
+
+/* =========================
+   MESSAGES + CONVERSATION V0.1
+   ========================= */
+
+.messages-page {
+  width: min(1180px, calc(100% - 40px));
+  margin: 30px auto;
+}
+
+.messages-shell {
+  min-height: 700px;
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.messages-list-panel {
+  min-width: 0;
+  padding: 22px 18px;
+  border-right: 1px solid var(--border);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18, 22, 40, 0.96),
+      rgba(12, 15, 28, 0.98)
+    );
+}
+
+.messages-list-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.messages-list-header h1 {
+  margin: 4px 0 0;
+  font-size: 28px;
+}
+
+.new-message-button {
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid rgba(187, 114, 255, 0.24);
+  border-radius: 12px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(154, 66, 255, 0.24),
+      rgba(101, 32, 211, 0.14)
+    );
+  color: white;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.messages-search {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 13px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--text-muted);
+}
+
+.messages-search svg {
+  width: 17px;
+  height: 17px;
+}
+
+.messages-search input {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: white;
+  font-size: 13px;
+}
+
+.messages-search input::placeholder {
+  color: #73798d;
+}
+
+.conversation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.conversation-item {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.conversation-item:hover {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.conversation-item.active {
+  border-color: rgba(154, 66, 255, 0.20);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(154, 66, 255, 0.16),
+      rgba(101, 32, 211, 0.08)
+    );
+}
+
+.conversation-item > img,
+.conversation-avatar-wrap {
+  width: 54px;
+  height: 54px;
+}
+
+.conversation-item > img,
+.conversation-avatar-wrap img {
+  width: 54px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: 17px;
+  border: 2px solid rgba(154, 66, 255, 0.22);
+}
+
+.conversation-avatar-wrap {
+  position: relative;
+}
+
+.conversation-unread-dot {
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--purple-light);
+  border: 2px solid #111526;
+}
+
+.conversation-preview {
+  min-width: 0;
+}
+
+.conversation-preview-top,
+.conversation-preview-bottom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.conversation-preview-top {
+  justify-content: space-between;
+}
+
+.conversation-preview-top strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.conversation-preview-top time {
+  flex-shrink: 0;
+  color: #7f8497;
+  font-size: 10px;
+}
+
+.conversation-preview-bottom {
+  margin-top: 5px;
+}
+
+.conversation-preview-bottom span {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.conversation-preview-bottom b {
+  min-width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--purple);
+  color: white;
+  font-size: 10px;
+}
+
+.conversation-panel {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background:
+    radial-gradient(
+      circle at 80% 0%,
+      rgba(154, 66, 255, 0.08),
+      transparent 30%
+    ),
+    rgba(8, 10, 20, 0.72);
+}
+
+.conversation-header {
+  height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 22px;
+  border-bottom: 1px solid var(--border);
+}
+
+.conversation-person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.conversation-person img {
+  width: 46px;
+  height: 46px;
+  object-fit: cover;
+  border-radius: 15px;
+  border: 2px solid rgba(154, 66, 255, 0.22);
+}
+
+.conversation-person strong,
+.conversation-person span {
+  display: block;
+}
+
+.conversation-person strong {
+  font-size: 14px;
+}
+
+.conversation-person span {
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.conversation-options {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.conversation-body {
+  min-height: 0;
+  max-height: 560px;
+  overflow-y: auto;
+  padding: 24px 26px;
+}
+
+.conversation-date {
+  width: fit-content;
+  margin: 0 auto 24px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.025);
+  font-size: 10px;
+}
+
+.message-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 9px;
+  margin-bottom: 16px;
+}
+
+.message-row > img {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.message-row.outgoing {
+  justify-content: flex-end;
+}
+
+.message-stack {
+  max-width: 68%;
+}
+
+.message-bubble {
+  padding: 12px 14px;
+  border-radius: 17px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.message-row.incoming .message-bubble {
+  border-bottom-left-radius: 6px;
+  background: #191d31;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #e1e3ec;
+}
+
+.message-row.outgoing .message-bubble {
+  border-bottom-right-radius: 6px;
+  background:
+    linear-gradient(
+      135deg,
+      var(--purple),
+      var(--purple-dark)
+    );
+  color: white;
+}
+
+.message-stack time {
+  display: block;
+  margin-top: 5px;
+  color: #757b8e;
+  font-size: 9px;
+}
+
+.message-row.outgoing .message-stack time {
+  text-align: right;
+}
+
+.conversation-composer {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
+  gap: 9px;
+  align-items: end;
+  padding: 16px 18px;
+  border-top: 1px solid var(--border);
+  background: rgba(12, 15, 28, 0.92);
+}
+
+.message-attachment-button,
+.message-gif-button,
+.message-send-button {
+  height: 42px;
+  border-radius: 13px;
+  cursor: pointer;
+}
+
+.message-attachment-button {
+  width: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.025);
+  color: #b8bdcf;
+}
+
+.message-gif-button {
+  width: 48px;
+  border: 1px solid rgba(154, 66, 255, 0.22);
+  background: rgba(154, 66, 255, 0.07);
+  color: var(--purple-light);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.message-input {
+  min-height: 42px;
+  max-height: 120px;
+  resize: none;
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.03);
+  color: white;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.message-input::placeholder {
+  color: #74798d;
+}
+
+.message-input:focus {
+  border-color: rgba(154, 66, 255, 0.36);
+  box-shadow: 0 0 0 3px rgba(154, 66, 255, 0.06);
+}
+
+.message-send-button {
+  padding: 0 18px;
+  border: 0;
+  background:
+    linear-gradient(
+      135deg,
+      var(--purple),
+      var(--purple-dark)
+    );
+  color: white;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .messages-shell {
+    grid-template-columns: 310px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .messages-page {
+    width: min(680px, calc(100% - 20px));
+  }
+
+  .messages-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .messages-list-panel {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .conversation-panel {
+    min-height: 600px;
+  }
+}
+
+@media (max-width: 520px) {
+  .messages-list-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .new-message-button {
+    width: fit-content;
+  }
+
+  .conversation-composer {
+    grid-template-columns: auto auto minmax(0, 1fr);
+  }
+
+  .message-send-button {
+    grid-column: 1 / -1;
+  }
+
+  .message-stack {
+    max-width: 82%;
+  }
+}
+
+/* =========================
+   MESSAGES V0.1 — INBOX TEXT FIX
+   ========================= */
+
+.conversation-item {
+  grid-template-columns: 54px minmax(0, 1fr);
+}
+
+.conversation-preview {
+  min-width: 0;
+  width: 100%;
+}
+
+.conversation-preview-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.conversation-preview-top strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.conversation-preview-top time {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.conversation-preview-bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.conversation-preview-bottom span {
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.conversation-preview-bottom b {
+  flex-shrink: 0;
+}
+
+
+/* ========================= NOTIFICATIONS V0.1 ========================= */
+.notifications-page{width:min(1180px,calc(100% - 40px));margin:30px auto;grid-template-columns:minmax(0,1fr) 330px;gap:28px;align-items:start}
+.notifications-main{min-width:0}.notifications-side{position:sticky;top:calc(var(--nav-height) + 26px);display:flex;flex-direction:column;gap:18px}
+.notifications-hero{display:flex;justify-content:space-between;align-items:end;gap:18px;padding:8px 4px 22px}.notifications-hero h1{margin:5px 0 7px;font-size:34px}.notifications-hero p{margin:0;color:var(--text-muted);font-size:14px}
+.mark-all-read-button{height:42px;padding:0 15px;border:1px solid var(--border);border-radius:13px;background:rgba(255,255,255,.025);color:#c7cada;cursor:pointer;font-weight:650}
+.notifications-tabs{display:flex;gap:8px;width:fit-content;margin-bottom:22px;padding:5px;border:1px solid var(--border);border-radius:16px;background:rgba(16,19,35,.72)}
+.notifications-tab{min-width:92px;height:40px;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 16px;border:0;border-radius:12px;background:transparent;color:var(--text-muted);cursor:pointer;font-weight:650}
+.notifications-tab.active{color:white;background:linear-gradient(135deg,rgba(154,66,255,.34),rgba(101,32,211,.18))}
+.notifications-tab-count{min-width:21px;height:21px;display:grid;place-items:center;padding:0 6px;border-radius:999px;background:var(--purple);color:white;font-size:10px;font-weight:800}
+.notifications-content-panel{display:none}.notifications-content-panel.active-notifications-panel{display:block}
+.notification-group-label{margin:0 4px 10px;color:var(--purple-light);font-size:10px;font-weight:800;letter-spacing:1.7px}.older-label{margin-top:26px}
+.notification-item{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:13px;align-items:center;padding:16px;margin-bottom:12px}
+.notification-item.unread{background:linear-gradient(145deg,rgba(28,25,50,.98),rgba(13,16,31,.98));border-color:rgba(154,66,255,.18)}
+.notification-avatar,.notification-social-mark{width:52px;height:52px;border-radius:16px}.notification-avatar{object-fit:cover;border:2px solid rgba(154,66,255,.20)}.notification-social-mark{display:grid;place-items:center;background:linear-gradient(135deg,#4a226f,#1b1930);border:1px solid rgba(154,66,255,.24);font-weight:800}
+.notification-copy{min-width:0}.notification-copy p{margin:0;color:#d7d9e4;font-size:13px;line-height:1.5}.notification-copy p strong{color:white}.notification-copy span{display:block;margin-top:6px;color:var(--text-muted);font-size:10px}
+.notification-unread-dot{width:10px;height:10px;border-radius:50%;background:var(--purple-light);box-shadow:0 0 14px rgba(187,114,255,.38)}
+.notification-actions{display:flex;gap:8px}.notification-actions button{height:38px;padding:0 14px;border-radius:12px;cursor:pointer;font-size:11px;font-weight:700}.notification-primary{border:0;background:linear-gradient(135deg,var(--purple),var(--purple-dark));color:white}.notification-secondary{border:1px solid var(--border);background:rgba(255,255,255,.025);color:#c3c7d6}
+.notifications-summary,.notifications-control{padding:21px}.notifications-summary h2,.notifications-control h2{margin:8px 0 10px;font-size:24px}.notifications-summary p,.notifications-control p{margin:0;color:var(--text-muted);font-size:13px;line-height:1.6}
+.notification-summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}.notification-summary-grid div{padding:13px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.025)}.notification-summary-grid strong,.notification-summary-grid span{display:block}.notification-summary-grid span{margin-top:3px;color:var(--text-muted);font-size:10px}
+@media(max-width:820px){.notifications-page{width:min(680px,calc(100% - 24px));grid-template-columns:1fr}.notifications-side{position:static}}
+@media(max-width:600px){.notifications-hero{align-items:stretch;flex-direction:column}.notifications-tabs{width:100%;overflow-x:auto}.notifications-tab{flex:1;min-width:100px;white-space:nowrap}.notification-item{grid-template-columns:46px minmax(0,1fr)}.notification-unread-dot,.notification-actions{grid-column:2;justify-self:start}}
+
+/* =========================
+   NOTIFICATION POPOVER V0.2
+   ========================= */
+
+.notification-popover {
+  position: fixed;
+  z-index: 1200;
+  top: 82px;
+  left: 50%;
+  width: 390px;
+  max-height: calc(100vh - 105px);
+  overflow: hidden;
+  display: none;
+  border: 1px solid rgba(154, 66, 255, 0.22);
+  border-radius: 20px;
+  background:
+    linear-gradient(145deg, rgba(19, 21, 39, 0.995), rgba(9, 11, 23, 0.995));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.48);
+}
+
+.notification-popover.open {
+  display: block;
+}
+
+.notification-popover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 18px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.notification-popover-header h2 {
+  margin: 4px 0 0;
+  font-size: 21px;
+}
+
+.popover-mark-read {
+  border: 0;
+  background: transparent;
+  color: var(--purple-light);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.popover-mark-read:hover {
+  color: white;
+}
+
+.notification-popover-list {
+  max-height: 430px;
+  overflow-y: auto;
+}
+
+.popover-notification {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) 9px;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 17px;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.popover-notification:hover {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.popover-notification.unread {
+  background:
+    linear-gradient(90deg, rgba(137, 53, 235, 0.10), rgba(137, 53, 235, 0.025));
+}
+
+.popover-notification img {
+  width: 46px;
+  height: 46px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid rgba(154, 66, 255, 0.28);
+}
+
+.popover-notification-copy {
+  min-width: 0;
+}
+
+.popover-notification-copy > span {
+  display: block;
+  color: #d9dbe6;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.popover-notification-copy strong {
+  color: white;
+}
+
+.popover-notification-copy small {
+  display: block;
+  margin-top: 5px;
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+.popover-unread-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--purple-light);
+  box-shadow: 0 0 12px rgba(187, 114, 255, 0.4);
+}
+
+.notification-see-all {
+  width: 100%;
+  height: 48px;
+  border: 0;
+  border-top: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.018);
+  color: var(--purple-light);
+  cursor: pointer;
+  font-weight: 750;
+}
+
+.notification-see-all:hover {
+  background: rgba(154, 66, 255, 0.08);
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .notification-popover {
+    top: 76px;
+    left: 12px !important;
+    right: 12px;
+    width: auto;
+    transform: none !important;
+  }
+}
+
+/* =========================
+   SEARCH V0.1
+   ========================= */
+
+.search-box { cursor: text; }
+
+.search-page {
+  width: min(1180px, calc(100% - 40px));
+  margin: 30px auto;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 28px;
+  align-items: start;
+}
+
+.search-main { min-width: 0; }
+
+.search-side {
+  position: sticky;
+  top: calc(var(--nav-height) + 26px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.search-hero { padding: 8px 4px 20px; }
+.search-hero h1 { margin: 5px 0 7px; font-size: 34px; }
+.search-hero p { margin: 0; color: var(--text-muted); font-size: 14px; }
+
+.search-page-box {
+  margin-top: 20px;
+  height: 54px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 11px;
+  padding: 0 8px 0 16px;
+  border: 1px solid rgba(154, 66, 255, 0.20);
+  border-radius: 18px;
+  background: rgba(16, 19, 35, 0.76);
+}
+
+.search-page-box svg { width: 19px; height: 19px; color: var(--text-muted); }
+.search-page-box input { width: 100%; border: 0; outline: none; background: transparent; color: white; font-size: 15px; }
+.search-page-box input::placeholder { color: #74798d; }
+
+.search-page-box button {
+  height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 13px;
+  background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.search-tabs {
+  display: flex;
+  gap: 8px;
+  width: fit-content;
+  margin-bottom: 12px;
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(16, 19, 35, 0.72);
+}
+
+.search-tab {
+  min-width: 88px;
+  height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.search-tab.active {
+  color: white;
+  background: linear-gradient(135deg, rgba(154, 66, 255, 0.34), rgba(101, 32, 211, 0.18));
+}
+
+.search-query-line { margin: 0 4px 22px; color: var(--text-muted); font-size: 12px; }
+.search-query-line strong { color: white; }
+
+.search-content-panel { display: none; }
+.search-content-panel.active-search-panel { display: block; }
+
+.search-section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 4px 13px;
+}
+
+.search-section-heading h2 { margin: 4px 0 0; font-size: 23px; }
+.search-section-spaced { margin-top: 26px; }
+
+.search-people-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.search-person-card {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 15px;
+}
+
+.search-person-card img {
+  width: 58px;
+  height: 58px;
+  object-fit: cover;
+  border-radius: 18px;
+  border: 2px solid rgba(154, 66, 255, 0.24);
+}
+
+.search-person-card strong,
+.search-person-card span,
+.search-person-card small { display: block; }
+
+.search-person-card strong { font-size: 13px; }
+.search-person-card span { margin-top: 3px; color: #b2b6c7; font-size: 11px; }
+.search-person-card small { margin-top: 6px; color: var(--text-muted); font-size: 10px; }
+
+.search-person-card button {
+  height: 34px;
+  padding: 0 11px;
+  border: 1px solid rgba(154, 66, 255, 0.22);
+  border-radius: 10px;
+  background: rgba(154, 66, 255, 0.08);
+  color: var(--purple-light);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.search-post { padding: 18px; margin-bottom: 14px; }
+.search-post-top { display: flex; align-items: center; gap: 11px; }
+.search-post-top strong, .search-post-top span { display: block; }
+.search-post-top strong { font-size: 13px; }
+.search-post-top span { margin-top: 4px; color: var(--text-muted); font-size: 10px; }
+.search-post p { margin: 16px 0; color: #d7d9e4; font-size: 14px; line-height: 1.55; }
+.search-post-meta { display: flex; gap: 18px; color: var(--text-muted); font-size: 10px; }
+
+.search-topic-row, .search-topic-grid { display: grid; gap: 14px; }
+.search-topic-row, .search-topic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.search-topic-card {
+  min-height: 120px;
+  padding: 18px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.search-topic-card strong, .search-topic-card small { display: block; }
+.search-topic-card strong { margin-top: 7px; font-size: 17px; }
+.search-topic-card small { margin-top: 8px; color: var(--text-muted); font-size: 10px; }
+
+.search-tip, .search-recent { padding: 21px; }
+.search-tip h2 { margin: 8px 0 10px; font-size: 24px; }
+.search-tip p { margin: 0; color: var(--text-muted); font-size: 13px; line-height: 1.6; }
+
+.recent-search-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 14px;
+}
+
+.recent-search-list button {
+  padding: 12px 0;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  color: #d0d3df;
+  text-align: left;
+  cursor: pointer;
+}
+
+.recent-search-list button:last-child { border-bottom: 0; }
+
+@media (max-width: 900px) {
+  .search-page { grid-template-columns: minmax(0, 1fr) 285px; }
+  .search-people-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 820px) {
+  .search-page {
+    width: min(680px, calc(100% - 24px));
+    grid-template-columns: 1fr;
+  }
+  .search-side { position: static; }
+}
+
+@media (max-width: 600px) {
+  .search-tabs { width: 100%; overflow-x: auto; }
+  .search-tab { min-width: 80px; flex: 1; }
+  .search-topic-row, .search-topic-grid { grid-template-columns: 1fr; }
+  .search-person-card { grid-template-columns: 54px minmax(0, 1fr); }
+  .search-person-card button { grid-column: 2; justify-self: start; }
+}
+
