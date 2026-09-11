@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SOCIAL with friends</title>
 
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=3" />
 </head>
 
 <body>
@@ -407,13 +407,14 @@
         </div>
 
         <div class="explore-tabs" role="tablist" aria-label="Explore sections">
-          <button class="explore-tab active">For You</button>
-          <button class="explore-tab">Trending</button>
-          <button class="explore-tab">Topics</button>
+          <button class="explore-tab active" data-explore-tab="for-you">For You</button>
+          <button class="explore-tab" data-explore-tab="trending">Trending</button>
+          <button class="explore-tab" data-explore-tab="topics">Topics</button>
         </div>
       </div>
 
-      <section class="explore-section">
+      <!-- FOR YOU -->
+      <section class="explore-section explore-content-panel active-explore-panel" data-explore-panel="for-you">
         <div class="section-heading">
           <div>
             <span class="panel-label">PERSONALIZED</span>
@@ -540,6 +541,148 @@
         </div>
       </section>
 
+      <!-- TRENDING -->
+      <section class="explore-section explore-content-panel" data-explore-panel="trending">
+        <div class="section-heading">
+          <div>
+            <span class="panel-label">RIGHT NOW</span>
+            <h2>Trending Conversations</h2>
+            <p>Public conversations getting people talking across SOCIAL.</p>
+          </div>
+        </div>
+
+        <div class="trending-feed">
+
+          <button class="trending-conversation card">
+            <div class="trending-number">01</div>
+            <div class="trending-conversation-copy">
+              <span class="trend-topic">FRIENDSHIP</span>
+              <h3>What counts as a real friendship?</h3>
+              <p>People are sharing the moments that made them realize who was truly in their corner.</p>
+              <div class="trend-meta">
+                <strong>4.8K people talking</strong>
+                <span>1.2K replies today</span>
+              </div>
+            </div>
+            <span class="trend-arrow">→</span>
+          </button>
+
+          <button class="trending-conversation card">
+            <div class="trending-number">02</div>
+            <div class="trending-conversation-copy">
+              <span class="trend-topic">LIFE</span>
+              <h3>Best advice you ignored at first</h3>
+              <p>The advice made no sense at the time. Years later, you finally understood it.</p>
+              <div class="trend-meta">
+                <strong>3.1K people talking</strong>
+                <span>826 replies today</span>
+              </div>
+            </div>
+            <span class="trend-arrow">→</span>
+          </button>
+
+          <button class="trending-conversation card">
+            <div class="trending-number">03</div>
+            <div class="trending-conversation-copy">
+              <span class="trend-topic">TECHNOLOGY</span>
+              <h3>Technology that desperately needs a redesign</h3>
+              <p>Everyone has one app, device, or everyday system that somehow still makes simple things difficult.</p>
+              <div class="trend-meta">
+                <strong>2.6K people talking</strong>
+                <span>704 replies today</span>
+              </div>
+            </div>
+            <span class="trend-arrow">→</span>
+          </button>
+
+          <button class="trending-conversation card">
+            <div class="trending-number">04</div>
+            <div class="trending-conversation-copy">
+              <span class="trend-topic">TRAVEL</span>
+              <h3>Where would you travel tomorrow?</h3>
+              <p>No planning stress, no budget limits. Pick the destination and tell everybody why.</p>
+              <div class="trend-meta">
+                <strong>1.9K people talking</strong>
+                <span>488 replies today</span>
+              </div>
+            </div>
+            <span class="trend-arrow">→</span>
+          </button>
+
+        </div>
+      </section>
+
+      <!-- TOPICS -->
+      <section class="explore-section explore-content-panel" data-explore-panel="topics">
+        <div class="section-heading">
+          <div>
+            <span class="panel-label">CHOOSE YOUR INTERESTS</span>
+            <h2>Topics</h2>
+            <p>Explore categories directly and eventually follow the ones you want more of.</p>
+          </div>
+        </div>
+
+        <div class="topic-browser">
+
+          <button class="topic-browser-card card">
+            <span class="topic-kicker">SPORTS</span>
+            <h3>Sports</h3>
+            <p>Games, players, predictions, debates, and the moments everybody is talking about.</p>
+            <span class="topic-activity">12.4K active conversations</span>
+          </button>
+
+          <button class="topic-browser-card card">
+            <span class="topic-kicker">RELATIONSHIPS</span>
+            <h3>Relationships</h3>
+            <p>Dating, friendship, marriage, boundaries, and everyday relationship conversations.</p>
+            <span class="topic-activity">9.8K active conversations</span>
+          </button>
+
+          <button class="topic-browser-card card">
+            <span class="topic-kicker">TECHNOLOGY</span>
+            <h3>Technology</h3>
+            <p>Apps, devices, AI, new ideas, and the technology people actually use every day.</p>
+            <span class="topic-activity">7.2K active conversations</span>
+          </button>
+
+          <button class="topic-browser-card card">
+            <span class="topic-kicker">TRAVEL</span>
+            <h3>Travel</h3>
+            <p>Destinations, trip stories, recommendations, and places people want to experience next.</p>
+            <span class="topic-activity">5.6K active conversations</span>
+          </button>
+
+          <button class="topic-browser-card card">
+            <span class="topic-kicker">MUSIC</span>
+            <h3>Music</h3>
+            <p>Artists, albums, throwbacks, new releases, and songs people cannot stop playing.</p>
+            <span class="topic-activity">8.1K active conversations</span>
+          </button>
+
+          <button class="topic-browser-card card">
+            <span class="topic-kicker">FOOD</span>
+            <h3>Food</h3>
+            <p>Favorite meals, restaurant conversations, recipes, debates, and food discoveries.</p>
+            <span class="topic-activity">6.3K active conversations</span>
+          </button>
+
+          <button class="topic-browser-card card">
+            <span class="topic-kicker">MONEY</span>
+            <h3>Money</h3>
+            <p>Saving, credit, side income, business ideas, and everyday conversations about money.</p>
+            <span class="topic-activity">4.9K active conversations</span>
+          </button>
+
+          <button class="topic-browser-card card">
+            <span class="topic-kicker">ENTERTAINMENT</span>
+            <h3>Entertainment</h3>
+            <p>TV, movies, culture, viral moments, and the entertainment conversations worth joining.</p>
+            <span class="topic-activity">10.7K active conversations</span>
+          </button>
+
+        </div>
+      </section>
+
     </section>
 
     <aside class="explore-side">
@@ -624,44 +767,7 @@
   </main>
 
 
-  <script src="script.js"></script>
-
-  <script>
-    const homePage = document.getElementById("home-page");
-    const explorePage = document.getElementById("explore-page");
-    const homeNav = document.querySelector('[data-page="home"]');
-    const exploreNav = document.querySelector('[data-page="explore"]');
-
-    function showPage(pageName) {
-      if (pageName === "explore") {
-        homePage.classList.remove("active-page");
-        explorePage.classList.add("active-page");
-        homeNav.classList.remove("active");
-        exploreNav.classList.add("active");
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        return;
-      }
-
-      explorePage.classList.remove("active-page");
-      homePage.classList.add("active-page");
-      exploreNav.classList.remove("active");
-      homeNav.classList.add("active");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    homeNav.addEventListener("click", () => showPage("home"));
-    exploreNav.addEventListener("click", () => showPage("explore"));
-
-    document.querySelectorAll(".explore-tab").forEach((tab) => {
-      tab.addEventListener("click", () => {
-        document.querySelectorAll(".explore-tab").forEach((item) => {
-          item.classList.remove("active");
-        });
-
-        tab.classList.add("active");
-      });
-    });
-  </script>
+  <script src="script.js?v=3"></script>
 
 </body>
 </html>
