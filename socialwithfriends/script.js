@@ -4,30 +4,83 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const composer = document.querySelector(".composer");
   const composerInput = document.querySelector(".composer-input");
-  const composerTop = document.querySelector(".composer-top");
   const audienceButton = document.querySelector(".audience-button");
   const postButton = document.querySelector(".post-button");
+
+  const homePage = document.getElementById("home-page");
+  const explorePage = document.getElementById("explore-page");
+  const homeNav = document.querySelector('[data-page="home"]');
+  const exploreNav = document.querySelector('[data-page="explore"]');
+
+  const exploreTabs = document.querySelectorAll("[data-explore-tab]");
+  const explorePanels = document.querySelectorAll("[data-explore-panel]");
 
   let composerOpen = false;
   let audienceMenuOpen = false;
 
-  // -------------------------
-  // TOP NAV ACTIVE STATE
-  // -------------------------
+  function showPage(pageName) {
+    if (pageName === "explore") {
+      homePage.classList.remove("active-page");
+      explorePage.classList.add("active-page");
+
+      navItems.forEach((nav) => nav.classList.remove("active"));
+      exploreNav.classList.add("active");
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    explorePage.classList.remove("active-page");
+    homePage.classList.add("active-page");
+
+    navItems.forEach((nav) => nav.classList.remove("active"));
+    homeNav.classList.add("active");
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  homeNav.addEventListener("click", () => showPage("home"));
+  exploreNav.addEventListener("click", () => showPage("explore"));
 
   navItems.forEach((item) => {
+    if (
+      item === homeNav ||
+      item === exploreNav ||
+      item.classList.contains("create-button")
+    ) {
+      return;
+    }
+
     item.addEventListener("click", () => {
       navItems.forEach((nav) => nav.classList.remove("active"));
-
-      if (!item.classList.contains("create-button")) {
-        item.classList.add("active");
-      }
+      item.classList.add("active");
     });
   });
 
-  // -------------------------
-  // COMPOSER
-  // -------------------------
+  function showExplorePanel(panelName) {
+    exploreTabs.forEach((tab) => {
+      const isActive = tab.dataset.exploreTab === panelName;
+
+      tab.classList.toggle("active", isActive);
+      tab.setAttribute(
+        "aria-selected",
+        isActive ? "true" : "false"
+      );
+    });
+
+    explorePanels.forEach((panel) => {
+      panel.classList.toggle(
+        "active-explore-panel",
+        panel.dataset.explorePanel === panelName
+      );
+    });
+  }
+
+  exploreTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      showExplorePanel(tab.dataset.exploreTab);
+    });
+  });
 
   function openComposer() {
     if (composerOpen) return;
@@ -47,11 +100,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   composerInput.addEventListener("click", openComposer);
-  createButton.addEventListener("click", openComposer);
 
-  // -------------------------
-  // AUDIENCE MENU
-  // -------------------------
+  createButton.addEventListener("click", () => {
+    showPage("home");
+    openComposer();
+  });
 
   const audienceMenu = document.createElement("div");
   audienceMenu.className = "audience-menu";
@@ -91,16 +144,20 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
-  audienceMenu.querySelectorAll("button").forEach((option) => {
-    option.addEventListener("click", () => {
-      const selectedAudience = option.dataset.audience;
+  audienceMenu
+    .querySelectorAll("button")
+    .forEach((option) => {
+      option.addEventListener("click", () => {
+        audienceButton.textContent =
+          option.dataset.audience;
 
-      audienceButton.textContent = selectedAudience;
+        audienceMenuOpen = false;
 
-      audienceMenuOpen = false;
-      audienceMenu.classList.remove("audience-menu-open");
+        audienceMenu.classList.remove(
+          "audience-menu-open"
+        );
+      });
     });
-  });
 
   document.addEventListener("click", (event) => {
     if (
@@ -109,16 +166,17 @@ document.addEventListener("DOMContentLoaded", () => {
       !audienceButton.contains(event.target)
     ) {
       audienceMenuOpen = false;
-      audienceMenu.classList.remove("audience-menu-open");
+
+      audienceMenu.classList.remove(
+        "audience-menu-open"
+      );
     }
   });
 
-  // -------------------------
-  // POST BUTTON
-  // -------------------------
-
   postButton.addEventListener("click", () => {
-    const textarea = document.querySelector(".composer-textarea");
+    const textarea = document.querySelector(
+      ".composer-textarea"
+    );
 
     if (!textarea) {
       openComposer();
