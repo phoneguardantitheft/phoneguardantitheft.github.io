@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
   <title>SocialCheck</title>
-  <meta name="description" content="Find out who unfollowed you on Instagram and removed you on Facebook with SocialCheck." />
+  <meta name="description" content="See who unfollowed you on Instagram, removed you on Facebook, and track Facebook friend and follower changes with SocialCheck." />
 
   <style>
     * {
@@ -48,21 +48,30 @@
     }
 
     .tagline {
-      max-width: 680px;
+      max-width: 700px;
       margin: 0 auto 28px;
       font-size: 18px;
       color: rgba(255,255,255,0.82);
+    }
+
+    .download-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
     }
 
     .download-btn {
       display: inline-block;
       background: #ffffff;
       color: #1d4ed8 !important;
-      padding: 16px 34px;
+      padding: 16px 30px;
       border-radius: 14px;
       text-decoration: none;
       font-weight: 800;
       box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      min-width: 205px;
     }
 
     .download-btn:hover {
@@ -151,6 +160,15 @@
       .grid {
         grid-template-columns: 1fr;
       }
+
+      .download-buttons {
+        flex-direction: column;
+      }
+
+      .download-btn {
+        width: 100%;
+        max-width: 300px;
+      }
     }
   </style>
 
@@ -160,104 +178,140 @@
 
   <main class="page">
 
-<section class="hero">
-  <h1>SocialCheck</h1>
+    <section class="hero">
+      <h1>SocialCheck</h1>
 
-  <p class="subtitle">
-    Find Out Who Unfollowed You on Instagram and Removed You on Facebook 👀
-  </p>
+      <p class="subtitle">
+        See Who Unfollowed, Unfriended, or Stopped Following You 👀
+      </p>
 
-<p class="tagline">
-  See who's no longer following you and discover changes to your social media connections.
-</p>
+      <p class="tagline">
+        Track changes to your Instagram followers, Facebook friends, and Facebook followers — all in one place.
+      </p>
 
+      <div class="download-buttons">
+        <a class="download-btn"
+           href="https://apps.apple.com/us/app/socialcheck/id6759270164"
+           target="_blank"
+           rel="noopener noreferrer">
+           Download for iPhone
+        </a>
 
-  <a class="download-btn"
-     href="https://apps.apple.com/us/app/socialcheck/id6759270164"
-     target="_blank">
-     Download Now
-  </a>
+        <a class="download-btn"
+           href="https://play.google.com/store/apps/details?id=com.daveonhawthorne.socialcheck"
+           target="_blank"
+           rel="noopener noreferrer">
+           Download for Android
+        </a>
+      </div>
 
-  <div class="preview">
-    <div class="preview-row">👀 Instagram Unfollowers</div>
-    <div class="preview-row">👥 Facebook Removed Connections</div>
-  </div>
-</section>
+      <div class="preview">
+        <div class="preview-row">👀 Instagram Unfollowers</div>
+        <div class="preview-row">👥 Facebook Friends Removed</div>
+        <div class="preview-row">📲 Facebook Friend Sync</div>
+        <div class="preview-row">🔔 Facebook Follower Sync</div>
+      </div>
+    </section>
 
-<section class="grid">
+    <section class="grid">
 
-  <div class="card">
-    <h2>What is SocialCheck?</h2>
+      <div class="card">
+        <h2>What is SocialCheck?</h2>
+        <p>
+          SocialCheck helps you keep track of changes across your social connections.
+        </p>
+        <p>
+          See who unfollowed you on Instagram, who removed you from Facebook, and track changes to your Facebook friends and followers.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Instagram Tracking</h2>
+        <p class="feature">👀 See who unfollowed you</p>
+        <p class="feature">✨ Discover new followers</p>
+        <p class="feature">📦 Import your Instagram ZIP export</p>
+        <p class="feature">📊 Compare changes over time</p>
+      </div>
+
+      <div class="card">
+        <h2>Facebook Friends</h2>
+        <p class="feature">👥 See friends who removed you</p>
+        <p class="feature">➕ See newly added friends</p>
+        <p class="feature">🔄 Sync your Facebook friends</p>
+        <p class="feature">📦 Import your Facebook ZIP export</p>
+        <p class="feature">📚 Review your connection history</p>
+      </div>
+
+      <div class="card">
+        <h2>Facebook Followers</h2>
+        <p class="feature">📉 See followers who unfollowed you</p>
+        <p class="feature">📈 Discover new followers</p>
+        <p class="feature">🔄 Sync your Facebook followers</p>
+        <p class="feature">👤 View your current followers</p>
+      </div>
+
+      <div class="card">
+        <h2>Easy Import</h2>
+        <p>
+          Import your Facebook or Instagram ZIP export directly into SocialCheck.
+        </p>
+        <p>
+          SocialCheck compares your information over time and organizes the changes so they're easy to understand.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Privacy First</h2>
+        <p>
+          SocialCheck is designed to help you review your own social connection data.
+        </p>
+        <p>
+          Imported files and comparison data are processed on your device.
+        </p>
+      </div>
+
+      <div class="card full">
+        <h2>Stop Wondering. Start Checking.</h2>
+        <p>
+          Keep track of who's following, unfollowing, adding, or removing you with SocialCheck.
+        </p>
+
+        <div class="download-buttons">
+          <a class="download-btn"
+             href="https://apps.apple.com/us/app/socialcheck/id6759270164"
+             target="_blank"
+             rel="noopener noreferrer">
+             Download on the App Store
+          </a>
+
+          <a class="download-btn"
+             href="https://play.google.com/store/apps/details?id=com.daveonhawthorne.socialcheck"
+             target="_blank"
+             rel="noopener noreferrer">
+             Get it on Google Play
+          </a>
+        </div>
+      </div>
+
+      <div class="card full">
+        <h2>Support</h2>
+        <p>
+          Email:
+          <a href="mailto:admin@hawthorne-software.com">
+            admin@hawthorne-software.com
+          </a>
+        </p>
+      </div>
+
+    </section>
+
     <p>
-      SocialCheck helps you compare social media exports over time so you can see exactly what's changed.
-    </p>
-    <p>
-      Discover unfollows, removed friends, and other differences between exports in seconds.
-    </p>
-  </div>
-
-  <div class="card">
-    <h2>Features</h2>
-    <p class="feature">👀 Find out who unfollowed you</p>
-    <p class="feature">👥 Review Facebook connection changes</p>
-    <p class="feature">📊 Compare exports over time</p>
-    <p class="feature">🔒 Your data stays on your device</p>
-    <p class="feature">⚡ Fast comparison results</p>
-  </div>
-
-  <div class="card">
-    <h2>Perfect For</h2>
-    <p>
-      ✅ Tracking Instagram unfollows<br>
-      ✅ Monitoring Facebook connection changes<br>
-      ✅ Comparing exports over time<br>
-      ✅ Keeping up with social account activity
-    </p>
-  </div>
-
-  <div class="card">
-    <h2>Privacy First</h2>
-    <p>
-      SocialCheck helps you review your exported data without needing to connect your social accounts directly.
-    </p>
-    <p>
-      Your comparisons happen using the files you choose to import.
-    </p>
-  </div>
-
-  <div class="card full">
-    <h2>Stop Wondering. Start Checking.</h2>
-    <p>
-      Find out who unfollowed you and discover changes to your social media connections.
+      <a href="/socialcheck/privacy/">Privacy Policy</a>
     </p>
 
-    <a class="download-btn"
-       href="https://apps.apple.com/us/app/socialcheck/id6759270164"
-       target="_blank">
-       Download on the App Store
-    </a>
-  </div>
-
-  <div class="card full">
-    <h2>Support</h2>
-    <p>
-      Email:
-      <a href="mailto:admin@hawthorne-software.com">
-        admin@hawthorne-software.com
-      </a>
-    </p>
-  </div>
-
-</section>
-
-<p>
-  <a href="/socialcheck/privacy/">Privacy Policy</a>
-</p>
-
-<footer>
-  © Hawthorne's Computer Repair, LLC
-</footer>
-
+    <footer>
+      © Hawthorne's Computer Repair, LLC
+    </footer>
 
   </main>
 
